@@ -59,6 +59,18 @@ export class UsersService implements OnApplicationBootstrap {
     }
 
     // [function]─────────────────────────────────────────────────────────────────
+    async update(id: number) {
+        const tag = this.update.name;
+        try {
+            // const updateUser = await this.userRepository.update({
+
+            // });
+
+        } catch (error) {
+            this.logger.error(`${tag} -> `, error);
+            throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     async findOne(id: number): Promise<UserDB> {
         const tag = this.findOne.name;

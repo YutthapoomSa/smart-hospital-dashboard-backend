@@ -57,18 +57,18 @@ export class FindOneUserResDTO {
     constructor(resCode: ResStatus, msg: string, datas: UserDB) {
         this.resCode = resCode;
         this.msg = msg;
-        this.resData = null;
-
+        this.resData = new FindOneUserResDTOResData();
         if (!!datas) {
-            const _data = new FindOneUserResDTOResData();
-            _data.email = datas.email;
-            _data.userName = datas.username;
-            _data.firstName = datas.firstName;
-            _data.lastName = datas.lastName;
-            _data.role = datas.role;
-            _data.status = datas.status;
-            _data.gender = datas.gender;
-            _data.phoneNumber = datas.phoneNumber;
+
+            this.resData.email = datas.email;
+            this.resData.userName = datas.username;
+            this.resData.firstName = datas.firstName;
+            this.resData.lastName = datas.lastName;
+            this.resData.role = datas.role;
+            this.resData.status = datas.status;
+            this.resData.gender = datas.gender;
+            this.resData.phoneNumber = datas.phoneNumber;
         }
+
     }
 }

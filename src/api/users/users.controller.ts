@@ -12,12 +12,23 @@ import { UserLoginRefreshToKenReqDto } from './dto/user-login-refreshToken.dto';
 @Controller('users')
 @ApiTags('users')
 export class UsersController {
-    constructor(private readonly apiUsersService: ApiUsersService) {}
+    constructor(private readonly apiUsersService: ApiUsersService) { }
 
+    // Register with guest
     @Post('register')
     @ApiOkResponse({ type: FindOneUserResDTO })
-    register(@Body() body: CreateUserReqDTO, @User() user:UserDB) {
-        return this.apiUsersService.api_create(body,user);
+    register(@Body() body: CreateUserReqDTO) {
+
+        return this.apiUsersService.api_create(body);
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard('jwt'))
+    @Post('registerWithAdmin')
+    @ApiOkResponse({ type: FindOneUserResDTO })
+    async registerWithAdmin(@Body() body: CreateUserReqDTO, @User() user: UserDB) {
+
+        return this.apiUsersService.api_createWithAdmin(body, user);
     }
 
     @Post('login')

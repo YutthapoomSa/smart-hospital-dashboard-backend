@@ -41,9 +41,10 @@ export class ApiUsersService implements OnApplicationBootstrap {
         private convertImageService: ConvertImageService,
 
         @Inject(forwardRef(() => UsersService))
-        private usersService: UsersService,
+        private usersService: UsersService
     ) { }
-    onApplicationBootstrap() {
+
+    async onApplicationBootstrap() {
         //
     }
 
@@ -67,10 +68,11 @@ export class ApiUsersService implements OnApplicationBootstrap {
         }
     }
 
-    async api_create(body: CreateUserReqDTO, user: UserDB) {
+    async api_createWithAdmin(body: CreateUserReqDTO, user: UserDB) {
         const tag = this.api_create.name;
         try {
-            if (user.role!== UserDBRole.admin) throw new HttpException('Not authorized', HttpStatus.NOT_FOUND);
+            if (String(user.role) !== String(UserDBRole.admin)) throw new HttpException('Not authorized', HttpStatus.UNAUTHORIZED);
+            if (!body) throw new Error('data is required')
             const email = await this.usersService.isEmail(body.email);
 
             if (email) {
@@ -91,7 +93,42 @@ export class ApiUsersService implements OnApplicationBootstrap {
             users.gender = body.gender;
             users.phoneNumber = body.phoneNumber;
 
-            return new FindOneUserResDTO(ResStatus.fail, 'อีเมลนี้ถูกใช้ไปแล้ว', await user.save());
+            await users.save();
+            // console.log(users);
+            return new FindOneUserResDTO(ResStatus.success, '', users);
+        } catch (error) {
+            this.logger.error(`${tag} -> `, error);
+            throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    async api_create(body: CreateUserReqDTO) {
+        const tag = this.api_create.name;
+        try {
+            // console.log(JSON.stringify(user, null, 2));
+            if (!body) throw new Error('data is required')
+            const email = await this.usersService.isEmail(body.email);
+
+            if (email) {
+                return new FindOneUserResDTO(ResStatus.fail, 'อีเมลนี้ถูกใช้ไปแล้ว', null);
+            }
+
+            // ─────────────────────────────────────────────────────────────────
+            const resultHash = await this.usersService.genPassword(body.password);
+            const _salt = resultHash.salt;
+            const _hashPass = resultHash.hashPass;
+
+            const users = new UserDB();
+            users.email = body.email.trim().toLowerCase();
+            users.username = body.username.trim().toLowerCase();
+            users.firstName = body.firstName;
+            users.lastName = body.lastName;
+            users.password = _hashPass;
+            users.gender = body.gender;
+            users.phoneNumber = body.phoneNumber;
+
+            await users.save();
+            return new FindOneUserResDTO(ResStatus.success, '', users);
         } catch (error) {
             this.logger.error(`${tag} -> `, error);
             throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);

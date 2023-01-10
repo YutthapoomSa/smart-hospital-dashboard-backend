@@ -5,14 +5,14 @@ import { UserDB } from '../../../database/entity/user.entity';
 
 export class UserLoginRequestDTO {
     @ApiProperty({
-        example: 'superAdmin',
+        example: 'admin',
     })
     @IsString()
     @IsNotEmpty()
     readonly username: string;
 
     @ApiProperty({
-        example: 'superAdmin',
+        example: 'admin',
     })
     @IsString()
     @IsNotEmpty()

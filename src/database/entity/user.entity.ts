@@ -12,7 +12,7 @@ import { UserPasswordDB } from './user-password.entity';
 import { UserSocketDB } from './user-socket.entity';
 
 export enum UserDBRole {
-    superAdmin = 'superAdmin',
+    // superAdmin = 'superAdmin',
     admin = 'admin',
     user = 'user',
 }
@@ -69,7 +69,7 @@ export class UserDB extends Model<UserDB> {
 
     @Column({
         allowNull: false,
-        type: DataType.ENUM(UserDBRole.superAdmin, UserDBRole.admin, UserDBRole.user),
+        type: DataType.ENUM(UserDBRole.admin, UserDBRole.user),
         comment: 'สิทธิ์การเข้าใช้งาน',
         defaultValue: UserDBRole.user,
     })
