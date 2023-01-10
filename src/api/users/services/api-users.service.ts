@@ -11,7 +11,7 @@ import { Cache } from 'cache-manager';
 import { Sequelize } from 'sequelize-typescript';
 import { DataBase } from 'src/database/database.providers';
 import { UserTokenDB } from '../../../database/entity/user-token.entity';
-import { UserDB } from '../../../database/entity/user.entity';
+import { UserDB, UserDBRole } from '../../../database/entity/user.entity';
 import { ConvertImageService } from '../../../helper/services/convert-image.service';
 import { EncryptionService } from '../../../helper/services/encryption.service';
 import { LogService } from '../../../helper/services/log.service';
@@ -42,7 +42,7 @@ export class ApiUsersService implements OnApplicationBootstrap {
 
         @Inject(forwardRef(() => UsersService))
         private usersService: UsersService,
-    ) {}
+    ) { }
     onApplicationBootstrap() {
         //
     }
@@ -67,10 +67,10 @@ export class ApiUsersService implements OnApplicationBootstrap {
         }
     }
 
-    async api_create(body: CreateUserReqDTO) {
+    async api_create(body: CreateUserReqDTO, user: UserDB) {
         const tag = this.api_create.name;
         try {
-
+            if (user.role!== UserDBRole.admin) throw new HttpException('Not authorized', HttpStatus.NOT_FOUND);
             const email = await this.usersService.isEmail(body.email);
 
             if (email) {
@@ -82,14 +82,14 @@ export class ApiUsersService implements OnApplicationBootstrap {
             const _salt = resultHash.salt;
             const _hashPass = resultHash.hashPass;
 
-            const user = new UserDB();
-            user.email = body.email.trim().toLowerCase();
-            user.username = body.username.trim().toLowerCase();
-            user.firstName = body.firstName;
-            user.lastName = body.lastName;
-            user.password = _hashPass;
-            user.gender = body.gender;
-            user.phoneNumber = body.phoneNumber;
+            const users = new UserDB();
+            users.email = body.email.trim().toLowerCase();
+            users.username = body.username.trim().toLowerCase();
+            users.firstName = body.firstName;
+            users.lastName = body.lastName;
+            users.password = _hashPass;
+            users.gender = body.gender;
+            users.phoneNumber = body.phoneNumber;
 
             return new FindOneUserResDTO(ResStatus.fail, 'อีเมลนี้ถูกใช้ไปแล้ว', await user.save());
         } catch (error) {

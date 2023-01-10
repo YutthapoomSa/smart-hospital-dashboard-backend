@@ -16,8 +16,8 @@ export class UsersController {
 
     @Post('register')
     @ApiOkResponse({ type: FindOneUserResDTO })
-    register(@Body() body: CreateUserReqDTO) {
-        return this.apiUsersService.api_create(body);
+    register(@Body() body: CreateUserReqDTO, @User() user:UserDB) {
+        return this.apiUsersService.api_create(body,user);
     }
 
     @Post('login')

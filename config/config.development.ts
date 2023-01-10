@@ -4,11 +4,11 @@ const logger = new Logger('ORM');
 export const config = {
     database: {
         dialect: 'mysql' as Dialect,
-        host: 'localhost',
+        host: '127.0.0.1',
         port: 3306,
         username: 'root',
         password: '',
-        database: 'mysql1',
+        database: 'dashboard',
         // logging: false,
         // logging: (msg: any) => logger.log(msg),
         // dialectOptions: {
