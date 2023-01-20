@@ -4,10 +4,10 @@ const logger = new Logger('ORM');
 export const config = {
     database: {
         dialect: 'mysql' as Dialect,
-        host: '127.0.0.1',
+        host: 'internal.neercode.com',
         port: 3306,
         username: 'root',
-        password: '',
+        password: '123132123',
         database: 'dashboard',
         // logging: false,
         // logging: (msg: any) => logger.log(msg),

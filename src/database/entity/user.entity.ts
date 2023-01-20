@@ -37,14 +37,11 @@ export class UserDB extends Model<UserDB> {
     })
     id: number;
 
-    @ApiProperty()
-    @IsEmail
     @Column({
         allowNull: false,
     })
     email: string;
 
-    @ApiProperty()
     @Column({
         allowNull: false,
     })
@@ -55,13 +52,11 @@ export class UserDB extends Model<UserDB> {
     })
     password: string;
 
-    @ApiProperty()
     @Column({
         allowNull: false,
     })
     firstName: string;
 
-    @ApiProperty()
     @Column({
         allowNull: false,
     })
@@ -75,7 +70,6 @@ export class UserDB extends Model<UserDB> {
     })
     role: UserDBRole;
 
-    @ApiProperty()
     @Column({
         comment: 'status เปิด ปิด',
         defaultValue: true,
@@ -83,13 +77,11 @@ export class UserDB extends Model<UserDB> {
     })
     status: boolean;
 
-    @ApiProperty()
     @Column({
         allowNull: true,
     })
     image: string;
 
-    @ApiProperty()
     @Column({
         allowNull: true,
         type: DataType.ENUM(UserDBGender.male, UserDBGender.female, UserDBGender.other),
@@ -97,7 +89,6 @@ export class UserDB extends Model<UserDB> {
     })
     gender: UserDBGender;
 
-    @ApiProperty()
     @Column({
         type: DataType.TEXT(),
         defaultValue: null,
