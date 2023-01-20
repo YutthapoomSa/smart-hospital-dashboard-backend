@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { ResStatus } from 'src/shared/enum/res-status.enum';
-import { UserDB } from '../../../database/entity/user.entity';
+import { ResStatus } from './../../../shared/enum/res-status.enum';
 
 export class UserLoginRequestDTO {
     @ApiProperty({

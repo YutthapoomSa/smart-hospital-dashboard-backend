@@ -1,4 +1,4 @@
-import { Table, Column, DataType, ForeignKey, CreatedAt, UpdatedAt, BelongsTo, Model } from 'sequelize-typescript';
+import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { MenuDB } from './menu.entity';
 
 @Table({
@@ -21,15 +21,30 @@ export class SubMenuDB extends Model<SubMenuDB> {
     submenu_name: string;
 
     @Column({
+        allowNull: true,
+    })
+    submenu_icon: string;
+
+    @Column({
         allowNull: false,
     })
     url: string;
 
-    @CreatedAt
-    readonly createdAt?: Date;
+    // @Column({
+    //     type: DataType.DATE(),
+    //     defaultValue: () => Date.now(),
+    //     allowNull: false,
+    // })
+    // @CreatedAt
+    // readonly createdAt?: Date;
 
-    @UpdatedAt
-    readonly updatedAt?: Date;
+    // @Column({
+    //     type: DataType.DATE(),
+    //     defaultValue: () => Date.now(),
+    //     allowNull: false,
+    // })
+    // @UpdatedAt
+    // readonly updatedAt?: Date;
     // ─────────────────────────────────────────────────────────────────────
 
     @ForeignKey(() => MenuDB)
@@ -39,7 +54,11 @@ export class SubMenuDB extends Model<SubMenuDB> {
         field: 'menu_id',
     })
     menu_id: number;
-
+    
     @BelongsTo(() => MenuDB)
-    user: MenuDB;
+    menuLists: MenuDB[];
+
+    //     @BelongsTo(() => MenuDB)
+
+    //     menu: MenuDB;
 }

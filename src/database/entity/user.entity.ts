@@ -1,18 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
-import {
-    Column,
-    CreatedAt,
-    DataType, HasMany,
-    IsEmail,
-    Model,
-    Table,
-    UpdatedAt
-} from 'sequelize-typescript';
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 import { UserPasswordDB } from './user-password.entity';
 import { UserSocketDB } from './user-socket.entity';
 
 export enum UserDBRole {
-    // superAdmin = 'superAdmin',
     admin = 'admin',
     user = 'user',
 }
@@ -25,7 +15,7 @@ export enum UserDBGender {
 
 @Table({
     tableName: 'user',
-    comment:'ตารางข้อมูล user'
+    comment: 'ตารางข้อมูล user',
 })
 export class UserDB extends Model<UserDB> {
     @Column({
@@ -96,11 +86,21 @@ export class UserDB extends Model<UserDB> {
     })
     phoneNumber: string;
 
-    @CreatedAt
-    readonly createdAt?: Date;
+    // @Column({
+    //     type: DataType.DATE(),
+    //     defaultValue: () => Date.now(),
+    //     allowNull: false,
+    // })
+    // @CreatedAt
+    // readonly createdAt?: Date;
 
-    @UpdatedAt
-    readonly updatedAt?: Date;
+    // @Column({
+    //     type: DataType.DATE(),
+    //     defaultValue: () => Date.now(),
+    //     allowNull: false,
+    // })
+    // @UpdatedAt
+    // readonly updatedAt?: Date;
 
     // ─────────────────────────────────────────────────────────────────
 

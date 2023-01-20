@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UserDB, UserDBGender, UserDBRole } from 'src/database/entity/user.entity';
+import { UserDB, UserDBGender, UserDBRole } from './../../../database/entity/user.entity';
 import { ResDataCommon } from './../../../helper/services/pagination/res-data-common.interface';
 
 class FindAllResDTOResData {

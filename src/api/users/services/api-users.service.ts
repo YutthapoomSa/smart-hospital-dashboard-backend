@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { Sequelize } from 'sequelize-typescript';
-import { DataBase } from 'src/database/database.providers';
+import { DataBase } from './../../../database/database.providers';
 import { UserTokenDB } from '../../../database/entity/user-token.entity';
 import { UserDB, UserDBRole } from '../../../database/entity/user.entity';
 import { ConvertImageService } from '../../../helper/services/convert-image.service';

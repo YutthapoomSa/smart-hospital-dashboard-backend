@@ -1,4 +1,4 @@
 import { PartialType } from '@nestjs/swagger';
-import { CreateSubMenuDto } from './create-sub-menu.dto';
+import { CreateSubMenuReqDTO } from './create-sub-menu.dto';
 
-export class UpdateSubMenuDto extends PartialType(CreateSubMenuDto) {}
+export class UpdateSubMenuDto extends PartialType(CreateSubMenuReqDTO) {}

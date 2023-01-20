@@ -39,7 +39,7 @@ export class UpdateUserDto {
     readonly lastName: string;
 
     @ApiProperty({
-        enum: [UserDBRole.user, UserDBRole.superAdmin],
+        enum: [UserDBRole.user, UserDBRole.admin],
     })
     @IsOptional()
     @IsEnum(UserDBRole)
