@@ -1,22 +1,11 @@
-import { PartialType, ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { MenuDB } from 'src/database/entity/menu.entity';
 import { ResStatus } from 'src/shared/enum/res-status.enum';
-import { CreateMenuDTO } from './create-menu.dto';
+import { UpdateMenuResDTOData } from './update-menu.dto';
 
-export class UpdateMenuDto extends PartialType(CreateMenuDTO) {}
+export class FindOneMenuResDTOData extends PartialType(UpdateMenuResDTOData) {}
 
-export class UpdateMenuResDTOData {
-    @ApiProperty()
-    menu_id: number;
-    @ApiProperty()
-    menu_name: string;
-    @ApiProperty()
-    menu_icon: string;
-    @ApiProperty()
-    url: string;
-}
-
-export class UpdateMenuResDTO {
+export class FindOneMenuResDTO {
     @ApiProperty({
         enum: Object.keys(ResStatus).map((k) => ResStatus[k]),
         description: 'รหัสสถานะ',
@@ -24,10 +13,10 @@ export class UpdateMenuResDTO {
     resCode: ResStatus;
 
     @ApiProperty({
-        type: () => UpdateMenuResDTOData,
+        type: () => FindOneMenuResDTOData,
         description: 'ข้อมูล',
     })
-    resData: UpdateMenuResDTOData;
+    resData: FindOneMenuResDTOData;
 
     @ApiProperty({
         description: 'ข้อความอธิบาย',
@@ -37,7 +26,7 @@ export class UpdateMenuResDTO {
     constructor(resCode: ResStatus, msg: string, datas: MenuDB) {
         this.resCode = resCode;
         this.msg = msg;
-        this.resData = new UpdateMenuResDTOData();
+        this.resData = new FindOneMenuResDTOData();
 
         if (!!datas) {
             this.resData.menu_id = datas.menu_id;

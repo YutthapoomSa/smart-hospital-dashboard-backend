@@ -44,26 +44,32 @@ export class MenuService implements OnApplicationBootstrap {
 
     // ─────────────────────────────────────────────────────────────────────
 
-    async update(menu_id: number, updateMenuDto: UpdateMenuDto) {
+    async update(menu_id: number, updateMenuDto: UpdateMenuDto, user: UserDB) {
         const tag = this.update.name;
         try {
+            if (String(user.role) !== String(UserDBRole.admin))
+                throw new HttpException('Not authorized', HttpStatus.UNAUTHORIZED);
             if (!menu_id) throw new Error('id is required');
             if (!updateMenuDto) throw new Error('updateMenuDto is required');
 
-            const resultUpdate = await this.menuRepository.findOne({
-                where: {
-                    id: menu_id,
+            const resultUpdate = await this.menuRepository.findByPk(menu_id);
+            if (!resultUpdate) throw new Error('may be is wrong id try again later');
+
+            const updateMennu = await resultUpdate.update(
+                {
+                    menu_name: updateMenuDto.menu_name,
+                    menu_icon: updateMenuDto.menu_icon,
+                    url: updateMenuDto.url,
                 },
-            });
-            if (!resultUpdate)
-                throw new Error('no data found with this id maybe is invalid or deleted try again later..');
+                {
+                    where: {
+                        menu_id: menu_id,
+                    },
+                },
+            );
+            console.log(updateMennu);
 
-            resultUpdate.menu_name = updateMenuDto.menu_name || resultUpdate.menu_name;
-            resultUpdate.menu_icon = updateMenuDto.menu_icon || resultUpdate.menu_icon;
-            resultUpdate.url = updateMenuDto.url || resultUpdate.url;
-            await resultUpdate.save();
-
-            return resultUpdate;
+            return updateMennu;
         } catch (error) {
             this.logger.error(`${tag} -> `, error);
             throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -107,7 +113,23 @@ export class MenuService implements OnApplicationBootstrap {
         }
     }
 
-    remove(id: number) {
-        return `This action removes a #${id} menu`;
+    async remove(menu_id: number) {
+        const tag = this.remove.name;
+        try {
+            if (!menu_id) throw new Error('id is required');
+            const isFindResult = await this.menuRepository.findByPk(menu_id);
+            if (!isFindResult) throw new Error('may be is wrong id try again later');
+            const removeResult = await this.menuRepository.destroy({ where: { id: menu_id } });
+
+            if (removeResult === 1) {
+                return `remove ResultRider Id : ${menu_id} success`;
+            } else {
+                throw new Error('something went wrong please try again later...');
+            }
+        } catch (error) {
+            console.error(`${tag} -> `, error);
+            this.logger.error(`${tag} -> `, error);
+            throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

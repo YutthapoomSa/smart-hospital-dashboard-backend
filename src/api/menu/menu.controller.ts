@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserDB } from './../../database/entity/user.entity';
@@ -22,29 +22,30 @@ export class MenuController {
         return this.apiMenuService.api_create(body, user);
     }
 
-    @Patch(':id/updateMenu')
+    @Patch('updateMenu/:id')
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     @ApiOkResponse({ type: CreateMenuResDTO })
     @ApiOperation({ summary: 'อัพเดตรายการเมนู' })
-    async update(@Param('menu_id') menu_id: number, @Body() updateMenuDto: UpdateMenuDto) {
-        return this.apiMenuService.api_update(menu_id, updateMenuDto);
+    async update(@Param('menu_id') menu_id: number, @Body() updateMenuDto: UpdateMenuDto, @User() user: UserDB) {
+        return this.apiMenuService.api_update(menu_id, updateMenuDto, user);
     }
-    
+
     @Get(':id')
     @ApiOperation({ summary: 'ค้นหารายการเมนูโดย id' })
     async findOne(@Param('menu_id') menu_id: number) {
         return this.apiMenuService.api_findOne(menu_id);
     }
-    
+
     @Get('Menu/findAllMenu')
     @ApiOperation({ summary: 'findAll menu' })
     async findAll() {
         return await this.apiMenuService.api_findAll();
     }
 
-    // @Delete(':id')
-    // remove(@Param('id') id: string) {
-    //     return this.menuService.remove(+id);
-    // }
+    @Delete('DeleteMenuByMenuId/:id')
+    @ApiOperation({ summary: 'delete menu' })
+    async remove(@Param('id') menu_id: number) {
+        return await this.apiMenuService.api_remove(menu_id);
+    }
 }
