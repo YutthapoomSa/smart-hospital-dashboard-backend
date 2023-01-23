@@ -93,6 +93,8 @@ export class ApiUsersService implements OnApplicationBootstrap {
             users.password = _hashPass;
             users.gender = body.gender;
             users.phoneNumber = body.phoneNumber;
+            users.role = body.role;
+
 
             await users.save();
             // console.log(users);
