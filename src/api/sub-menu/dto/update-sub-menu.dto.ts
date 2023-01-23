@@ -35,7 +35,9 @@ export class UpdateSubMenuResDTO {
             this.resData.submenuId = datas.submenuId;
             this.resData.submenuName = datas.submenuName;
             this.resData.submenuIcon = datas.submenuIcon;
-            this.resData.url = datas.url;
+            this.resData.iframe = datas.iframe;
+            this.resData.link = datas.link;
+            this.resData.page = datas.page;
             this.resData.menuLists = [];
 
             if (!!this.resData.menuLists && this.resData.menuLists.length > 0)

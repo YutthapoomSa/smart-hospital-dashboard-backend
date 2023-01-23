@@ -14,7 +14,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
     constructor(
         @Inject('SEQUELIZE') private readonly sequelize: Sequelize,
         @Inject(DataBase.SubMenuDB) private readonly subMenuRepositoryModel: typeof SubMenuDB,
-    ) { }
+    ) {}
 
     onApplicationBootstrap() {
         //
@@ -32,8 +32,10 @@ export class SubMenuRepository implements OnApplicationBootstrap {
                 where: {
                     submenuName: body.submenuName,
                     submenuIcon: body.submenuIcon,
-                    url: body.url,
                     menuId: body.menuId,
+                    iframe: body.iframe,
+                    link: body.link,
+                    page: body.page,
                 },
             });
 
@@ -42,8 +44,10 @@ export class SubMenuRepository implements OnApplicationBootstrap {
             const _create = new SubMenuDB();
             _create.submenuName = body.submenuName;
             _create.submenuIcon = body.submenuIcon;
-            _create.url = body.url;
             _create.menuId = body.menuId;
+            _create.iframe = body.iframe;
+            _create.link = body.link;
+            _create.page = body.page;
             await _create.save();
 
             return _create;
@@ -54,30 +58,23 @@ export class SubMenuRepository implements OnApplicationBootstrap {
         }
     }
 
-    async update(_submenuId: number, body: UpdateSubMenuDto, user: UserDB) {
+    async update(body: UpdateSubMenuDto, user: UserDB) {
         const tag = this.update.name;
         try {
             if (String(user.role) !== String(UserDBRole.admin))
                 throw new HttpException('Not authorized', HttpStatus.UNAUTHORIZED);
 
-            const resultUpdate = await this.subMenuRepositoryModel.findByPk(_submenuId);
+            const resultUpdate = await this.subMenuRepositoryModel.findByPk(body.submenuId);
             if (!resultUpdate) throw new Error('may be is wrong id try again later');
 
-            const updateSubmenu = await resultUpdate.update(
-                {
-                    submenuName: body.submenuName,
-                    submenuIcon: body.submenuIcon,
-                    url: body.url,
-                    menuId: body.menuId,
-                },
-                {
-                    where: {
-                        submenuId: _submenuId,
-                    },
-                },
-            );
-            console.log(JSON.stringify(updateSubmenu, null, 2));
-            return updateSubmenu;
+            resultUpdate.submenuName = body.submenuName ? body.submenuName : resultUpdate.submenuName;
+            resultUpdate.submenuIcon = body.submenuIcon ? body.submenuIcon : resultUpdate.submenuIcon;
+            resultUpdate.menuId = body.menuId ? body.menuId : resultUpdate.menuId;
+            resultUpdate.iframe = body.iframe ? body.iframe : resultUpdate.iframe;
+            resultUpdate.link = body.link ? body.link : resultUpdate.link;
+            resultUpdate.page = body.page ? body.page : resultUpdate.page;
+
+            return await resultUpdate.save();
         } catch (error) {
             console.error(`${tag} -> `, error);
             this.logger.error(`${tag} -> `, error);
@@ -89,10 +86,11 @@ export class SubMenuRepository implements OnApplicationBootstrap {
         const tag = this.findAll.name;
         try {
             const result = await this.subMenuRepositoryModel.findAll({
-                include: [{
-                    model: MenuDB,
-                    attributes: ['menu_id', 'menu_name'],
-                },
+                include: [
+                    {
+                        model: MenuDB,
+                        attributes: ['menu_id', 'menu_name'],
+                    },
                 ],
             });
             if (!result) throw new Error('no data found try again later');
@@ -127,11 +125,15 @@ export class SubMenuRepository implements OnApplicationBootstrap {
     async remove(_submenuId: number) {
         const tag = this.remove.name;
         try {
-            const isFindSubmenuDetailById = await this.subMenuRepositoryModel.count({ where: { submenuId: _submenuId } });
+            const isFindSubmenuDetailById = await this.subMenuRepositoryModel.count({
+                where: { submenuId: _submenuId },
+            });
             if (isFindSubmenuDetailById === 0) {
                 throw new Error('can not remove this title maybe is invalid id');
             }
-            const resultRemoveSubMenuDetailById = await this.subMenuRepositoryModel.destroy({ where: { submenuId: _submenuId } });
+            const resultRemoveSubMenuDetailById = await this.subMenuRepositoryModel.destroy({
+                where: { submenuId: _submenuId },
+            });
             if (resultRemoveSubMenuDetailById === 1) {
                 return `remove subMenuDetail Id : ${_submenuId} success`;
             } else {

@@ -5,13 +5,13 @@ import { UserDB } from './../../database/entity/user.entity';
 import { User } from './../../helper/guard/user.decorator';
 import { CreateSubMenuReqDTO, CreateSubMenuResDTO } from './dto/create-sub-menu.dto';
 import { FindOneMenuResDTO } from './dto/findOne-subMenu.dto';
-import { UpdateSubMenuResDTO } from './dto/update-sub-menu.dto';
+import { UpdateSubMenuDto, UpdateSubMenuResDTO } from './dto/update-sub-menu.dto';
 import { SubMenuService } from './sub-menu.service';
 
 @Controller('sub-menu')
 @ApiTags('SubMenu')
 export class SubMenuController {
-    constructor(private readonly subMenuService: SubMenuService) { }
+    constructor(private readonly subMenuService: SubMenuService) {}
 
     @Post('CreateSubMenu')
     @ApiBearerAuth()
@@ -38,8 +38,8 @@ export class SubMenuController {
     @UseGuards(AuthGuard('jwt'))
     @ApiOkResponse({ type: UpdateSubMenuResDTO })
     @ApiOperation({ summary: 'Update Sub Menu' })
-    async update(@Param('submenuId') submenuId: number, @Body() body: CreateSubMenuReqDTO, @User() user: UserDB) {
-        return await this.subMenuService.update(submenuId, body, user);
+    async update(@Body() body: UpdateSubMenuDto, @User() user: UserDB) {
+        return await this.subMenuService.update(body, user);
     }
 
     @Delete('deleteSubMenuBySubMenuId/:submenuId')

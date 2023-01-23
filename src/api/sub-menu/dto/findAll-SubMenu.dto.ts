@@ -17,7 +17,11 @@ export class FindAllSubMenuResDTOData {
     @ApiProperty()
     submenuIcon: string;
     @ApiProperty()
-    url: string;
+    iframe: string;
+    @ApiProperty()
+    link: string;
+    @ApiProperty()
+    page: string;
     @ApiProperty()
     menuId: number;
     @ApiProperty({
@@ -56,7 +60,9 @@ export class FindAllSubMenuResDTO {
                 _data.submenuId = iterator.submenuId;
                 _data.submenuName = iterator.submenuName;
                 _data.submenuIcon = iterator.submenuIcon;
-                _data.url = iterator.url;
+                _data.iframe = iterator.iframe;
+                _data.link = iterator.link;
+                _data.page = iterator.page;
                 _data.menuId = iterator.menuId;
                 _data.menuLists = [];
 

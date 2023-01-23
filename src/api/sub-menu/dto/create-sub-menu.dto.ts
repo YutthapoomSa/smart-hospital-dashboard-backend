@@ -5,6 +5,11 @@ import { ResStatus } from './../../../shared/enum/res-status.enum';
 
 export class CreateSubMenuReqDTO {
     @ApiProperty()
+    @IsNumber()
+    @IsNotEmpty()
+    submenuId: number;
+
+    @ApiProperty()
     @IsString()
     @IsNotEmpty()
     submenuName: string;
@@ -15,7 +20,15 @@ export class CreateSubMenuReqDTO {
 
     @ApiProperty()
     @IsString()
-    url: string;
+    iframe: string;
+
+    @ApiProperty()
+    @IsString()
+    link: string;
+
+    @ApiProperty()
+    @IsString()
+    page: string;
 
     @ApiProperty()
     @IsNumber()
@@ -38,7 +51,11 @@ export class CreateSubmenuResDTOData {
     @ApiProperty()
     submenuIcon: string;
     @ApiProperty()
-    url: string;
+    iframe: string;
+    @ApiProperty()
+    link: string;
+    @ApiProperty()
+    page: string;
     @ApiProperty({ type: () => [MenuLists] })
     menuLists: MenuLists[];
 }
@@ -70,7 +87,9 @@ export class CreateSubMenuResDTO {
             this.resData.submenuId = datas.submenuId;
             this.resData.submenuName = datas.submenuName;
             this.resData.submenuIcon = datas.submenuIcon;
-            this.resData.url = datas.url;
+            this.resData.iframe = datas.iframe;
+            this.resData.link = datas.link;
+            this.resData.page = datas.page;
             this.resData.menuLists = [];
 
             if (!!this.resData.menuLists && this.resData.menuLists.length > 0)

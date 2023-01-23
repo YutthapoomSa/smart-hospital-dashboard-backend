@@ -57,21 +57,11 @@ export class SubMenuService implements OnApplicationBootstrap {
         }
     }
 
-    async update(_submenuId: number, body: UpdateSubMenuDto, user: UserDB) {
+    async update(body: UpdateSubMenuDto, user: UserDB) {
         const tag = this.update.name;
         try {
-            let res: UpdateSubMenuResDTO = null;
-            await this.subMenuRepository
-                .update(_submenuId, body, user)
-                .then((response: any) => {
-                    console.log('response ', response);
-                    res = new UpdateSubMenuResDTO(ResStatus.success, 'อัพเดตเมนูสำเร็จ', response);
-                })
-                .catch((error: any) => {
-                    console.error(error);
-                    res = new UpdateSubMenuResDTO(ResStatus.fail, 'กรุณาตรวจสอบความถูกต้องของข้อมูล', null);
-                });
-            return res;
+            const updateSubmenu = await this.subMenuRepository.update(body,user);
+            return updateSubmenu;
         } catch (error) {
             this.logger.error(`${tag} -> `, error);
             throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
