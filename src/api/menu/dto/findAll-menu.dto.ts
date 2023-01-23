@@ -1,9 +1,9 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { MenuDB } from 'src/database/entity/menu.entity';
-import { ResStatus } from 'src/shared/enum/res-status.enum';
+import { MenuDB } from './../../../database/entity/menu.entity';
+import { ResStatus } from './../../../shared/enum/res-status.enum';
 import { UpdateMenuResDTOData } from './update-menu.dto';
 
-export class FindAllMenuResDTOData extends PartialType(UpdateMenuResDTOData) { }
+export class FindAllMenuResDTOData extends PartialType(UpdateMenuResDTOData) {}
 
 export class FindAllMenuResDTO {
     @ApiProperty({

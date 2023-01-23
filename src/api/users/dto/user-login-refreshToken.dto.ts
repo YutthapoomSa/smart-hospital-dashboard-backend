@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 import moment from 'moment-timezone';
-import { ResStatus } from 'src/shared/enum/res-status.enum';
+import { ResStatus } from './../../../shared/enum/res-status.enum';
 moment.tz.setDefault('Asia/Bangkok');
 
 export class UserLoginRefreshToKenReqDto {

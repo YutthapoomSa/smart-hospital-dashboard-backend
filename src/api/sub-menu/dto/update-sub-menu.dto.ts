@@ -1,6 +1,6 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { SubMenuDB } from 'src/database/entity/sub-menu.entity';
-import { ResStatus } from 'src/shared/enum/res-status.enum';
+import { SubMenuDB } from './../../../database/entity/sub-menu.entity';
+import { ResStatus } from './../../../shared/enum/res-status.enum';
 import { CreateSubMenuReqDTO, CreateSubmenuResDTOData } from './create-sub-menu.dto';
 import { MenuListDTO } from './findAll-SubMenu.dto';
 

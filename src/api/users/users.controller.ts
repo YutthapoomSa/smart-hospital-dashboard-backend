@@ -1,7 +1,7 @@
 import { FindOneUserResDTO } from './dto/find-one-user-res.dto';
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserDB } from './../../database/entity/user.entity';
 import { User } from './../../helper/guard/user.decorator';
 import { CreateUserReqDTO } from './dto/create-user-req.dto';
@@ -16,15 +16,17 @@ export class UsersController {
 
     // Register with guest
     @Post('register')
+    @ApiOperation({ summary: 'สร้างuserสำหรับ Admin' })
     @ApiOkResponse({ type: FindOneUserResDTO })
     register(@Body() body: CreateUserReqDTO) {
 
         return this.apiUsersService.api_create(body);
     }
 
+    @Post('registerWithAdmin')
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
-    @Post('registerWithAdmin')
+    @ApiOperation({ summary: 'Adminเป็นคนสร้างให้User' })
     @ApiOkResponse({ type: FindOneUserResDTO })
     async registerWithAdmin(@Body() body: CreateUserReqDTO, @User() user: UserDB) {
 

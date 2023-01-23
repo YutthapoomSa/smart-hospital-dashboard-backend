@@ -53,12 +53,12 @@ export class LoginResDTO {
         this.msg = msg;
         this.resData = new LoginResDTOResData();
 
-                            // ก้อนข้อมูล init //
+        // ก้อนข้อมูล init //
         this.resData.username = null;
         this.resData.password = null;
 
         // ─────────────────────────────────────────────────────────────────
-                                // (>。<) //
+        // (>。<) //
         // ─────────────────────────────────────────────────────────────────
 
         if (_username != null) {

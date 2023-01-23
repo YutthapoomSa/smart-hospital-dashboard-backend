@@ -56,7 +56,7 @@ export class UserDB extends Model<UserDB> {
         allowNull: false,
         type: DataType.ENUM(UserDBRole.admin, UserDBRole.user),
         comment: 'สิทธิ์การเข้าใช้งาน',
-        defaultValue: UserDBRole.user,
+        // defaultValue: UserDBRole.user,
     })
     role: UserDBRole;
 

@@ -1,11 +1,11 @@
 import { HttpException, HttpStatus, Inject, Injectable, OnApplicationBootstrap } from '@nestjs/common';
-import { LogService } from './../../helper/services/log.service';
-import { DataBase } from './../../database/database.providers';
 import { Sequelize } from 'sequelize-typescript';
-import { SubMenuDB } from './../../database/entity/sub-menu.entity';
-import { CreateSubMenuReqDTO } from './dto/create-sub-menu.dto';
-import { UserDB, UserDBRole } from './../../database/entity/user.entity';
 import { MenuDB } from 'src/database/entity/menu.entity';
+import { DataBase } from './../../database/database.providers';
+import { SubMenuDB } from './../../database/entity/sub-menu.entity';
+import { UserDB, UserDBRole } from './../../database/entity/user.entity';
+import { LogService } from './../../helper/services/log.service';
+import { CreateSubMenuReqDTO } from './dto/create-sub-menu.dto';
 import { UpdateSubMenuDto } from './dto/update-sub-menu.dto';
 @Injectable()
 export class SubMenuRepository implements OnApplicationBootstrap {

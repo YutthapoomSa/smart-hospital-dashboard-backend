@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { SubMenuDB } from 'src/database/entity/sub-menu.entity';
-import { ResStatus } from 'src/shared/enum/res-status.enum';
+import { SubMenuDB } from './../../../database/entity/sub-menu.entity';
+import { ResStatus } from './../../../shared/enum/res-status.enum';
 
 export class MenuListDTO {
     @ApiProperty()
@@ -55,7 +55,6 @@ export class FindOneMenuResDTO {
             this.resData.menuLists = [];
 
             if (!!datas.menuLists) {
-
                 const _data2 = new MenuListDTO();
                 _data2.menuId = datas.menuLists.menuId;
                 _data2.menuName = datas.menuLists.menuName;

@@ -29,7 +29,7 @@ export class CreateUserReqDTO {
     lastName: string;
 
     @ApiProperty({
-        enum: Object.keys(UserDBGender).map(k => UserDBGender[k]),
+        enum: Object.keys(UserDBGender).map((k) => UserDBGender[k]),
     })
     @IsEnum(UserDBGender)
     gender: UserDBGender;
@@ -39,7 +39,7 @@ export class CreateUserReqDTO {
     phoneNumber: string;
 
     @ApiProperty({
-        enum: Object.keys(UserDBRole).map(k => UserDBRole[k]),
+        enum: Object.keys(UserDBRole).map((k) => UserDBRole[k]),
     })
     @IsEnum(UserDBRole)
     @IsNotEmpty()

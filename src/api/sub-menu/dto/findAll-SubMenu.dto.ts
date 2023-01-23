@@ -2,7 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { SubMenuDB } from './../../../database/entity/sub-menu.entity';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
 
-
 export class MenuListDTO {
     @ApiProperty()
     menuId: number;
