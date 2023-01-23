@@ -54,15 +54,13 @@ export class FindOneMenuResDTO {
             this.resData.url = datas.url;
             this.resData.menuLists = [];
 
-            if (!!this.resData.menuLists && this.resData.menuLists.length > 0)
-                for (const iterator2 of this.resData.menuLists) {
-                    const _data2 = new MenuListDTO();
-                    _data2.menu_id = iterator2.menu_id;
-                    _data2.menu_name = iterator2.menu_name;
-                    console.log(JSON.stringify(_data2, null, 2));
+            if (!!datas.menuLists) {
 
-                    this.resData.menuLists.push(iterator2);
-                }
+                const _data2 = new MenuListDTO();
+                _data2.menu_id = datas.menuLists.menu_id;
+                _data2.menu_name = datas.menuLists.menu_name;
+                this.resData.menuLists.push(_data2);
+            }
         }
     }
 }

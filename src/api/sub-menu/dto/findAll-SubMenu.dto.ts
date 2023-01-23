@@ -61,13 +61,11 @@ export class FindAllSubMenuResDTO {
                 _data.menu_id = iterator.menu_id;
                 _data.menuLists = [];
 
-                if (!!_data.menuLists && _data.menuLists.length > 0) {
-                    for (const iterator2 of _data.menuLists) {
-                        const _menu = new MenuListDTO();
-                        _menu.menu_id = iterator2.menu_id;
-                        _menu.menu_name = iterator2.menu_name;
-                        _data.menuLists.push(_menu);
-                    }
+                if (!!iterator.menuLists) {
+                    const _menu = new MenuListDTO();
+                    _menu.menu_id = iterator.menuLists.menu_id;
+                    _menu.menu_name = iterator.menuLists.menu_name;
+                    _data.menuLists.push(_menu);
                 }
                 this.resData.push(_data);
             }

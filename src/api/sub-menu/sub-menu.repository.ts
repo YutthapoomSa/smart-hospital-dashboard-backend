@@ -14,7 +14,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
     constructor(
         @Inject('SEQUELIZE') private readonly sequelize: Sequelize,
         @Inject(DataBase.SubMenuDB) private readonly subMenuRepositoryModel: typeof SubMenuDB,
-    ) {}
+    ) { }
 
     onApplicationBootstrap() {
         //
@@ -88,9 +88,15 @@ export class SubMenuRepository implements OnApplicationBootstrap {
     async findAll() {
         const tag = this.findAll.name;
         try {
-            const result = await this.subMenuRepositoryModel.findAll();
+            const result = await this.subMenuRepositoryModel.findAll({
+                include: [{
+                    model: MenuDB,
+                    attributes: ['menu_id', 'menu_name'],
+                },
+                ],
+            });
             if (!result) throw new Error('no data found try again later');
-            // console.log(result);
+            console.log(JSON.stringify(result, null, 2));
             return result;
         } catch (error) {
             console.error(error);
@@ -106,7 +112,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
                 include: [
                     {
                         model: MenuDB,
-                        attributes: ['menu_id,menu_name'],
+                        attributes: ['menu_id', 'menu_name'],
                     },
                 ],
             });
