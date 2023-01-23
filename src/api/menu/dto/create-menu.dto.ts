@@ -16,6 +16,7 @@ export class CreateMenuDTO {
     @ApiProperty()
     @IsString()
     url: string;
+
 }
 
 export class CreateMenuResDTOData {

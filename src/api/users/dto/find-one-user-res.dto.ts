@@ -4,6 +4,9 @@ import { ResStatus } from './../../../shared/enum/res-status.enum';
 
 class FindOneUserResDTOResData {
     @ApiProperty()
+    id: number;
+
+    @ApiProperty()
     email: string;
 
     @ApiProperty({
@@ -59,7 +62,7 @@ export class FindOneUserResDTO {
         this.msg = msg;
         this.resData = new FindOneUserResDTOResData();
         if (!!datas) {
-
+            this.resData.id = datas.id;
             this.resData.email = datas.email;
             this.resData.userName = datas.username;
             this.resData.firstName = datas.firstName;
@@ -69,6 +72,5 @@ export class FindOneUserResDTO {
             this.resData.gender = datas.gender;
             this.resData.phoneNumber = datas.phoneNumber;
         }
-
     }
 }
