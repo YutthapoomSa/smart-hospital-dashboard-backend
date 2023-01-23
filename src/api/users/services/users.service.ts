@@ -19,7 +19,7 @@ import { Sequelize } from 'sequelize-typescript';
 import { DataBase } from './../../../database/database.providers';
 import { v4 as uuidv4 } from 'uuid';
 import { UserTokenDB } from '../../../database/entity/user-token.entity';
-import { UserDB } from '../../../database/entity/user.entity';
+import { UserDB, UserDBRole } from '../../../database/entity/user.entity';
 import { ConvertImageService } from '../../../helper/services/convert-image.service';
 import { EncryptionService } from '../../../helper/services/encryption.service';
 import { LogService } from '../../../helper/services/log.service';
@@ -30,6 +30,7 @@ import { UserLoginRefreshToKenReqDto } from '../dto/user-login-refreshToken.dto'
 import { UserLoginRequestDTO } from '../dto/user-login.dto';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
 import { CacheUsersService } from './cache-users.service';
+import { UpdateUserDto } from '../dto/update-user.dto';
 @Injectable()
 export class UsersService implements OnApplicationBootstrap {
     private readonly jwtPrivateKey: string;
@@ -355,6 +356,46 @@ export class UsersService implements OnApplicationBootstrap {
             const result = await this.usersRepository.findAll({ attributes: ['id'] });
             return resolve(result.map((x) => x.id));
         });
+    }
+
+    async api_updateUserById(user: UserDB, body: UpdateUserDto) {
+        const tag = this.api_updateUserById.name;
+        try {
+            if (!user) throw new Error('not authorized');
+            if (!body) throw new Error('data is required try again later');
+
+            if (user.role === UserDBRole.admin) {
+                const updateUser = await this.userRepository.findByPk(body.userId);
+                if (!updateUser) throw new Error('no user found try again later');
+                updateUser.email = body.email ? body.email : updateUser.email;
+                updateUser.username = body.username ? body.username : updateUser.username;
+                updateUser.password = body.password ? (await this.genPassword(body.password)).hashPass : updateUser.password;
+                updateUser.firstName = body.firstName ? body.firstName : updateUser.firstName;
+                updateUser.lastName = body.lastName ? body.lastName : updateUser.lastName;
+                updateUser.phoneNumber = body.phoneNumber ? body.phoneNumber : updateUser.phoneNumber;
+                updateUser.role = body.role ? body.role : updateUser.role;
+                return await updateUser.save();
+            }
+            else if (user.role === UserDBRole.user) {
+                const updateUser = await this.userRepository.findByPk(user.id);
+                if (!updateUser) throw new Error('no user found try again later');
+                updateUser.email = body.email ? body.email : updateUser.email;
+                updateUser.username = body.username ? body.username : updateUser.username;
+                updateUser.password = body.password ? (await this.genPassword(body.password)).hashPass : updateUser.password;
+                updateUser.firstName = body.firstName ? body.firstName : updateUser.firstName;
+                updateUser.lastName = body.lastName ? body.lastName : updateUser.lastName;
+                updateUser.phoneNumber = body.phoneNumber ? body.phoneNumber : updateUser.phoneNumber;
+                return await updateUser.save();
+            }
+            else {
+                throw new Error('something went wrong try again later');
+            }
+
+
+        } catch (error) {
+            this.logger.error(`${tag} -> `, error);
+            throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // [Cron]─────────────────────────────────────────────────────────────────

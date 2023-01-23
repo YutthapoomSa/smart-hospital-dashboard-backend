@@ -1,5 +1,5 @@
 import { FindOneUserResDTO } from './dto/find-one-user-res.dto';
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserDB } from './../../database/entity/user.entity';
@@ -8,6 +8,7 @@ import { CreateUserReqDTO } from './dto/create-user-req.dto';
 import { ApiUsersService } from './services/api-users.service';
 import { UserLoginRequestDTO } from './dto/user-login.dto';
 import { UserLoginRefreshToKenReqDto } from './dto/user-login-refreshToken.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -51,5 +52,12 @@ export class UsersController {
     @UseGuards(AuthGuard('jwt'))
     refreshToken(@User() user: UserDB, @Body() body: UserLoginRefreshToKenReqDto) {
         return this.apiUsersService.api_refreshToken(user, body);
+    }
+
+    @Patch('updateUserById')
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard('jwt'))
+    updateUserById(@User() user: UserDB, @Body() body: UpdateUserDto) {
+        return this.apiUsersService.api_updateUserById(user, body);
     }
 }

@@ -4,6 +4,11 @@ import { UserDB } from 'src/database/entity/user.entity';
 import { ResStatus } from 'src/shared/enum/res-status.enum';
 
 export class UpdateUserDto {
+
+    @ApiProperty()
+    @IsNumber()
+    userId?: number;
+
     @ApiProperty()
     @IsNotEmpty()
     @IsEmail()
@@ -32,6 +37,12 @@ export class UpdateUserDto {
     @ApiProperty()
     @IsString()
     phoneNumber: string;
+
+    @ApiProperty({
+        enum: Object.keys(UserDBRole).map((k) => UserDBRole[k]),
+    })
+    @IsEnum(UserDBRole)
+    role?: UserDBRole;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
