@@ -11,7 +11,7 @@ import { MenuService } from './service/menu.service';
 @ApiTags('Menu')
 @Controller('menu')
 export class MenuController {
-    constructor(private readonly menuService: MenuService, private readonly apiMenuService: ApiMenuService) {}
+    constructor(private readonly menuService: MenuService, private readonly apiMenuService: ApiMenuService) { }
 
     @Post('createMenu')
     @ApiBearerAuth()
@@ -22,19 +22,19 @@ export class MenuController {
         return await this.apiMenuService.api_create(body, user);
     }
 
-    @Patch('updateMenu/:menu_id')
+    @Patch('updateMenu/:menuId')
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     @ApiOkResponse({ type: UpdateMenuResDTO })
     @ApiOperation({ summary: 'อัพเดตรายการเมนู' })
-    async update(@Param('menu_id') menu_id: number, @Body() updateMenuDto: UpdateMenuDTO, @User() user: UserDB) {
-        return await this.apiMenuService.api_update(menu_id, updateMenuDto, user);
+    async update(@Param('menuId') menuId: number, @Body() updateMenuDto: UpdateMenuDTO, @User() user: UserDB) {
+        return await this.apiMenuService.api_update(menuId, updateMenuDto, user);
     }
 
-    @Get('findOne/:menu_id')
+    @Get('findOne/:menuId')
     @ApiOperation({ summary: 'ค้นหารายการเมนูโดย id' })
-    async findOne(@Param('menu_id') menu_id: number) {
-        return await this.apiMenuService.api_findOne(menu_id);
+    async findOne(@Param('menuId') menuId: number) {
+        return await this.apiMenuService.api_findOne(menuId);
     }
 
     @Get('Menu/findAllMenu')
@@ -43,9 +43,9 @@ export class MenuController {
         return await this.apiMenuService.api_findAll();
     }
 
-    @Delete('DeleteMenuByMenuId/:menu_id')
+    @Delete('DeleteMenuByMenuId/:menuId')
     @ApiOperation({ summary: 'delete menu' })
-    async remove(@Param('menu_id') menu_id: number) {
-        return await this.apiMenuService.api_remove(menu_id);
+    async remove(@Param('menuId') menuId: number) {
+        return await this.apiMenuService.api_remove(menuId);
     }
 }

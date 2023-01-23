@@ -13,7 +13,7 @@ import { GlobalResDTO } from './../global-dto/global-res.dto';
 export class SubMenuService implements OnApplicationBootstrap {
     private logger = new LogService(SubMenuService.name);
 
-    constructor(private subMenuRepository: SubMenuRepository) {}
+    constructor(private subMenuRepository: SubMenuRepository) { }
 
     onApplicationBootstrap() {
         //
@@ -45,10 +45,10 @@ export class SubMenuService implements OnApplicationBootstrap {
         }
     }
 
-    async findOne(submenu_id: number) {
+    async findOne(_submenuId: number) {
         const tag = this.findOne.name;
         try {
-            const resultFindOne = await this.subMenuRepository.findOne(submenu_id);
+            const resultFindOne = await this.subMenuRepository.findOne(_submenuId);
             return new FindOneMenuResDTO(ResStatus.success, '', resultFindOne);
         } catch (error) {
             console.error(`${tag} -> `, error);
@@ -57,12 +57,12 @@ export class SubMenuService implements OnApplicationBootstrap {
         }
     }
 
-    async update(submenu_id: number, body: UpdateSubMenuDto, user: UserDB) {
+    async update(_submenuId: number, body: UpdateSubMenuDto, user: UserDB) {
         const tag = this.update.name;
         try {
             let res: UpdateSubMenuResDTO = null;
             await this.subMenuRepository
-                .update(submenu_id, body, user)
+                .update(_submenuId, body, user)
                 .then((response: any) => {
                     console.log('response ', response);
                     res = new UpdateSubMenuResDTO(ResStatus.success, 'อัพเดตเมนูสำเร็จ', response);
@@ -78,10 +78,10 @@ export class SubMenuService implements OnApplicationBootstrap {
         }
     }
 
-    async remove(submenu_id: number) {
+    async remove(_submenuId: number) {
         const tag = this.remove.name;
         try {
-            const resultRemoveSubMenuDetailById = await this.subMenuRepository.remove(submenu_id);
+            const resultRemoveSubMenuDetailById = await this.subMenuRepository.remove(_submenuId);
             return new GlobalResDTO(ResStatus.success, resultRemoveSubMenuDetailById);
             // return resultRemoveTitleDetailById;
         } catch (error) {

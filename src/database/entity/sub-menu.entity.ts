@@ -13,17 +13,17 @@ export class SubMenuDB extends Model<SubMenuDB> {
         unique: 'unique_sub_menu_id',
         primaryKey: true,
     })
-    submenu_id: number;
+    submenuId: number;
 
     @Column({
         allowNull: false,
     })
-    submenu_name: string;
+    submenuName: string;
 
     @Column({
         allowNull: true,
     })
-    submenu_icon: string;
+    submenuIcon: string;
 
     @Column({
         allowNull: false,
@@ -52,8 +52,8 @@ export class SubMenuDB extends Model<SubMenuDB> {
         type: DataType.INTEGER,
         allowNull: true,
     })
-    menu_id: number;
-    
+    menuId: number;
+
     @BelongsTo(() => MenuDB)
     menuLists: MenuDB;
 

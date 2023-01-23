@@ -5,22 +5,22 @@ import { ResStatus } from './../../../shared/enum/res-status.enum';
 
 export class MenuListDTO {
     @ApiProperty()
-    menu_id: number;
+    menuId: number;
     @ApiProperty()
-    menu_name: string;
+    menuName: string;
 }
 
 export class FindAllSubMenuResDTOData {
     @ApiProperty()
-    submenu_id: number;
+    submenuId: number;
     @ApiProperty()
-    submenu_name: string;
+    submenuName: string;
     @ApiProperty()
-    submenu_icon: string;
+    submenuIcon: string;
     @ApiProperty()
     url: string;
     @ApiProperty()
-    menu_id: number;
+    menuId: number;
     @ApiProperty({
         type: () => [MenuListDTO],
     })
@@ -54,17 +54,17 @@ export class FindAllSubMenuResDTO {
         if (!!datas) {
             for (const iterator of datas) {
                 const _data = new FindAllSubMenuResDTOData();
-                _data.submenu_id = iterator.submenu_id;
-                _data.submenu_name = iterator.submenu_name;
-                _data.submenu_icon = iterator.submenu_icon;
+                _data.submenuId = iterator.submenuId;
+                _data.submenuName = iterator.submenuName;
+                _data.submenuIcon = iterator.submenuIcon;
                 _data.url = iterator.url;
-                _data.menu_id = iterator.menu_id;
+                _data.menuId = iterator.menuId;
                 _data.menuLists = [];
 
                 if (!!iterator.menuLists) {
                     const _menu = new MenuListDTO();
-                    _menu.menu_id = iterator.menuLists.menu_id;
-                    _menu.menu_name = iterator.menuLists.menu_name;
+                    _menu.menuId = iterator.menuLists.menuId;
+                    _menu.menuName = iterator.menuLists.menuName;
                     _data.menuLists.push(_menu);
                 }
                 this.resData.push(_data);

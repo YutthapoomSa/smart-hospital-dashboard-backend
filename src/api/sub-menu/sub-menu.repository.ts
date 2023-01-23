@@ -30,20 +30,20 @@ export class SubMenuRepository implements OnApplicationBootstrap {
 
             const createSubMenu = await this.subMenuRepositoryModel.count({
                 where: {
-                    submenu_name: body.submenu_name,
-                    submenu_icon: body.submenu_icon,
+                    submenuName: body.submenuName,
+                    submenuIcon: body.submenuIcon,
                     url: body.url,
-                    menu_id: body.menu_id,
+                    menuId: body.menuId,
                 },
             });
 
             if (createSubMenu > 0) throw new Error('This submenu has exists !!...');
 
             const _create = new SubMenuDB();
-            _create.submenu_name = body.submenu_name;
-            _create.submenu_icon = body.submenu_icon;
+            _create.submenuName = body.submenuName;
+            _create.submenuIcon = body.submenuIcon;
             _create.url = body.url;
-            _create.menu_id = body.menu_id;
+            _create.menuId = body.menuId;
             await _create.save();
 
             return _create;
@@ -54,25 +54,25 @@ export class SubMenuRepository implements OnApplicationBootstrap {
         }
     }
 
-    async update(submenu_id: number, body: UpdateSubMenuDto, user: UserDB) {
+    async update(_submenuId: number, body: UpdateSubMenuDto, user: UserDB) {
         const tag = this.update.name;
         try {
             if (String(user.role) !== String(UserDBRole.admin))
                 throw new HttpException('Not authorized', HttpStatus.UNAUTHORIZED);
 
-            const resultUpdate = await this.subMenuRepositoryModel.findByPk(submenu_id);
+            const resultUpdate = await this.subMenuRepositoryModel.findByPk(_submenuId);
             if (!resultUpdate) throw new Error('may be is wrong id try again later');
 
             const updateSubmenu = await resultUpdate.update(
                 {
-                    submenu_name: body.submenu_name,
-                    submenu_icon: body.submenu_icon,
+                    submenuName: body.submenuName,
+                    submenuIcon: body.submenuIcon,
                     url: body.url,
-                    menu_id: body.menu_id,
+                    menuId: body.menuId,
                 },
                 {
                     where: {
-                        submenu_id: submenu_id,
+                        submenuId: _submenuId,
                     },
                 },
             );
@@ -103,12 +103,12 @@ export class SubMenuRepository implements OnApplicationBootstrap {
         }
     }
 
-    async findOne(submenu_id: number) {
+    async findOne(_submenuId: number) {
         const tag = this.findOne.name;
         try {
-            if (!submenu_id) throw new Error('id is required');
+            if (!_submenuId) throw new Error('id is required');
 
-            const result = await this.subMenuRepositoryModel.findByPk(submenu_id, {
+            const result = await this.subMenuRepositoryModel.findByPk(_submenuId, {
                 include: [
                     {
                         model: MenuDB,
@@ -124,16 +124,16 @@ export class SubMenuRepository implements OnApplicationBootstrap {
         }
     }
 
-    async remove(submenu_id: number) {
+    async remove(_submenuId: number) {
         const tag = this.remove.name;
         try {
-            const isFindSubmenuDetailById = await this.subMenuRepositoryModel.count({ where: { submenu_id: submenu_id } });
+            const isFindSubmenuDetailById = await this.subMenuRepositoryModel.count({ where: { submenuId: _submenuId } });
             if (isFindSubmenuDetailById === 0) {
                 throw new Error('can not remove this title maybe is invalid id');
             }
-            const resultRemoveSubMenuDetailById = await this.subMenuRepositoryModel.destroy({ where: { submenu_id: submenu_id } });
+            const resultRemoveSubMenuDetailById = await this.subMenuRepositoryModel.destroy({ where: { submenuId: _submenuId } });
             if (resultRemoveSubMenuDetailById === 1) {
-                return `remove subMenuDetail Id : ${submenu_id} success`;
+                return `remove subMenuDetail Id : ${_submenuId} success`;
             } else {
                 throw new Error('something went wrong please try again later...');
             }

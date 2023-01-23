@@ -26,13 +26,12 @@ export class ApiMenuService implements OnApplicationBootstrap {
         @Inject('SEQUELIZE') private sequelize: Sequelize,
         @Inject(forwardRef(() => MenuService))
         private menuService: MenuService,
-    ) {}
+    ) { }
 
     async onApplicationBootstrap() {
         //
     }
 
-    //[Function]─────────────────────────────────────────────────────────────────────
 
     async api_create(body: CreateMenuDTO, user: UserDB): Promise<CreateMenuResDTO> {
         const tag = this.api_create.name;
@@ -44,12 +43,12 @@ export class ApiMenuService implements OnApplicationBootstrap {
         }
     }
 
-    async api_update(menu_id: number, updateMenuDto: UpdateMenuDTO, user: UserDB) {
+    async api_update(_menuId: number, updateMenuDto: UpdateMenuDTO, user: UserDB) {
         const tag = this.api_update.name;
         try {
             let res: UpdateMenuResDTO = null;
             await this.menuService
-                .update(menu_id, updateMenuDto, user)
+                .update(_menuId, updateMenuDto, user)
                 .then((response: any) => {
                     console.log('response ', response);
                     res = new UpdateMenuResDTO(ResStatus.success, 'อัพเดตเมนูสำเร็จ', response);
@@ -65,10 +64,10 @@ export class ApiMenuService implements OnApplicationBootstrap {
         }
     }
 
-    async api_findOne(menu_id: number) {
+    async api_findOne(_menuId: number) {
         const tag = this.api_update.name;
         try {
-            const result = await this.menuService.findOne(menu_id);
+            const result = await this.menuService.findOne(_menuId);
             return new FindOneMenuResDTO(ResStatus.success, '', result);
         } catch (error) {
             this.logger.error(`${tag} -> `, error);
@@ -90,7 +89,7 @@ export class ApiMenuService implements OnApplicationBootstrap {
         const tag = this.api_remove.name;
         try {
             const removeResult = await this.menuService.remove(id);
-            return new GlobalResDTO(ResStatus.success, '');
+            if (removeResult) return new GlobalResDTO(ResStatus.success, '');
         } catch (error) {
             console.error(`${tag} -> `, error);
             this.logger.error(`${tag} -> `, error);

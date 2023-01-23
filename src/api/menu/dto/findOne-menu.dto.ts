@@ -3,7 +3,7 @@ import { MenuDB } from 'src/database/entity/menu.entity';
 import { ResStatus } from 'src/shared/enum/res-status.enum';
 import { UpdateMenuResDTOData } from './update-menu.dto';
 
-export class FindOneMenuResDTOData extends PartialType(UpdateMenuResDTOData) {}
+export class FindOneMenuResDTOData extends PartialType(UpdateMenuResDTOData) { }
 
 export class FindOneMenuResDTO {
     @ApiProperty({
@@ -29,9 +29,9 @@ export class FindOneMenuResDTO {
         this.resData = new FindOneMenuResDTOData();
 
         if (!!datas) {
-            this.resData.menu_id = datas.menu_id;
-            this.resData.menu_name = datas.menu_name;
-            this.resData.menu_icon = datas.menu_icon;
+            this.resData.menuId = datas.menuId;
+            this.resData.menuName = datas.menuName;
+            this.resData.menuIcon = datas.menuIcon;
             this.resData.url = datas.url;
         }
     }

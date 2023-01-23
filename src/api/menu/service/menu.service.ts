@@ -14,7 +14,7 @@ export class MenuService implements OnApplicationBootstrap {
     constructor(
         @Inject(DataBase.MenuDB) private readonly menuRepositoryModel: typeof MenuDB,
         @Inject('SEQUELIZE') private readonly sequelize: Sequelize,
-    ) {}
+    ) { }
 
     onApplicationBootstrap() {
         //
@@ -30,8 +30,8 @@ export class MenuService implements OnApplicationBootstrap {
             if (!body) throw new Error('data is required');
 
             const menuCreate = new MenuDB();
-            menuCreate.menu_name = body.menu_name;
-            menuCreate.menu_icon = body.menu_icon;
+            menuCreate.menuName = body.menuName;
+            menuCreate.menuIcon = body.menuIcon;
             menuCreate.url = body.url;
 
             await menuCreate.save();
@@ -44,26 +44,26 @@ export class MenuService implements OnApplicationBootstrap {
 
     // ─────────────────────────────────────────────────────────────────────
 
-    async update(menu_id: number, updateMenuDto: UpdateMenuDTO, user: UserDB) {
+    async update(_menuId: number, updateMenuDto: UpdateMenuDTO, user: UserDB) {
         const tag = this.update.name;
         try {
             if (String(user.role) !== String(UserDBRole.admin))
                 throw new HttpException('Not authorized', HttpStatus.UNAUTHORIZED);
-            if (!menu_id) throw new Error('id is required');
+            if (!_menuId) throw new Error('id is required');
             if (!updateMenuDto) throw new Error('updateMenuDto is required');
 
-            const resultUpdate = await this.menuRepositoryModel.findByPk(menu_id);
+            const resultUpdate = await this.menuRepositoryModel.findByPk(_menuId);
             if (!resultUpdate) throw new Error('may be is wrong id try again later');
 
             const updateMenu = await resultUpdate.update(
                 {
-                    menu_name: updateMenuDto.menu_name,
-                    menu_icon: updateMenuDto.menu_icon,
+                    menuName: updateMenuDto.menuName,
+                    menuIcon: updateMenuDto.menuIcon,
                     url: updateMenuDto.url,
                 },
                 {
                     where: {
-                        menu_id: menu_id,
+                        menuId: _menuId,
                     },
                 },
             );
@@ -98,12 +98,12 @@ export class MenuService implements OnApplicationBootstrap {
 
     // ─────────────────────────────────────────────────────────────────────
 
-    async findOne(menu_id: number) {
+    async findOne(_menuId: number) {
         const tag = this.findAll.name;
         try {
-            if (!menu_id) throw new Error('menu_id is required');
+            if (!_menuId) throw new Error('menu_id is required');
 
-            const result = await this.menuRepositoryModel.findByPk(menu_id);
+            const result = await this.menuRepositoryModel.findByPk(_menuId);
             if (!result) {
                 throw new Error('not found');
             }
@@ -115,16 +115,16 @@ export class MenuService implements OnApplicationBootstrap {
         }
     }
 
-    async remove(menu_id: number) {
+    async remove(_menuId: number) {
         const tag = this.remove.name;
         try {
-            if (!menu_id) throw new Error('id is required');
-            const isFindResult = await this.menuRepositoryModel.findByPk(menu_id);
+            if (!_menuId) throw new Error('id is required');
+            const isFindResult = await this.menuRepositoryModel.findByPk(_menuId);
             if (!isFindResult) throw new Error('may be is wrong id try again later');
-            const removeResult = await this.menuRepositoryModel.destroy({ where: { menu_id: menu_id } });
+            const removeResult = await this.menuRepositoryModel.destroy({ where: { menuId: _menuId } });
 
             if (removeResult === 1) {
-                return `remove ResultRider Id : ${menu_id} success`;
+                return `remove ResultRider Id : ${_menuId} success`;
             } else {
                 throw new Error('something went wrong please try again later...');
             }

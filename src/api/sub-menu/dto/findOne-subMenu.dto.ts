@@ -4,18 +4,18 @@ import { ResStatus } from 'src/shared/enum/res-status.enum';
 
 export class MenuListDTO {
     @ApiProperty()
-    menu_id: number;
+    menuId: number;
     @ApiProperty()
-    menu_name: string;
+    menuName: string;
 }
 
 export class FindOneSubMenuResDTOData {
     @ApiProperty()
-    submenu_id: number;
+    submenuId: number;
     @ApiProperty()
-    submenu_name: string;
+    submenuName: string;
     @ApiProperty()
-    submenu_icon: string;
+    submenuIcon: string;
     @ApiProperty()
     url: string;
     @ApiProperty({
@@ -48,17 +48,17 @@ export class FindOneMenuResDTO {
         this.resData = new FindOneSubMenuResDTOData();
 
         if (!!datas) {
-            this.resData.submenu_id = datas.submenu_id;
-            this.resData.submenu_name = datas.submenu_name;
-            this.resData.submenu_icon = datas.submenu_icon;
+            this.resData.submenuId = datas.submenuId;
+            this.resData.submenuName = datas.submenuName;
+            this.resData.submenuIcon = datas.submenuIcon;
             this.resData.url = datas.url;
             this.resData.menuLists = [];
 
             if (!!datas.menuLists) {
 
                 const _data2 = new MenuListDTO();
-                _data2.menu_id = datas.menuLists.menu_id;
-                _data2.menu_name = datas.menuLists.menu_name;
+                _data2.menuId = datas.menuLists.menuId;
+                _data2.menuName = datas.menuLists.menuName;
                 this.resData.menuLists.push(_data2);
             }
         }

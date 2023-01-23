@@ -8,11 +8,11 @@ export class CreateSubMenuReqDTO {
     @ApiProperty()
     @IsString()
     @IsNotEmpty()
-    submenu_name: string;
+    submenuName: string;
 
     @ApiProperty()
     @IsString()
-    submenu_icon: string;
+    submenuIcon: string;
 
     @ApiProperty()
     @IsString()
@@ -21,23 +21,23 @@ export class CreateSubMenuReqDTO {
     @ApiProperty()
     @IsNumber()
     @IsNotEmpty()
-    menu_id: number;
+    menuId: number;
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
 export class MenuLists {
     @ApiProperty()
-    menu_id: number;
+    menuId: number;
     @ApiProperty()
-    menu_name: string;
+    menuName: string;
 }
 export class CreateSubmenuResDTOData {
     @ApiProperty()
-    submenu_id: number;
+    submenuId: number;
     @ApiProperty()
-    submenu_name: string;
+    submenuName: string;
     @ApiProperty()
-    submenu_icon: string;
+    submenuIcon: string;
     @ApiProperty()
     url: string;
     @ApiProperty({ type: () => [MenuLists] })
@@ -68,17 +68,17 @@ export class CreateSubMenuResDTO {
         this.resData = new CreateSubmenuResDTOData();
 
         if (!!datas) {
-            this.resData.submenu_id = datas.submenu_id;
-            this.resData.submenu_name = datas.submenu_name;
-            this.resData.submenu_icon = datas.submenu_icon;
+            this.resData.submenuId = datas.submenuId;
+            this.resData.submenuName = datas.submenuName;
+            this.resData.submenuIcon = datas.submenuIcon;
             this.resData.url = datas.url;
             this.resData.menuLists = [];
 
             if (!!this.resData.menuLists && this.resData.menuLists.length > 0)
                 for (const iterator2 of this.resData.menuLists) {
                     const _data2 = new MenuLists();
-                    _data2.menu_id = iterator2.menu_id;
-                    _data2.menu_name = iterator2.menu_name;
+                    _data2.menuId = iterator2.menuId;
+                    _data2.menuName = iterator2.menuName;
                     this.resData.menuLists.push(iterator2);
                 }
         }

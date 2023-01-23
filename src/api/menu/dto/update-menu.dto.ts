@@ -8,11 +8,11 @@ export class UpdateMenuDTO {
     @ApiProperty()
     @IsString()
     @IsNotEmpty()
-    menu_name: string;
+    menuName: string;
 
     @ApiProperty()
     @IsString()
-    menu_icon: string;
+    menuIcon: string;
 
     @ApiProperty()
     @IsString()
@@ -21,11 +21,11 @@ export class UpdateMenuDTO {
 
 export class UpdateMenuResDTOData {
     @ApiProperty()
-    menu_id: number;
+    menuId: number;
     @ApiProperty()
-    menu_name: string;
+    menuName: string;
     @ApiProperty()
-    menu_icon: string;
+    menuIcon: string;
     @ApiProperty()
     url: string;
 }
@@ -54,9 +54,9 @@ export class UpdateMenuResDTO {
         this.resData = new UpdateMenuResDTOData();
 
         if (!!datas) {
-            this.resData.menu_id = datas.menu_id;
-            this.resData.menu_name = datas.menu_name;
-            this.resData.menu_icon = datas.menu_icon;
+            this.resData.menuId = datas.menuId;
+            this.resData.menuName = datas.menuName;
+            this.resData.menuIcon = datas.menuIcon;
             this.resData.url = datas.url;
         }
     }

@@ -13,8 +13,8 @@ export enum DataBase {
     UserTokenDB = 'UserTokenDB',
     UserSocketDB = 'UserSocketDB',
     UserPasswordDB = 'UserPasswordDB',
-    MenuDB = "MenuDB",
-    SubMenuDB = "SubMenuDB"
+    MenuDB = 'MenuDB',
+    SubMenuDB = 'SubMenuDB'
 }
 
 export const dbProviders = [

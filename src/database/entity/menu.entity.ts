@@ -12,17 +12,17 @@ export class MenuDB extends Model<MenuDB> {
         autoIncrement: true,
         primaryKey: true,
     })
-    menu_id: number;
+    menuId: number;
 
     @Column({
         allowNull: false,
     })
-    menu_name: string;
+    menuName: string;
 
     @Column({
         allowNull: true,
     })
-    menu_icon: string;
+    menuIcon: string;
 
     @Column({
         allowNull: true,

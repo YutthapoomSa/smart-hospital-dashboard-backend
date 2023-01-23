@@ -11,7 +11,7 @@ import { FindOneMenuResDTO } from './dto/findOne-subMenu.dto';
 @Controller('sub-menu')
 @ApiTags('SubMenu')
 export class SubMenuController {
-    constructor(private readonly subMenuService: SubMenuService) {}
+    constructor(private readonly subMenuService: SubMenuService) { }
 
     @Post('CreateSubMenu')
     @ApiBearerAuth()
@@ -26,25 +26,25 @@ export class SubMenuController {
         return await this.subMenuService.findAll();
     }
 
-    @Get('findOne/:submenu_id')
+    @Get('findOne/:submenuId')
     @ApiOperation({ summary: 'findOne sub-menu' })
     @ApiOkResponse({ type: FindOneMenuResDTO })
-    async findOne(@Param('submenu_id') submenu_id: number) {
-        return await this.subMenuService.findOne(submenu_id);
+    async findOne(@Param('submenu_id') submenuId: number) {
+        return await this.subMenuService.findOne(submenuId);
     }
 
-    @Patch('updateSubMenu/:submenu_id')
+    @Patch('updateSubMenu/:submenuId')
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     @ApiOkResponse({ type: UpdateSubMenuResDTO })
     @ApiOperation({ summary: 'Update Sub Menu' })
-    async update(@Param('submenu_id') submenu_id: number, @Body() body: CreateSubMenuReqDTO, @User() user: UserDB) {
-        return await this.subMenuService.update(submenu_id, body, user);
+    async update(@Param('submenuId') submenuId: number, @Body() body: CreateSubMenuReqDTO, @User() user: UserDB) {
+        return await this.subMenuService.update(submenuId, body, user);
     }
 
-    @Delete('deleteSubMenuBySubMenuId/:submenu_id')
+    @Delete('deleteSubMenuBySubMenuId/:submenuId')
     @ApiOperation({ summary: 'delete submenu' })
-    async remove(@Param('submenu_id') submenu_id: number) {
-        return await this.subMenuService.remove(submenu_id);
+    async remove(@Param('submenu_id') submenuId: number) {
+        return await this.subMenuService.remove(submenuId);
     }
 }

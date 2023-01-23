@@ -4,11 +4,11 @@ import { ResStatus } from 'src/shared/enum/res-status.enum';
 import { CreateSubMenuReqDTO, CreateSubmenuResDTOData } from './create-sub-menu.dto';
 import { MenuListDTO } from './findAll-SubMenu.dto';
 
-export class UpdateSubMenuDto extends PartialType(CreateSubMenuReqDTO) {}
+export class UpdateSubMenuDto extends PartialType(CreateSubMenuReqDTO) { }
 
-export class UpdateSubMenuResDTOData extends PartialType(CreateSubmenuResDTOData) {}
+export class UpdateSubMenuResDTOData extends PartialType(CreateSubmenuResDTOData) { }
 
-export class UpdateSubMenuResDTO{
+export class UpdateSubMenuResDTO {
     @ApiProperty({
         enum: Object.keys(ResStatus).map((k) => ResStatus[k]),
         description: 'รหัสสถานะ',
@@ -32,17 +32,17 @@ export class UpdateSubMenuResDTO{
         this.resData = new UpdateSubMenuResDTOData();
 
         if (!!datas) {
-            this.resData.submenu_id = datas.submenu_id;
-            this.resData.submenu_name = datas.submenu_name;
-            this.resData.submenu_icon = datas.submenu_icon;
+            this.resData.submenuId = datas.submenuId;
+            this.resData.submenuName = datas.submenuName;
+            this.resData.submenuIcon = datas.submenuIcon;
             this.resData.url = datas.url;
             this.resData.menuLists = [];
 
             if (!!this.resData.menuLists && this.resData.menuLists.length > 0)
                 for (const iterator2 of this.resData.menuLists) {
                     const _data2 = new MenuListDTO();
-                    _data2.menu_id = iterator2.menu_id;
-                    _data2.menu_name = iterator2.menu_name;
+                    _data2.menuId = iterator2.menuId;
+                    _data2.menuName = iterator2.menuName;
                     this.resData.menuLists.push(iterator2);
                 }
         }
