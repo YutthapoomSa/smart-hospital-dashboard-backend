@@ -51,12 +51,11 @@ export class SubMenuDB extends Model<SubMenuDB> {
     @Column({
         type: DataType.INTEGER,
         allowNull: true,
-        field: 'menu_id',
     })
     menu_id: number;
     
     @BelongsTo(() => MenuDB)
-    menuLists: MenuDB[];
+    menuLists: MenuDB;
 
     //     @BelongsTo(() => MenuDB)
 

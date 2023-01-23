@@ -4,7 +4,7 @@ import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swa
 import { UserDB } from './../../database/entity/user.entity';
 import { User } from './../../helper/guard/user.decorator';
 import { CreateMenuDTO, CreateMenuResDTO } from './dto/create-menu.dto';
-import { UpdateMenuDto } from './dto/update-menu.dto';
+import { UpdateMenuDTO, UpdateMenuResDTO } from './dto/update-menu.dto';
 import { ApiMenuService } from './service/api-menu.service';
 import { MenuService } from './service/menu.service';
 
@@ -19,22 +19,22 @@ export class MenuController {
     @ApiOkResponse({ type: CreateMenuResDTO })
     @ApiOperation({ summary: 'สร้างรายการเมนู' })
     async create(@User() user: UserDB, @Body() body: CreateMenuDTO) {
-        return this.apiMenuService.api_create(body, user);
+        return await this.apiMenuService.api_create(body, user);
     }
 
-    @Patch('updateMenu/:id')
+    @Patch('updateMenu/:menu_id')
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
-    @ApiOkResponse({ type: CreateMenuResDTO })
+    @ApiOkResponse({ type: UpdateMenuResDTO })
     @ApiOperation({ summary: 'อัพเดตรายการเมนู' })
-    async update(@Param('menu_id') menu_id: number, @Body() updateMenuDto: UpdateMenuDto, @User() user: UserDB) {
-        return this.apiMenuService.api_update(menu_id, updateMenuDto, user);
+    async update(@Param('menu_id') menu_id: number, @Body() updateMenuDto: UpdateMenuDTO, @User() user: UserDB) {
+        return await this.apiMenuService.api_update(menu_id, updateMenuDto, user);
     }
 
-    @Get(':id')
+    @Get('findOne/:menu_id')
     @ApiOperation({ summary: 'ค้นหารายการเมนูโดย id' })
     async findOne(@Param('menu_id') menu_id: number) {
-        return this.apiMenuService.api_findOne(menu_id);
+        return await this.apiMenuService.api_findOne(menu_id);
     }
 
     @Get('Menu/findAllMenu')
@@ -43,9 +43,9 @@ export class MenuController {
         return await this.apiMenuService.api_findAll();
     }
 
-    @Delete('DeleteMenuByMenuId/:id')
+    @Delete('DeleteMenuByMenuId/:menu_id')
     @ApiOperation({ summary: 'delete menu' })
-    async remove(@Param('id') menu_id: number) {
+    async remove(@Param('menu_id') menu_id: number) {
         return await this.apiMenuService.api_remove(menu_id);
     }
 }

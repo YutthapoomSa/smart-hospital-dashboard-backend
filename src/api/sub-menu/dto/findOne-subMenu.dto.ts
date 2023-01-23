@@ -1,37 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
-import { SubMenuDB } from './../../../database/entity/sub-menu.entity';
-import { ResStatus } from './../../../shared/enum/res-status.enum';
-import { IsNumber } from 'class-validator';
+import { SubMenuDB } from 'src/database/entity/sub-menu.entity';
+import { ResStatus } from 'src/shared/enum/res-status.enum';
 
-export class CreateSubMenuReqDTO {
-    @ApiProperty()
-    @IsString()
-    @IsNotEmpty()
-    submenu_name: string;
-
-    @ApiProperty()
-    @IsString()
-    submenu_icon: string;
-
-    @ApiProperty()
-    @IsString()
-    url: string;
-
-    @ApiProperty()
-    @IsNumber()
-    @IsNotEmpty()
-    menu_id: number;
-}
-// ─────────────────────────────────────────────────────────────────────────────
-
-export class MenuLists {
+export class MenuListDTO {
     @ApiProperty()
     menu_id: number;
     @ApiProperty()
     menu_name: string;
 }
-export class CreateSubmenuResDTOData {
+
+export class FindOneSubMenuResDTOData {
     @ApiProperty()
     submenu_id: number;
     @ApiProperty()
@@ -40,11 +18,13 @@ export class CreateSubmenuResDTOData {
     submenu_icon: string;
     @ApiProperty()
     url: string;
-    @ApiProperty({ type: () => [MenuLists] })
-    menuLists: MenuLists[];
+    @ApiProperty({
+        type: () => [MenuListDTO],
+    })
+    menuLists: MenuListDTO[];
 }
 
-export class CreateSubMenuResDTO {
+export class FindOneMenuResDTO {
     @ApiProperty({
         enum: Object.keys(ResStatus).map((k) => ResStatus[k]),
         description: 'รหัสสถานะ',
@@ -52,10 +32,10 @@ export class CreateSubMenuResDTO {
     resCode: ResStatus;
 
     @ApiProperty({
-        type: () => CreateSubmenuResDTOData,
+        type: () => FindOneSubMenuResDTOData,
         description: 'ข้อมูล',
     })
-    resData: CreateSubmenuResDTOData;
+    resData: FindOneSubMenuResDTOData;
 
     @ApiProperty({
         description: 'ข้อความอธิบาย',
@@ -65,7 +45,7 @@ export class CreateSubMenuResDTO {
     constructor(resCode: ResStatus, msg: string, datas: SubMenuDB) {
         this.resCode = resCode;
         this.msg = msg;
-        this.resData = new CreateSubmenuResDTOData();
+        this.resData = new FindOneSubMenuResDTOData();
 
         if (!!datas) {
             this.resData.submenu_id = datas.submenu_id;
@@ -76,9 +56,11 @@ export class CreateSubMenuResDTO {
 
             if (!!this.resData.menuLists && this.resData.menuLists.length > 0)
                 for (const iterator2 of this.resData.menuLists) {
-                    const _data2 = new MenuLists();
+                    const _data2 = new MenuListDTO();
                     _data2.menu_id = iterator2.menu_id;
                     _data2.menu_name = iterator2.menu_name;
+                    console.log(JSON.stringify(_data2, null, 2));
+
                     this.resData.menuLists.push(iterator2);
                 }
         }

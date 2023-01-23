@@ -12,7 +12,7 @@ import { MenuDB } from './../../../database/entity/menu.entity';
 import { MenuService } from './menu.service';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
 import { UserDB } from './../../../database/entity/user.entity';
-import { UpdateMenuDto, UpdateMenuResDTO } from '../dto/update-menu.dto';
+import { UpdateMenuDTO, UpdateMenuResDTO } from '../dto/update-menu.dto';
 import { GlobalResDTO } from './../../../api/global-dto/global-res.dto';
 import { FindOneMenuResDTO } from '../dto/findOne-menu.dto';
 import { FindAllMenuResDTO } from '../dto/findAll-menu.dto';
@@ -44,7 +44,7 @@ export class ApiMenuService implements OnApplicationBootstrap {
         }
     }
 
-    async api_update(menu_id: number, updateMenuDto: UpdateMenuDto, user: UserDB) {
+    async api_update(menu_id: number, updateMenuDto: UpdateMenuDTO, user: UserDB) {
         const tag = this.api_update.name;
         try {
             let res: UpdateMenuResDTO = null;
@@ -59,8 +59,6 @@ export class ApiMenuService implements OnApplicationBootstrap {
                     res = new UpdateMenuResDTO(ResStatus.fail, 'กรุณาตรวจสอบความถูกต้องของข้อมูล', null);
                 });
             return res;
-
-            // return new CreateMenuResDTO(ResStatus.success, '', await this.menuService.update(menu_id, updateMenuDto));
         } catch (error) {
             this.logger.error(`${tag} -> `, error);
             throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -3,7 +3,7 @@ import { Op, Sequelize } from 'sequelize';
 import { DataBase } from './../../../database/database.providers';
 import { LogService } from './../../../helper/services/log.service';
 import { CreateMenuDTO } from '../dto/create-menu.dto';
-import { UpdateMenuDto } from '../dto/update-menu.dto';
+import { UpdateMenuDTO } from '../dto/update-menu.dto';
 import { MenuDB } from './../../../database/entity/menu.entity';
 import { UserDB, UserDBRole } from './../../../database/entity/user.entity';
 
@@ -12,7 +12,7 @@ export class MenuService implements OnApplicationBootstrap {
     private logger = new LogService(MenuService.name);
 
     constructor(
-        @Inject(DataBase.MenuDB) private readonly menuRepository: typeof MenuDB,
+        @Inject(DataBase.MenuDB) private readonly menuRepositoryModel: typeof MenuDB,
         @Inject('SEQUELIZE') private readonly sequelize: Sequelize,
     ) {}
 
@@ -44,7 +44,7 @@ export class MenuService implements OnApplicationBootstrap {
 
     // ─────────────────────────────────────────────────────────────────────
 
-    async update(menu_id: number, updateMenuDto: UpdateMenuDto, user: UserDB) {
+    async update(menu_id: number, updateMenuDto: UpdateMenuDTO, user: UserDB) {
         const tag = this.update.name;
         try {
             if (String(user.role) !== String(UserDBRole.admin))
@@ -52,10 +52,10 @@ export class MenuService implements OnApplicationBootstrap {
             if (!menu_id) throw new Error('id is required');
             if (!updateMenuDto) throw new Error('updateMenuDto is required');
 
-            const resultUpdate = await this.menuRepository.findByPk(menu_id);
+            const resultUpdate = await this.menuRepositoryModel.findByPk(menu_id);
             if (!resultUpdate) throw new Error('may be is wrong id try again later');
 
-            const updateMennu = await resultUpdate.update(
+            const updateMenu = await resultUpdate.update(
                 {
                     menu_name: updateMenuDto.menu_name,
                     menu_icon: updateMenuDto.menu_icon,
@@ -67,9 +67,9 @@ export class MenuService implements OnApplicationBootstrap {
                     },
                 },
             );
-            console.log(updateMennu);
+            console.log(updateMenu);
 
-            return updateMennu;
+            return updateMenu;
         } catch (error) {
             this.logger.error(`${tag} -> `, error);
             throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -81,18 +81,18 @@ export class MenuService implements OnApplicationBootstrap {
     async findAll() {
         const tag = this.findAll.name;
         try {
-            const result = await this.menuRepository.findAll({
-                include: [
-                    {
-                        model: MenuDB,
-                    },
-                ],
-            });
-            if (!result) throw new Error('no data found try again later');
-            // console.log(result);
-            return result;
+            const isFind = await this.menuRepositoryModel.count({});
+
+            if (isFind <= 0) {
+                throw new Error('no data try again later...');
+            }
+
+            const resultFindAllMenu = await this.menuRepositoryModel.findAll();
+
+            return resultFindAllMenu;
         } catch (error) {
-            console.error(error);
+            this.logger.error(`${tag} -> `, error);
+            throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -101,11 +101,13 @@ export class MenuService implements OnApplicationBootstrap {
     async findOne(menu_id: number) {
         const tag = this.findAll.name;
         try {
-            const result = await this.menuRepository.findByPk(menu_id);
+            if (!menu_id) throw new Error('menu_id is required');
 
+            const result = await this.menuRepositoryModel.findByPk(menu_id);
             if (!result) {
                 throw new Error('not found');
             }
+
             return result;
         } catch (error) {
             this.logger.error(`${tag} -> `, error);
@@ -117,9 +119,9 @@ export class MenuService implements OnApplicationBootstrap {
         const tag = this.remove.name;
         try {
             if (!menu_id) throw new Error('id is required');
-            const isFindResult = await this.menuRepository.findByPk(menu_id);
+            const isFindResult = await this.menuRepositoryModel.findByPk(menu_id);
             if (!isFindResult) throw new Error('may be is wrong id try again later');
-            const removeResult = await this.menuRepository.destroy({ where: { id: menu_id } });
+            const removeResult = await this.menuRepositoryModel.destroy({ where: { menu_id: menu_id } });
 
             if (removeResult === 1) {
                 return `remove ResultRider Id : ${menu_id} success`;

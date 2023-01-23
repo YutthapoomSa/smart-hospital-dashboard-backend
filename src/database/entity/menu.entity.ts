@@ -10,7 +10,6 @@ export class MenuDB extends Model<MenuDB> {
         type: DataType.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        unique: 'unique_menu_id',
         primaryKey: true,
     })
     menu_id: number;
@@ -50,5 +49,4 @@ export class MenuDB extends Model<MenuDB> {
 
     @HasMany(() => SubMenuDB)
     subMenuLists: SubMenuDB[];
-    length: number;
 }

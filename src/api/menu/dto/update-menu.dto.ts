@@ -1,9 +1,23 @@
 import { PartialType, ApiProperty } from '@nestjs/swagger';
+import { IsString, IsNotEmpty } from 'class-validator';
 import { MenuDB } from 'src/database/entity/menu.entity';
 import { ResStatus } from 'src/shared/enum/res-status.enum';
 import { CreateMenuDTO } from './create-menu.dto';
 
-export class UpdateMenuDto extends PartialType(CreateMenuDTO) {}
+export class UpdateMenuDTO {
+    @ApiProperty()
+    @IsString()
+    @IsNotEmpty()
+    menu_name: string;
+
+    @ApiProperty()
+    @IsString()
+    menu_icon: string;
+
+    @ApiProperty()
+    @IsString()
+    url: string;
+}
 
 export class UpdateMenuResDTOData {
     @ApiProperty()
