@@ -32,7 +32,6 @@ export class FindOneMenuResDTO {
             this.resData.menuId = datas.menuId;
             this.resData.menuName = datas.menuName;
             this.resData.menuIcon = datas.menuIcon;
-            this.resData.url = datas.url;
         }
     }
 }

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { UserDB } from 'src/database/entity/user.entity';
+import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { UserDB, UserDBRole } from 'src/database/entity/user.entity';
 import { ResStatus } from 'src/shared/enum/res-status.enum';
 
 export class UpdateUserDto {

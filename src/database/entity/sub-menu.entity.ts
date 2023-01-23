@@ -27,8 +27,21 @@ export class SubMenuDB extends Model<SubMenuDB> {
 
     @Column({
         allowNull: false,
+        comment: 'link url iframe'
     })
-    url: string;
+    iframe: string;
+
+    @Column({
+        allowNull: false,
+        comment: 'link ที่ไปยังหน้าอื่น'
+    })
+    link: string;
+
+    @Column({
+        allowNull: false,
+        comment: 'link หน้าเปล่า'
+    })
+    page: string;
 
     // @Column({
     //     type: DataType.DATE(),

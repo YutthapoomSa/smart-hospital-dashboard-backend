@@ -24,12 +24,6 @@ export class MenuDB extends Model<MenuDB> {
     })
     menuIcon: string;
 
-    @Column({
-        allowNull: true,
-        comment: ' link url หน้า main',
-    })
-    url: string;
-
     // @Column({
     //     type: DataType.DATE(),
     //     defaultValue: () => Date.now(),

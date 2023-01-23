@@ -34,7 +34,6 @@ export class FindAllMenuResDTO {
                 _data.menuId = iterator.menuId;
                 _data.menuName = iterator.menuName;
                 _data.menuIcon = iterator.menuIcon;
-                _data.url = iterator.url;
                 this.resData.push(_data);
             }
         }

@@ -12,11 +12,6 @@ export class CreateMenuDTO {
     @ApiProperty()
     @IsString()
     menuIcon: string;
-
-    @ApiProperty()
-    @IsString()
-    url: string;
-
 }
 
 export class CreateMenuResDTOData {
@@ -26,8 +21,6 @@ export class CreateMenuResDTOData {
     menuName: string;
     @ApiProperty()
     menuIcon: string;
-    @ApiProperty()
-    url: string;
 }
 
 export class CreateMenuResDTO {
@@ -57,7 +50,6 @@ export class CreateMenuResDTO {
             this.resData.menuId = datas.menuId;
             this.resData.menuName = datas.menuName;
             this.resData.menuIcon = datas.menuIcon;
-            this.resData.url = datas.url;
         }
     }
 }

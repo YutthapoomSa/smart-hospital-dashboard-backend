@@ -16,7 +16,6 @@ import jwt_decode from 'jwt-decode';
 import moment from 'moment';
 import { Op } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
-import { DataBase } from './../../../database/database.providers';
 import { v4 as uuidv4 } from 'uuid';
 import { UserTokenDB } from '../../../database/entity/user-token.entity';
 import { UserDB, UserDBRole } from '../../../database/entity/user.entity';
@@ -25,12 +24,13 @@ import { EncryptionService } from '../../../helper/services/encryption.service';
 import { LogService } from '../../../helper/services/log.service';
 import { ConfigService } from '../../../shared/config/config.service';
 import { JwtPayload } from '../auth/jwt-payload.model';
+import { UpdateUserDto } from '../dto/update-user.dto';
 import { UserNameCheckResDTO } from '../dto/user-check.dto';
 import { UserLoginRefreshToKenReqDto } from '../dto/user-login-refreshToken.dto';
 import { UserLoginRequestDTO } from '../dto/user-login.dto';
+import { DataBase } from './../../../database/database.providers';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
 import { CacheUsersService } from './cache-users.service';
-import { UpdateUserDto } from '../dto/update-user.dto';
 @Injectable()
 export class UsersService implements OnApplicationBootstrap {
     private readonly jwtPrivateKey: string;
