@@ -37,7 +37,7 @@ export class SubMenuService implements OnApplicationBootstrap {
         const tag = this.findAll.name;
         try {
             const resultFindAll = await this.subMenuRepository.findAll();
-            return new FindAllSubMenuResDTO(ResStatus.success, '', resultFindAll);
+            return new FindAllSubMenuResDTO(ResStatus.success, 'Success', resultFindAll);
         } catch (error) {
             console.error(`${tag} -> `, error);
             this.logger.error(`${tag} -> `, error);

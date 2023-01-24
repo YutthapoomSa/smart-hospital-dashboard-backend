@@ -20,8 +20,6 @@ export class FindAllSubMenuResDTOData {
     link: string;
     @ApiProperty()
     page: string;
-    @ApiProperty()
-    menuId: number;
     @ApiProperty({
         type: () => [MenuListDTO],
     })
@@ -60,10 +58,9 @@ export class FindAllSubMenuResDTO {
                 _data.iframe = iterator.iframe;
                 _data.link = iterator.link;
                 _data.page = iterator.page;
-                _data.menuId = iterator.menuId;
                 _data.menuLists = [];
 
-                if (!!iterator.menuLists) {
+                if (!!_data.menuLists) {
                     const _menu = new MenuListDTO();
                     _menu.menuId = iterator.menuLists.menuId;
                     _menu.menuName = iterator.menuLists.menuName;

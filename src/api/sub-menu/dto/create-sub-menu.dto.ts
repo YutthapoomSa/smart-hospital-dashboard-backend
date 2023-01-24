@@ -85,7 +85,7 @@ export class CreateSubMenuResDTO {
                     const _data2 = new MenuLists();
                     _data2.menuId = iterator2.menuId;
                     _data2.menuName = iterator2.menuName;
-                    this.resData.menuLists.push(iterator2);
+                    this.resData.menuLists.push(_data2);
                 }
         }
     }
