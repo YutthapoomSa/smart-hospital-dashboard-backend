@@ -33,7 +33,7 @@ export class FindAllMenuResDTO {
                 const _data = new FindAllMenuResDTOData();
                 _data.menuId = iterator.menuId;
                 _data.menuName = iterator.menuName;
-                _data.menuIcon = iterator.menuIcon;
+                _data.iframe = iterator.iframe;
                 this.resData.push(_data);
             }
         }

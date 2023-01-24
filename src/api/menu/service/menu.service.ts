@@ -31,8 +31,7 @@ export class MenuService implements OnApplicationBootstrap {
 
             const menuCreate = new MenuDB();
             menuCreate.menuName = body.menuName;
-            menuCreate.menuIcon = body.menuIcon;
-            menuCreate.url = body.url;
+            menuCreate.iframe = body.iframe;
 
             await menuCreate.save();
             return menuCreate;
@@ -58,8 +57,7 @@ export class MenuService implements OnApplicationBootstrap {
             const updateMenu = await resultUpdate.update(
                 {
                     menuName: updateMenuDto.menuName,
-                    menuIcon: updateMenuDto.menuIcon,
-                    url: updateMenuDto.url,
+                    iframe: updateMenuDto.iframe,
                 },
                 {
                     where: {
