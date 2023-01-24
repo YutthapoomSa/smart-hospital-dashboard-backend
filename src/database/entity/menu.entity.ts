@@ -21,8 +21,9 @@ export class MenuDB extends Model<MenuDB> {
 
     @Column({
         allowNull: true,
+        comment: 'link url iframe'
     })
-    menuIcon: string;
+    iframe: string;
 
     // @Column({
     //     type: DataType.DATE(),

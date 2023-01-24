@@ -11,7 +11,7 @@ export class CreateMenuDTO {
 
     @ApiProperty()
     @IsString()
-    menuIcon: string;
+    iframe: string;
 }
 
 export class CreateMenuResDTOData {
@@ -20,7 +20,7 @@ export class CreateMenuResDTOData {
     @ApiProperty()
     menuName: string;
     @ApiProperty()
-    menuIcon: string;
+    iframe: string;
 }
 
 export class CreateMenuResDTO {
@@ -49,7 +49,7 @@ export class CreateMenuResDTO {
         if (!!datas) {
             this.resData.menuId = datas.menuId;
             this.resData.menuName = datas.menuName;
-            this.resData.menuIcon = datas.menuIcon;
+            this.resData.iframe = datas.iframe;
         }
     }
 }
