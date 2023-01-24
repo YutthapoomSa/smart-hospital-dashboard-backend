@@ -32,7 +32,7 @@ export class SubMenuController {
     @Get('findOne/:submenuId')
     @ApiOperation({ summary: 'findOne sub-menu' })
     @ApiOkResponse({ type: FindOneMenuResDTO })
-    async findOne(@Param('submenu_id') submenuId: number) {
+    async findOne(@Param('submenuId') submenuId: number) {
         return await this.subMenuService.findOne(submenuId);
     }
 
@@ -47,7 +47,7 @@ export class SubMenuController {
 
     @Delete('deleteSubMenuBySubMenuId/:submenuId')
     @ApiOperation({ summary: 'delete submenu' })
-    async remove(@Param('submenu_id') submenuId: number) {
+    async remove(@Param('submenuId') submenuId: number) {
         return await this.subMenuService.remove(submenuId);
     }
 }

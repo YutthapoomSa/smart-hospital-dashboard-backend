@@ -86,7 +86,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
                 include: [
                     {
                         model: MenuDB,
-                        attributes: ['menu_id', 'menu_name'],
+                        attributes: ['menuId', 'menuName'],
                     },
                 ],
             });
@@ -94,7 +94,9 @@ export class SubMenuRepository implements OnApplicationBootstrap {
             console.log(JSON.stringify(result, null, 2));
             return result;
         } catch (error) {
-            console.error(error);
+            console.error(`${tag} -> `, error);
+            this.logger.error(`${tag} -> `, error);
+            throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -107,7 +109,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
                 include: [
                     {
                         model: MenuDB,
-                        attributes: ['menu_id', 'menu_name'],
+                        attributes: ['menuId', 'menuName'],
                     },
                 ],
             });
