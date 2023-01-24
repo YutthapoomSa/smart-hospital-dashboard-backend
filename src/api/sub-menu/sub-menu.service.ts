@@ -13,7 +13,7 @@ import { GlobalResDTO } from './../global-dto/global-res.dto';
 export class SubMenuService implements OnApplicationBootstrap {
     private logger = new LogService(SubMenuService.name);
 
-    constructor(private subMenuRepository: SubMenuRepository) { }
+    constructor(private subMenuRepository: SubMenuRepository) {}
 
     onApplicationBootstrap() {
         //
@@ -60,7 +60,7 @@ export class SubMenuService implements OnApplicationBootstrap {
     async update(body: UpdateSubMenuDto, user: UserDB) {
         const tag = this.update.name;
         try {
-            const updateSubmenu = await this.subMenuRepository.update(body,user);
+            const updateSubmenu = await this.subMenuRepository.update(body, user);
             return updateSubmenu;
         } catch (error) {
             this.logger.error(`${tag} -> `, error);

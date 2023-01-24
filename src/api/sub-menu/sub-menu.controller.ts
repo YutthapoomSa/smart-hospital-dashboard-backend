@@ -4,6 +4,7 @@ import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swa
 import { UserDB } from './../../database/entity/user.entity';
 import { User } from './../../helper/guard/user.decorator';
 import { CreateSubMenuReqDTO, CreateSubMenuResDTO } from './dto/create-sub-menu.dto';
+import { FindAllSubMenuResDTO } from './dto/findAll-SubMenu.dto';
 import { FindOneMenuResDTO } from './dto/findOne-subMenu.dto';
 import { UpdateSubMenuDto, UpdateSubMenuResDTO } from './dto/update-sub-menu.dto';
 import { SubMenuService } from './sub-menu.service';
@@ -22,6 +23,8 @@ export class SubMenuController {
     }
 
     @Get('SubMenu/FindAllSubMenus')
+    @ApiOperation({ summary: 'findAll sub-menu' })
+    @ApiOkResponse({ type: FindAllSubMenuResDTO })
     async findAll() {
         return await this.subMenuService.findAll();
     }
