@@ -1,12 +1,44 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { SubMenuDB } from './../../../database/entity/sub-menu.entity';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
-import { CreateSubMenuReqDTO, CreateSubmenuResDTOData } from './create-sub-menu.dto';
+import { CreateSubmenuResDTOData } from './create-sub-menu.dto';
 import { MenuListDTO } from './findAll-SubMenu.dto';
 
-export class UpdateSubMenuDto extends PartialType(CreateSubMenuReqDTO) { }
+export class UpdateSubMenuDTO {
+    @ApiProperty()
+    @IsNumber()
+    @IsNotEmpty()
+    submenuId: number;
 
-export class UpdateSubMenuResDTOData extends PartialType(CreateSubmenuResDTOData) { }
+    @ApiProperty()
+    @IsString()
+    @IsNotEmpty()
+    submenuName: string;
+
+    @ApiProperty()
+    @IsString()
+    submenuIcon: string;
+
+    @ApiProperty()
+    @IsString()
+    iframe: string;
+
+    @ApiProperty()
+    @IsString()
+    link: string;
+
+    @ApiProperty()
+    @IsString()
+    page: string;
+
+    @ApiProperty()
+    @IsNumber()
+    @IsNotEmpty()
+    menuId: number;
+}
+
+export class UpdateSubMenuResDTOData extends PartialType(CreateSubmenuResDTOData) {}
 
 export class UpdateSubMenuResDTO {
     @ApiProperty({

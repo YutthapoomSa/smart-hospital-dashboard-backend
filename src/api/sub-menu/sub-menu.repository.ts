@@ -6,7 +6,7 @@ import { SubMenuDB } from './../../database/entity/sub-menu.entity';
 import { UserDB, UserDBRole } from './../../database/entity/user.entity';
 import { LogService } from './../../helper/services/log.service';
 import { CreateSubMenuReqDTO } from './dto/create-sub-menu.dto';
-import { UpdateSubMenuDto } from './dto/update-sub-menu.dto';
+import { UpdateSubMenuDTO } from './dto/update-sub-menu.dto';
 @Injectable()
 export class SubMenuRepository implements OnApplicationBootstrap {
     private logger = new LogService(SubMenuRepository.name);
@@ -58,7 +58,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
         }
     }
 
-    async update(body: UpdateSubMenuDto, user: UserDB) {
+    async update(body: UpdateSubMenuDTO, user: UserDB) {
         const tag = this.update.name;
         try {
             if (String(user.role) !== String(UserDBRole.admin))

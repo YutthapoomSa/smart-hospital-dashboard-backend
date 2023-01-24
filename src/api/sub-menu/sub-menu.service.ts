@@ -1,13 +1,13 @@
 import { HttpException, HttpStatus, Injectable, OnApplicationBootstrap } from '@nestjs/common';
+import { UserDB } from './../../database/entity/user.entity';
 import { LogService } from './../../helper/services/log.service';
 import { ResStatus } from './../../shared/enum/res-status.enum';
-import { CreateSubMenuResDTO, CreateSubMenuReqDTO } from './dto/create-sub-menu.dto';
-import { FindAllSubMenuResDTO } from './dto/findAll-SubMenu.dto';
-import { UpdateSubMenuDto, UpdateSubMenuResDTO } from './dto/update-sub-menu.dto';
-import { SubMenuRepository } from './sub-menu.repository';
-import { UserDB } from './../../database/entity/user.entity';
-import { FindOneMenuResDTO } from './dto/findOne-subMenu.dto';
 import { GlobalResDTO } from './../global-dto/global-res.dto';
+import { CreateSubMenuReqDTO, CreateSubMenuResDTO } from './dto/create-sub-menu.dto';
+import { FindAllSubMenuResDTO } from './dto/findAll-SubMenu.dto';
+import { FindOneMenuResDTO } from './dto/findOne-subMenu.dto';
+import { UpdateSubMenuDTO } from './dto/update-sub-menu.dto';
+import { SubMenuRepository } from './sub-menu.repository';
 
 @Injectable()
 export class SubMenuService implements OnApplicationBootstrap {
@@ -57,7 +57,7 @@ export class SubMenuService implements OnApplicationBootstrap {
         }
     }
 
-    async update(body: UpdateSubMenuDto, user: UserDB) {
+    async update(body: UpdateSubMenuDTO, user: UserDB) {
         const tag = this.update.name;
         try {
             const updateSubmenu = await this.subMenuRepository.update(body, user);
