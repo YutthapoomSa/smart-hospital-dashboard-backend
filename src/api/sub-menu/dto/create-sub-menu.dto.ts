@@ -5,11 +5,6 @@ import { ResStatus } from './../../../shared/enum/res-status.enum';
 
 export class CreateSubMenuReqDTO {
     @ApiProperty()
-    @IsNumber()
-    @IsNotEmpty()
-    submenuId: number;
-
-    @ApiProperty()
     @IsString()
     @IsNotEmpty()
     submenuName: string;

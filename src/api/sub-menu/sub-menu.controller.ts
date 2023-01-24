@@ -6,7 +6,7 @@ import { User } from './../../helper/guard/user.decorator';
 import { CreateSubMenuReqDTO, CreateSubMenuResDTO } from './dto/create-sub-menu.dto';
 import { FindAllSubMenuResDTO } from './dto/findAll-SubMenu.dto';
 import { FindOneMenuResDTO } from './dto/findOne-subMenu.dto';
-import { UpdateSubMenuDto, UpdateSubMenuResDTO } from './dto/update-sub-menu.dto';
+import { UpdateSubMenuDTO, UpdateSubMenuResDTO } from './dto/update-sub-menu.dto';
 import { SubMenuService } from './sub-menu.service';
 
 @Controller('sub-menu')
@@ -41,7 +41,7 @@ export class SubMenuController {
     @UseGuards(AuthGuard('jwt'))
     @ApiOkResponse({ type: UpdateSubMenuResDTO })
     @ApiOperation({ summary: 'Update Sub Menu' })
-    async update(@Body() body: UpdateSubMenuDto, @User() user: UserDB) {
+    async update(@Body() body: UpdateSubMenuDTO, @User() user: UserDB) {
         return await this.subMenuService.update(body, user);
     }
 
