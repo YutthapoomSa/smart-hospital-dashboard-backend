@@ -22,11 +22,6 @@ export class SubMenuDB extends Model<SubMenuDB> {
 
     @Column({
         allowNull: true,
-    })
-    submenuIcon: string;
-
-    @Column({
-        allowNull: true,
         comment: 'link url iframe'
     })
     iframe: string;

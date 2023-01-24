@@ -31,7 +31,6 @@ export class SubMenuRepository implements OnApplicationBootstrap {
             const createSubMenu = await this.subMenuRepositoryModel.count({
                 where: {
                     submenuName: body.submenuName,
-                    submenuIcon: body.submenuIcon,
                     menuId: body.menuId,
                     iframe: body.iframe,
                     link: body.link,
@@ -43,7 +42,6 @@ export class SubMenuRepository implements OnApplicationBootstrap {
 
             const _create = new SubMenuDB();
             _create.submenuName = body.submenuName;
-            _create.submenuIcon = body.submenuIcon;
             _create.menuId = body.menuId;
             _create.iframe = body.iframe;
             _create.link = body.link;
@@ -68,7 +66,6 @@ export class SubMenuRepository implements OnApplicationBootstrap {
             if (!resultUpdate) throw new Error('may be is wrong id try again later');
 
             resultUpdate.submenuName = body.submenuName ? body.submenuName : resultUpdate.submenuName;
-            resultUpdate.submenuIcon = body.submenuIcon ? body.submenuIcon : resultUpdate.submenuIcon;
             resultUpdate.menuId = body.menuId ? body.menuId : resultUpdate.menuId;
             resultUpdate.iframe = body.iframe ? body.iframe : resultUpdate.iframe;
             resultUpdate.link = body.link ? body.link : resultUpdate.link;
