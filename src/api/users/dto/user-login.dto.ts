@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsEmail } from 'class-validator';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
 
 export class UserLoginRequestDTO {
     @ApiProperty({
-        example: 'admin',
+        example: 'admin@gmail.com',
     })
-    @IsString()
+    @IsEmail()
     @IsNotEmpty()
-    readonly username: string;
+    readonly email: string;
 
     @ApiProperty({
         example: 'admin',
@@ -22,9 +22,9 @@ export class UserLoginRequestDTO {
 
 class LoginResDTOResData {
     @ApiProperty({
-        description: 'ชื่อ',
+        description: 'อีเมล',
     })
-    username: string;
+    email: string;
 
     @ApiProperty()
     password: string;
@@ -48,21 +48,21 @@ export class LoginResDTO {
     })
     msg: string;
 
-    constructor(resCode: ResStatus, msg: string, _username: string, _password: string) {
+    constructor(resCode: ResStatus, msg: string, _email: string, _password: string) {
         this.resCode = resCode;
         this.msg = msg;
         this.resData = new LoginResDTOResData();
 
         // ก้อนข้อมูล init //
-        this.resData.username = null;
+        this.resData.email = null;
         this.resData.password = null;
 
         // ─────────────────────────────────────────────────────────────────
         // (>。<) //
         // ─────────────────────────────────────────────────────────────────
 
-        if (_username != null) {
-            this.resData.username = _username;
+        if (_email != null) {
+            this.resData.email = _email;
         }
         if (_password != null) {
             this.resData.password = _password;

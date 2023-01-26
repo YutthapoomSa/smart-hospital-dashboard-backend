@@ -4,7 +4,6 @@ import { UserDB, UserDBRole } from 'src/database/entity/user.entity';
 import { ResStatus } from 'src/shared/enum/res-status.enum';
 
 export class UpdateUserDto {
-
     @ApiProperty()
     @IsNumber()
     userId?: number;
@@ -13,11 +12,6 @@ export class UpdateUserDto {
     @IsNotEmpty()
     @IsEmail()
     email: string;
-
-    @ApiProperty()
-    @IsNotEmpty()
-    @IsString()
-    username: string;
 
     @ApiProperty()
     @IsNotEmpty()
@@ -54,11 +48,6 @@ class UpdateUserResDTOResData {
     @ApiProperty()
     email: string;
 
-    @ApiProperty({
-        description: 'ข้อมูล',
-    })
-    userName: string;
-
     @ApiProperty()
     firstName: string;
 
@@ -94,7 +83,6 @@ export class UpdateUserResDTO {
         if (!!datas) {
             this.resData.id = datas.id;
             this.resData.email = datas.email;
-            this.resData.userName = datas.username;
             this.resData.firstName = datas.firstName;
             this.resData.lastName = datas.lastName;
             this.resData.phoneNumber = datas.phoneNumber;
