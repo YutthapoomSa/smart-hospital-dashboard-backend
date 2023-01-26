@@ -32,6 +32,11 @@ class FindAllResDTOResData {
     })
     gender: UserDBGender;
 
+    @ApiProperty({
+        description: 'รูปภาพ',
+    })
+    image: string;
+
     @ApiProperty()
     phoneNumber: string;
 }
@@ -67,11 +72,11 @@ export class FindAllResDTO {
         if (!!datas) {
             const _data = new FindAllResDTOResData();
             _data.email = datas.email;
-            _data.userName = datas.username;
             _data.firstName = datas.firstName;
             _data.lastName = datas.lastName;
             _data.role = datas.role;
             _data.status = datas.status;
+            _data.image = datas.image;
             _data.gender = datas.gender;
             _data.phoneNumber = datas.phoneNumber;
         }

@@ -33,6 +33,10 @@ export class CreateUserReqDTO {
     @ApiProperty()
     @IsString()
     phoneNumber: string;
+    
+    @ApiProperty()
+    @IsString()
+    image: string;
 
     @ApiProperty({
         enum: Object.keys(UserDBRole).map((k) => UserDBRole[k]),
@@ -59,6 +63,9 @@ class CreateUserResDTOResData {
 
     @ApiProperty()
     phoneNumber: string;
+    
+    @ApiProperty()
+    image: string;
 
     @ApiProperty()
     gender: UserDBGender;
@@ -96,6 +103,7 @@ export class CreateUserResDTO {
             this.resData.lastName = datas.lastName;
             this.resData.phoneNumber = datas.phoneNumber;
             this.resData.gender = datas.gender;
+            this.resData.image = datas.image;
             this.resData.role = datas.role;
         }
     }

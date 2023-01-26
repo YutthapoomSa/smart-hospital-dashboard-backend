@@ -29,6 +29,9 @@ class FindOneUserResDTOResData {
         description: 'status เปิด ปิด',
     })
     status: boolean;
+   
+    @ApiProperty()
+    image: string;
 
     @ApiProperty({
         description: 'เพศ',
@@ -64,11 +67,11 @@ export class FindOneUserResDTO {
         if (!!datas) {
             this.resData.id = datas.id;
             this.resData.email = datas.email;
-            this.resData.userName = datas.username;
             this.resData.firstName = datas.firstName;
             this.resData.lastName = datas.lastName;
             this.resData.role = datas.role;
             this.resData.status = datas.status;
+            this.resData.image = datas.image;
             this.resData.gender = datas.gender;
             this.resData.phoneNumber = datas.phoneNumber;
         }
