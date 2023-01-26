@@ -54,6 +54,9 @@ class CreateUserResDTOResData {
 
     @ApiProperty()
     email: string;
+    
+    @ApiProperty()
+    password: string;
 
     @ApiProperty()
     firstName: string;
@@ -99,6 +102,7 @@ export class CreateUserResDTO {
         if (!!datas) {
             this.resData.id = datas.id;
             this.resData.email = datas.email;
+            this.resData.password = datas.password;
             this.resData.firstName = datas.firstName;
             this.resData.lastName = datas.lastName;
             this.resData.phoneNumber = datas.phoneNumber;
