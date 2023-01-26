@@ -8,19 +8,18 @@ import { CreateUserReqDTO } from './dto/create-user-req.dto';
 import { ApiUsersService } from './services/api-users.service';
 import { UserLoginRequestDTO } from './dto/user-login.dto';
 import { UserLoginRefreshToKenReqDto } from './dto/user-login-refreshToken.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto, UpdateUserResDTO } from './dto/update-user.dto';
 
 @Controller('users')
 @ApiTags('users')
 export class UsersController {
-    constructor(private readonly apiUsersService: ApiUsersService) { }
+    constructor(private readonly apiUsersService: ApiUsersService) {}
 
     // Register with guest
     @Post('register')
     @ApiOperation({ summary: 'สร้างuserสำหรับ Admin' })
     @ApiOkResponse({ type: FindOneUserResDTO })
     register(@Body() body: CreateUserReqDTO) {
-
         return this.apiUsersService.api_create(body);
     }
 
@@ -30,7 +29,6 @@ export class UsersController {
     @ApiOperation({ summary: 'Adminเป็นคนสร้างให้User' })
     @ApiOkResponse({ type: FindOneUserResDTO })
     async registerWithAdmin(@Body() body: CreateUserReqDTO, @User() user: UserDB) {
-
         return this.apiUsersService.api_createWithAdmin(body, user);
     }
 
@@ -57,6 +55,7 @@ export class UsersController {
     @Patch('updateUserById')
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
+    @ApiOkResponse({ type: UpdateUserResDTO })
     updateUserById(@User() user: UserDB, @Body() body: UpdateUserDto) {
         return this.apiUsersService.api_updateUserById(user, body);
     }
