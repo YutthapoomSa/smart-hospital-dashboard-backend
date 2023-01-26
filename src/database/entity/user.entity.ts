@@ -39,6 +39,11 @@ export class UserDB extends Model<UserDB> {
     @Column({
         allowNull: false,
     })
+    username: string;
+
+    @Column({
+        allowNull: false,
+    })
     password: string;
 
     @Column({

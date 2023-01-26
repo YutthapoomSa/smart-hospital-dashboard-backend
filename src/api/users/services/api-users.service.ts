@@ -87,7 +87,8 @@ export class ApiUsersService implements OnApplicationBootstrap {
             const _hashPass = resultHash.hashPass;
 
             const users = new UserDB();
-            users.email = body.email.trim().toLowerCase();
+            users.email = body.email.trim().toLowerCase(); 
+            users.username = body.username.trim().toLowerCase();
             users.firstName = body.firstName;
             users.lastName = body.lastName;
             users.password = _hashPass;
@@ -122,6 +123,7 @@ export class ApiUsersService implements OnApplicationBootstrap {
 
             const users = new UserDB();
             users.email = body.email.trim().toLowerCase();
+            users.username = body.username.trim().toLowerCase();
             users.firstName = body.firstName;
             users.lastName = body.lastName;
             users.password = _hashPass;

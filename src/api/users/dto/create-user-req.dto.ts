@@ -12,6 +12,11 @@ export class CreateUserReqDTO {
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
+    username: string;
+
+    @ApiProperty()
+    @IsNotEmpty()
+    @IsString()
     password: string;
 
     @ApiProperty()
@@ -54,6 +59,9 @@ class CreateUserResDTOResData {
 
     @ApiProperty()
     email: string;
+
+    @ApiProperty()
+    username: string;
     
     @ApiProperty()
     password: string;
@@ -102,7 +110,8 @@ export class CreateUserResDTO {
         if (!!datas) {
             this.resData.id = datas.id;
             this.resData.email = datas.email;
-            this.resData.password = datas.password;
+            this.resData.username = datas.username
+            this.resData.password = datas.password;;
             this.resData.firstName = datas.firstName;
             this.resData.lastName = datas.lastName;
             this.resData.phoneNumber = datas.phoneNumber;

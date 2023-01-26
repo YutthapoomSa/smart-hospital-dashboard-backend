@@ -10,9 +10,9 @@ class FindOneUserResDTOResData {
     email: string;
 
     @ApiProperty({
-        description: 'ข้อมูล',
+        description: 'ชื่อผู้ใช้',
     })
-    userName: string;
+    username: string;
 
     @ApiProperty()
     firstName: string;
@@ -67,6 +67,7 @@ export class FindOneUserResDTO {
         if (!!datas) {
             this.resData.id = datas.id;
             this.resData.email = datas.email;
+            this.resData.username = datas.username;
             this.resData.firstName = datas.firstName;
             this.resData.lastName = datas.lastName;
             this.resData.role = datas.role;

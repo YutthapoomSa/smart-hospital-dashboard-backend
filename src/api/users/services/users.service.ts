@@ -133,7 +133,7 @@ export class UsersService implements OnApplicationBootstrap {
             const user = await this.usersRepository.findOne({
                 attributes: { exclude: ['createdAt', 'updatedAt'] },
                 where: {
-                    email: body.email,
+                    username: body.username,
                 },
             });
 
@@ -303,36 +303,36 @@ export class UsersService implements OnApplicationBootstrap {
         }
     }
 
-    // async checkUserName(_username: string) {
-    //     const count = await this.usersRepository.count({
-    //         where: {
-    //             username: _username,
-    //         },
-    //     });
-    //     return new UserNameCheckResDTO(count > 0);
-    // }
+    async checkUserName(_username: string) {
+        const count = await this.usersRepository.count({
+            where: {
+                username: _username,
+            },
+        });
+        return new UserNameCheckResDTO(count > 0);
+    }
 
-    // private async initSuperAdmin() {
-    //     const tag = this.initSuperAdmin.name;
-    //     try {
-    //         const result = await this.usersRepository.findOne({
-    //             where: { username: 'superAdmin' },
-    //         });
-    //         if (!result) {
-    //             // const createUserReqDto = new CreateUserReqDTO();
-    //             // createUserReqDto.email = 'superAdmin@gmail.com';
-    //             // createUserReqDto.username = 'superAdmin';
-    //             // createUserReqDto.firstName = 'superAdmin';
-    //             // createUserReqDto.lastName = 'superAdmin';
-    //             // createUserReqDto.password = 'superAdmin';
-    //             // createUserReqDto.role = UserDBRole.superAdmin;
-    //             // this.create(createUserReqDto);
-    //         }
-    //     } catch (error) {
-    //         this.logger.error(`${tag} -> `, error);
-    //         throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
-    //     }
-    // }
+    private async initSuperAdmin() {
+        const tag = this.initSuperAdmin.name;
+        try {
+            const result = await this.usersRepository.findOne({
+                where: { username: 'superAdmin' },
+            });
+            if (!result) {
+                // const createUserReqDto = new CreateUserReqDTO();
+                // createUserReqDto.email = 'superAdmin@gmail.com';
+                // createUserReqDto.username = 'superAdmin';
+                // createUserReqDto.firstName = 'superAdmin';
+                // createUserReqDto.lastName = 'superAdmin';
+                // createUserReqDto.password = 'superAdmin';
+                // createUserReqDto.role = UserDBRole.superAdmin;
+                // this.create(createUserReqDto);
+            }
+        } catch (error) {
+            this.logger.error(`${tag} -> `, error);
+            throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     async signToken(user: UserDB, expires?: string) {
         const _jit = uuidv4();
@@ -368,6 +368,7 @@ export class UsersService implements OnApplicationBootstrap {
                 const updateUser = await this.userRepository.findByPk(body.userId);
                 if (!updateUser) throw new Error('no user found try again later');
                 updateUser.email = body.email ? body.email : updateUser.email;
+                updateUser.username = body.username ? body.username : updateUser.username;
                 updateUser.password = body.password ? (await this.genPassword(body.password)).hashPass : updateUser.password;
                 updateUser.firstName = body.firstName ? body.firstName : updateUser.firstName;
                 updateUser.lastName = body.lastName ? body.lastName : updateUser.lastName;
@@ -379,6 +380,7 @@ export class UsersService implements OnApplicationBootstrap {
                 const updateUser = await this.userRepository.findByPk(user.id);
                 if (!updateUser) throw new Error('no user found try again later');
                 updateUser.email = body.email ? body.email : updateUser.email;
+                updateUser.username = body.username ? body.username : updateUser.username;
                 updateUser.password = body.password ? (await this.genPassword(body.password)).hashPass : updateUser.password;
                 updateUser.firstName = body.firstName ? body.firstName : updateUser.firstName;
                 updateUser.lastName = body.lastName ? body.lastName : updateUser.lastName;

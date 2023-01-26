@@ -16,6 +16,11 @@ export class UpdateUserDto {
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
+    username: string;
+
+    @ApiProperty()
+    @IsNotEmpty()
+    @IsString()
     password: string;
 
     @ApiProperty()
@@ -47,6 +52,9 @@ class UpdateUserResDTOResData {
 
     @ApiProperty()
     email: string;
+
+    @ApiProperty()
+    username: string
 
     @ApiProperty()
     firstName: string;
@@ -82,6 +90,7 @@ export class UpdateUserResDTO {
         this.resData = new UpdateUserResDTOResData();
         if (!!datas) {
             this.resData.id = datas.id;
+            this.resData.username = datas.username;
             this.resData.email = datas.email;
             this.resData.firstName = datas.firstName;
             this.resData.lastName = datas.lastName;

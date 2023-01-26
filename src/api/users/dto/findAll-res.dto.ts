@@ -9,7 +9,7 @@ class FindAllResDTOResData {
     @ApiProperty({
         description: 'ข้อมูล',
     })
-    userName: string;
+    username: string;
 
     @ApiProperty()
     firstName: string;
@@ -73,6 +73,7 @@ export class FindAllResDTO {
             const _data = new FindAllResDTOResData();
             _data.email = datas.email;
             _data.firstName = datas.firstName;
+            _data.username = datas.username;
             _data.lastName = datas.lastName;
             _data.role = datas.role;
             _data.status = datas.status;

@@ -4,11 +4,11 @@ import { ResStatus } from './../../../shared/enum/res-status.enum';
 
 export class UserLoginRequestDTO {
     @ApiProperty({
-        example: 'admin@gmail.com',
+        example: 'admin',
     })
-    @IsEmail()
+    @IsString()
     @IsNotEmpty()
-    readonly email: string;
+    readonly username: string;
 
     @ApiProperty({
         example: 'admin',
@@ -22,9 +22,9 @@ export class UserLoginRequestDTO {
 
 class LoginResDTOResData {
     @ApiProperty({
-        description: 'อีเมล',
+        description: 'ชื่อผู้ใช้งาน',
     })
-    email: string;
+    username: string;
 
     @ApiProperty()
     password: string;
@@ -48,21 +48,21 @@ export class LoginResDTO {
     })
     msg: string;
 
-    constructor(resCode: ResStatus, msg: string, _email: string, _password: string) {
+    constructor(resCode: ResStatus, msg: string, _username: string, _password: string) {
         this.resCode = resCode;
         this.msg = msg;
         this.resData = new LoginResDTOResData();
 
         // ก้อนข้อมูล init //
-        this.resData.email = null;
+        this.resData.username = null;
         this.resData.password = null;
 
         // ─────────────────────────────────────────────────────────────────
         // (>。<) //
         // ─────────────────────────────────────────────────────────────────
 
-        if (_email != null) {
-            this.resData.email = _email;
+        if (_username != null) {
+            this.resData.username = _username;
         }
         if (_password != null) {
             this.resData.password = _password;
