@@ -42,8 +42,8 @@ export class ApiUsersService implements OnApplicationBootstrap {
         private convertImageService: ConvertImageService,
 
         @Inject(forwardRef(() => UsersService))
-        private usersService: UsersService
-    ) { }
+        private usersService: UsersService,
+    ) {}
 
     async onApplicationBootstrap() {
         //
@@ -72,8 +72,9 @@ export class ApiUsersService implements OnApplicationBootstrap {
     async api_createWithAdmin(body: CreateUserReqDTO, user: UserDB) {
         const tag = this.api_create.name;
         try {
-            if (String(user.role) !== String(UserDBRole.admin)) throw new HttpException('Not authorized', HttpStatus.UNAUTHORIZED);
-            if (!body) throw new Error('data is required')
+            if (String(user.role) !== String(UserDBRole.admin))
+                throw new HttpException('Not authorized', HttpStatus.UNAUTHORIZED);
+            if (!body) throw new Error('data is required');
             const email = await this.usersService.isEmail(body.email);
 
             if (email) {
@@ -87,14 +88,12 @@ export class ApiUsersService implements OnApplicationBootstrap {
 
             const users = new UserDB();
             users.email = body.email.trim().toLowerCase();
-            users.username = body.username.trim().toLowerCase();
             users.firstName = body.firstName;
             users.lastName = body.lastName;
             users.password = _hashPass;
             users.gender = body.gender;
             users.phoneNumber = body.phoneNumber;
             users.role = body.role;
-
 
             await users.save();
             // console.log(users);
@@ -109,7 +108,7 @@ export class ApiUsersService implements OnApplicationBootstrap {
         const tag = this.api_create.name;
         try {
             // console.log(JSON.stringify(user, null, 2));
-            if (!body) throw new Error('data is required')
+            if (!body) throw new Error('data is required');
             const email = await this.usersService.isEmail(body.email);
 
             if (email) {
@@ -123,7 +122,6 @@ export class ApiUsersService implements OnApplicationBootstrap {
 
             const users = new UserDB();
             users.email = body.email.trim().toLowerCase();
-            users.username = body.username.trim().toLowerCase();
             users.firstName = body.firstName;
             users.lastName = body.lastName;
             users.password = _hashPass;

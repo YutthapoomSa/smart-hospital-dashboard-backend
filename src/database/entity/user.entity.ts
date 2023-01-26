@@ -13,6 +13,10 @@ export enum UserDBGender {
     other = 'other',
 }
 
+// export enum UserPositions {
+//     director = 'ผู้อำนวยการ',
+// }
+
 @Table({
     tableName: 'user',
     comment: 'ตารางข้อมูล user',
@@ -35,11 +39,6 @@ export class UserDB extends Model<UserDB> {
     @Column({
         allowNull: false,
     })
-    username: string;
-
-    @Column({
-        allowNull: false,
-    })
     password: string;
 
     @Column({
@@ -51,6 +50,13 @@ export class UserDB extends Model<UserDB> {
         allowNull: false,
     })
     lastName: string;
+
+    // @Column({
+    //     allowNull: false,
+    //     type: DataType.ENUM(UserPositions.director),
+    //     comment: 'ตำแหน่งงาน',
+    // })
+    // position: UserPositions;
 
     @Column({
         allowNull: false,
