@@ -23,7 +23,7 @@ import { UserLoginRequestDTO } from '../dto/user-login.dto';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
 import { FindOneUserResDTO } from './../dto/find-one-user-res.dto';
 import { UsersService } from './users.service';
-import { UpdateUserDto } from '../dto/update-user.dto';
+import { UpdateUserDto, UpdateUserResDTO } from '../dto/update-user.dto';
 
 @Injectable()
 export class ApiUsersService implements OnApplicationBootstrap {
@@ -150,7 +150,7 @@ export class ApiUsersService implements OnApplicationBootstrap {
         const tag = this.api_updateUserById.name;
         try {
             const updateUser = await this.usersService.api_updateUserById(user, body);
-            return updateUser;
+            return new UpdateUserResDTO(ResStatus.success, '', updateUser);
         } catch (error) {
             this.logger.error(`${tag} -> `, error);
             throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
