@@ -6,11 +6,24 @@ import { join } from 'path';
 import { AppModule } from './app.module';
 import { setupSwagger } from './swagger';
 import compression = require('compression');
+import path = require('path');
+import fs from 'fs';
+
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
-    app.useStaticAssets(join(__dirname, '/upload'), { prefix: '/storage' });
-    app.useStaticAssets(join(__dirname, '/upload-qr'), { prefix: '/qr' });
+
+    const pathUploadPath = path.join(__dirname, './../', 'upload');
+    if (!fs.existsSync(pathUploadPath)) fs.mkdirSync(pathUploadPath);
+
+
+    const pathImageUser = pathUploadPath + '/image-user';
+    if (!fs.existsSync(pathImageUser)) fs.mkdirSync(pathImageUser);
+
+
+    app.useStaticAssets(path.resolve(__dirname, './../upload', 'image-user'), { prefix: '/userImage' });
+
+
     app.enableCors({
         origin: '*',
         methods: 'GET,PUT,PATCH,POST,DELETE,UPDATE,OPTIONS',

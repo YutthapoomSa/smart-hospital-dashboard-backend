@@ -24,6 +24,7 @@ import { ResStatus } from './../../../shared/enum/res-status.enum';
 import { FindOneUserResDTO } from './../dto/find-one-user-res.dto';
 import { UsersService } from './users.service';
 import { UpdateUserDto, UpdateUserResDTO } from '../dto/update-user.dto';
+import { GlobalResDTO } from 'src/api/global-dto/global-res.dto';
 
 @Injectable()
 export class ApiUsersService implements OnApplicationBootstrap {
@@ -156,6 +157,18 @@ export class ApiUsersService implements OnApplicationBootstrap {
             const updateUser = await this.usersService.api_updateUserById(user, body);
             return new UpdateUserResDTO(ResStatus.success, '', updateUser);
         } catch (error) {
+            this.logger.error(`${tag} -> `, error);
+            throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    async api_delete(_userId: number): Promise<GlobalResDTO> {
+        const tag = this.api_delete.name;
+        try {
+            const result = await this.usersService.setFlexDelete(_userId);
+            return new GlobalResDTO(result ? ResStatus.success : ResStatus.fail, '');
+        } catch (error) {
+            console.error(`${tag} -> `, error);
             this.logger.error(`${tag} -> `, error);
             throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
         }
