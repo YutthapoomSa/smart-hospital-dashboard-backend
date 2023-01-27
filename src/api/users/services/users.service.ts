@@ -6,7 +6,7 @@ import {
     Inject,
     Injectable,
     OnApplicationBootstrap,
-    UnauthorizedException
+    UnauthorizedException,
 } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import bcrypt from 'bcrypt';
@@ -14,8 +14,9 @@ import { Cache } from 'cache-manager';
 import { sign } from 'jsonwebtoken';
 import jwt_decode from 'jwt-decode';
 import moment from 'moment';
-import { Op } from 'sequelize';
+import { FindOptions, Op } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
+import { PaginationService } from 'src/helper/services/pagination/pagination.service';
 import { v4 as uuidv4 } from 'uuid';
 import { UserTokenDB } from '../../../database/entity/user-token.entity';
 import { UserDB, UserDBRole } from '../../../database/entity/user.entity';
@@ -24,6 +25,7 @@ import { EncryptionService } from '../../../helper/services/encryption.service';
 import { LogService } from '../../../helper/services/log.service';
 import { ConfigService } from '../../../shared/config/config.service';
 import { JwtPayload } from '../auth/jwt-payload.model';
+import { UserPaginationDTO, UserPaginationResDTO } from '../dto/pagination-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UserNameCheckResDTO } from '../dto/user-check.dto';
 import { UserLoginRefreshToKenReqDto } from '../dto/user-login-refreshToken.dto';
@@ -46,6 +48,7 @@ export class UsersService implements OnApplicationBootstrap {
         private readonly configService: ConfigService,
         private encryptionService: EncryptionService,
         private convertImageService: ConvertImageService,
+        private paginationService: PaginationService,
 
         @Inject(forwardRef(() => CacheUsersService))
         private cacheUsersService: CacheUsersService,
@@ -53,7 +56,7 @@ export class UsersService implements OnApplicationBootstrap {
         this.jwtPrivateKey = this.configService.jwtConfig.privateKey;
     }
     onApplicationBootstrap() {
-        // 
+        //
     }
 
     // [function]─────────────────────────────────────────────────────────────────
@@ -61,9 +64,7 @@ export class UsersService implements OnApplicationBootstrap {
         const tag = this.update.name;
         try {
             // const updateUser = await this.userRepository.update({
-
             // });
-
         } catch (error) {
             this.logger.error(`${tag} -> `, error);
             throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -368,29 +369,87 @@ export class UsersService implements OnApplicationBootstrap {
                 const updateUser = await this.userRepository.findByPk(body.userId);
                 if (!updateUser) throw new Error('no user found try again later');
                 updateUser.email = body.email ? body.email : updateUser.email;
-                updateUser.password = body.password ? (await this.genPassword(body.password)).hashPass : updateUser.password;
+                updateUser.password = body.password
+                    ? (await this.genPassword(body.password)).hashPass
+                    : updateUser.password;
                 updateUser.firstName = body.firstName ? body.firstName : updateUser.firstName;
                 updateUser.lastName = body.lastName ? body.lastName : updateUser.lastName;
                 updateUser.phoneNumber = body.phoneNumber ? body.phoneNumber : updateUser.phoneNumber;
                 updateUser.role = body.role ? body.role : updateUser.role;
                 return await updateUser.save();
-            }
-            else if (user.role === UserDBRole.user) {
+            } else if (user.role === UserDBRole.user) {
                 const updateUser = await this.userRepository.findByPk(user.id);
                 if (!updateUser) throw new Error('no user found try again later');
                 updateUser.email = body.email ? body.email : updateUser.email;
-                updateUser.password = body.password ? (await this.genPassword(body.password)).hashPass : updateUser.password;
+                updateUser.password = body.password
+                    ? (await this.genPassword(body.password)).hashPass
+                    : updateUser.password;
                 updateUser.firstName = body.firstName ? body.firstName : updateUser.firstName;
                 updateUser.lastName = body.lastName ? body.lastName : updateUser.lastName;
                 updateUser.phoneNumber = body.phoneNumber ? body.phoneNumber : updateUser.phoneNumber;
                 return await updateUser.save();
-            }
-            else {
+            } else {
                 throw new Error('something went wrong try again later');
             }
-
-
         } catch (error) {
+            this.logger.error(`${tag} -> `, error);
+            throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    async paginationUser(paginationDTO: UserPaginationDTO): Promise<UserPaginationResDTO> {
+        const tag = this.paginationUser.name;
+        try {
+            const resData = {
+                totalItems: 0,
+                itemsPerPage: 0,
+                totalPages: 0,
+                currentPage: paginationDTO.page,
+            };
+
+            const findOption: FindOptions = {
+                order: [['createdAt', 'DESC']],
+                // include: [
+                //     {
+                //         model: AgencySecondaryDB,
+                //         attributes: { exclude: ['createdAt', 'updatedAt'] },
+                //     },
+                // ],
+            };
+
+            // จำนวนข้อมูลทั้งหมด ตามเงื่อนไข
+            resData.totalItems = await this.userRepository.count(findOption);
+
+            // คำนวณชุดข้อมูล
+            const padding = this.paginationService.paginationCal(
+                resData.totalItems,
+                paginationDTO.perPages,
+                paginationDTO.page,
+            );
+
+            Object.assign(findOption, { order: [['createdAt', 'DESC']] });
+
+            resData.totalPages = padding.totalPages;
+
+            Object.assign(findOption, { offset: padding.skips });
+            Object.assign(findOption, { limit: padding.limit });
+
+            const _result = await this.userRepository.findAll(findOption);
+
+            // this.logger.debug('user pagination data -> ', _result);
+            resData.itemsPerPage = _result.length;
+
+            return new UserPaginationResDTO(
+                ResStatus.success,
+                '',
+                _result,
+                resData.totalItems,
+                resData.itemsPerPage,
+                resData.totalPages,
+                resData.currentPage,
+            );
+        } catch (error) {
+            console.error(`${tag} -> `, error);
             this.logger.error(`${tag} -> `, error);
             throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
         }

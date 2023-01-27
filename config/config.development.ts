@@ -38,5 +38,7 @@ export const config = {
         uploadEndpoint: 'http://localhost:3000/storage',
         // uploadEndpoint: "https://phayathaiapi.flowmisite.com/storage",
         // uploadEndpoint: "http://localhost:3000/storage",
+        userImagePath: 'http://pdsolution.trueddns.com:44779/userImage',
+
     },
 };

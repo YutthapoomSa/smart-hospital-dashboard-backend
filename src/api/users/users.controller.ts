@@ -16,6 +16,7 @@ import path from 'path';
 import { CreateUserImage } from './dto/create-user-image.dto';
 import { UsersService } from './services/users.service';
 import { editFileName, imageFileFilter } from 'src/shared/utils/file-upload.utils';
+import { UserPaginationResDTO, UserPaginationDTO } from './dto/pagination-user.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -75,6 +76,17 @@ export class UsersController {
     @ApiOkResponse({ type: GlobalResDTO })
     delete(@Param('id') id: number): Promise<GlobalResDTO> {
         return this.apiUsersService.api_delete(id);
+    }
+
+    @Post('paginationUser')
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard('jwt'))
+    @ApiOperation({
+        summary: 'pagination users',
+    })
+    @ApiOkResponse({ type: UserPaginationResDTO })
+    paginationUser(@Body() paginationDTO: UserPaginationDTO): Promise<UserPaginationResDTO> {
+        return this.userService.paginationUser(paginationDTO);
     }
 
     @Post('uploads-image/:userId')
