@@ -21,9 +21,7 @@ export class UserLoginRequestDTO {
 // ────────────────────────────────────────────────────────────────────────────────
 
 class LoginResDTOResData {
-    @ApiProperty({
-        description: 'ชื่อผู้ใช้งาน',
-    })
+    @ApiProperty()
     username: string;
 
     @ApiProperty()
