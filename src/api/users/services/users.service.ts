@@ -134,7 +134,7 @@ export class UsersService implements OnApplicationBootstrap {
             const user = await this.usersRepository.findOne({
                 attributes: { exclude: ['createdAt', 'updatedAt'] },
                 where: {
-                    email: body.email,
+                    username: body.username,
                 },
             });
 
