@@ -396,6 +396,54 @@ export class UsersService implements OnApplicationBootstrap {
         }
     }
 
+    async setFlexDelete(_userId: number) {
+        const tag = this.setFlexDelete.name;
+        try {
+            const result = await this.userRepository.update(
+                {
+                    isDelete: true,
+                },
+                {
+                    where: {
+                        id: _userId,
+                    },
+                },
+            );
+
+            return result[0] > 0;
+        } catch (error) {
+            console.error(`${tag} -> `, error);
+            this.logger.error(`${tag} -> `, error);
+            throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    async uploadUserImage(image: Express.Multer.File[], _userId: number) {
+        const tag = this.uploadUserImage.name;
+        try {
+            const findUserById = await this.userRepository.findOne({
+                where: {
+                    id: _userId,
+                },
+            });
+            this.logger.debug('image -> ', image);
+            if (!findUserById) throw new HttpException(`cannot find user by id`, HttpStatus.INTERNAL_SERVER_ERROR);
+            this.logger.debug('user id data -> ', findUserById);
+            if (!!image) {
+                for (const item of image) {
+                    findUserById.image = item.filename;
+                    await findUserById.save();
+                }
+            }
+
+            return findUserById.image;
+        } catch (error) {
+            console.error(`${tag} -> `, error);
+            this.logger.error(`${tag} -> `, error);
+            throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     // [Cron]─────────────────────────────────────────────────────────────────
 
     @Cron(CronExpression.EVERY_DAY_AT_11PM)

@@ -92,6 +92,12 @@ export class UserDB extends Model<UserDB> {
     })
     phoneNumber: string;
 
+    @Column({
+        defaultValue: false,
+        allowNull: false,
+    })
+    isDelete: boolean;
+
     // @Column({
     //     type: DataType.DATE(),
     //     defaultValue: () => Date.now(),
