@@ -11,7 +11,7 @@ export class FindOneMenuResDTOData {
     @ApiProperty()
     iframe: string;
     @ApiProperty({ type: () => [SubMenuData] })
-    subMenuList: SubMenuData[];
+    subMenuLists: SubMenuData[];
 }
 
 export class SubMenuData {
@@ -42,23 +42,21 @@ export class FindOneMenuResDTO {
     constructor(resCode: ResStatus, msg: string, datas: MenuDB) {
         this.resCode = resCode;
         this.msg = msg;
-        this.resData = null;
+        this.resData = new FindOneMenuResDTOData();
 
         if (!!datas) {
-            const _data = new FindOneMenuResDTOData();
-            _data.menuId = datas.menuId;
-            _data.menuName = datas.menuName;
-            _data.iframe = datas.iframe;
-            _data.subMenuList = [];
+            this.resData.menuId = datas.menuId;
+            this.resData.menuName = datas.menuName;
+            this.resData.iframe = datas.iframe;
+            this.resData.subMenuLists = [];
 
-            if (!!_data.subMenuList && _data.subMenuList.length > 0) {
-                for (const iterator of _data.subMenuList) {
+            if (!!this.resData.subMenuLists) {
+                for (const iterator of this.resData.subMenuLists) {
                     const _data2 = new SubMenuData();
                     _data2.subMenuId = iterator.subMenuId;
                     _data2.subMenuName = iterator.subMenuName;
-                    _data.subMenuList.push(_data2);
+                    this.resData.subMenuLists.push(_data2);
                 }
-                this.resData = _data;
             }
         }
     }

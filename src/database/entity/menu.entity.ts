@@ -52,5 +52,5 @@ export class MenuDB extends Model<MenuDB> {
     subMenuId: number;
 
     @BelongsTo(() => SubMenuDB)
-    subMenuLists: SubMenuDB;
+    subMenuLists: SubMenuDB[];
 }

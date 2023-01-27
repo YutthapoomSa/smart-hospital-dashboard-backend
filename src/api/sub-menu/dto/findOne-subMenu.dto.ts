@@ -15,7 +15,7 @@ export class FindOneSubMenuResDTOData {
     @ApiProperty()
     page: string;
 }
-export class FindOneMenuResDTO {
+export class FindOneSubMenuResDTO {
     @ApiProperty({
         enum: Object.keys(ResStatus).map((k) => ResStatus[k]),
         description: 'รหัสสถานะ',

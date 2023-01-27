@@ -5,7 +5,7 @@ import { UserDB } from './../../database/entity/user.entity';
 import { User } from './../../helper/guard/user.decorator';
 import { CreateSubMenuReqDTO, CreateSubMenuResDTO } from './dto/create-sub-menu.dto';
 import { FindAllSubMenuResDTO } from './dto/findAll-SubMenu.dto';
-import { FindOneMenuResDTO } from './dto/findOne-subMenu.dto';
+import { FindOneSubMenuResDTO } from './dto/findOne-subMenu.dto';
 import { UpdateSubMenuDTO, UpdateSubMenuResDTO } from './dto/update-sub-menu.dto';
 import { SubMenuService } from './sub-menu.service';
 
@@ -31,7 +31,7 @@ export class SubMenuController {
 
     @Get('findOne/:submenuId')
     @ApiOperation({ summary: 'findOne sub-menu' })
-    @ApiOkResponse({ type: FindOneMenuResDTO })
+    @ApiOkResponse({ type: FindOneSubMenuResDTO })
     async findOne(@Param('submenuId') submenuId: number) {
         return await this.subMenuService.findOne(submenuId);
     }

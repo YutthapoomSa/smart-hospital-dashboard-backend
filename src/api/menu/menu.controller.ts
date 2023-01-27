@@ -4,6 +4,8 @@ import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swa
 import { UserDB } from './../../database/entity/user.entity';
 import { User } from './../../helper/guard/user.decorator';
 import { CreateMenuDTO, CreateMenuResDTO } from './dto/create-menu.dto';
+import { FindAllMenuResDTO } from './dto/findAll-menu.dto';
+import { FindOneMenuResDTO } from './dto/findOne-menu.dto';
 import { UpdateMenuDTO, UpdateMenuResDTO } from './dto/update-menu.dto';
 import { ApiMenuService } from './service/api-menu.service';
 import { MenuService } from './service/menu.service';
@@ -11,7 +13,7 @@ import { MenuService } from './service/menu.service';
 @ApiTags('Menu')
 @Controller('menu')
 export class MenuController {
-    constructor(private readonly menuService: MenuService, private readonly apiMenuService: ApiMenuService) { }
+    constructor(private readonly menuService: MenuService, private readonly apiMenuService: ApiMenuService) {}
 
     @Post('createMenu')
     @ApiBearerAuth()
@@ -33,12 +35,14 @@ export class MenuController {
 
     @Get('findOne/:menuId')
     @ApiOperation({ summary: 'ค้นหารายการเมนูโดย id' })
+    @ApiOkResponse({ type: FindOneMenuResDTO })
     async findOne(@Param('menuId') menuId: number) {
         return await this.apiMenuService.api_findOne(menuId);
     }
 
     @Get('Menu/findAllMenu')
     @ApiOperation({ summary: 'findAll menu' })
+    @ApiOkResponse({ type: FindAllMenuResDTO })
     async findAll() {
         return await this.apiMenuService.api_findAll();
     }
