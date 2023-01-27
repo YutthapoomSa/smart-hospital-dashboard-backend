@@ -89,12 +89,14 @@ export class ApiUsersService implements OnApplicationBootstrap {
 
             const users = new UserDB();
             users.email = body.email.trim().toLowerCase();
+            users.username = body.username.trim().toLowerCase();
             users.firstName = body.firstName;
             users.lastName = body.lastName;
             users.password = _hashPass;
             users.gender = body.gender;
             users.phoneNumber = body.phoneNumber;
             users.role = body.role;
+
 
             await users.save();
             // console.log(users);
@@ -123,11 +125,14 @@ export class ApiUsersService implements OnApplicationBootstrap {
 
             const users = new UserDB();
             users.email = body.email.trim().toLowerCase();
+            users.username = body.username.trim().toLowerCase();
             users.firstName = body.firstName;
             users.lastName = body.lastName;
             users.password = _hashPass;
             users.gender = body.gender;
             users.phoneNumber = body.phoneNumber;
+            users.role = body.role;
+
 
             await users.save();
             return new FindOneUserResDTO(ResStatus.success, '', users);

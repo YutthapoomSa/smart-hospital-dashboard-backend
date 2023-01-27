@@ -3,7 +3,23 @@ import { MenuDB } from './../../../database/entity/menu.entity';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
 import { UpdateMenuResDTOData } from './update-menu.dto';
 
-export class FindAllMenuResDTOData extends PartialType(UpdateMenuResDTOData) {}
+export class FindAllMenuResDTOData {
+    @ApiProperty()
+    menuId: number;
+    @ApiProperty()
+    menuName: string;
+    @ApiProperty()
+    iframe: string;
+    @ApiProperty({ type: () => [SubMenuData] })
+    subMenuList: SubMenuData[];
+}
+
+export class SubMenuData {
+    @ApiProperty()
+    subMenuId: number;
+    @ApiProperty()
+    subMenuName: string;
+}
 
 export class FindAllMenuResDTO {
     @ApiProperty({
@@ -34,7 +50,17 @@ export class FindAllMenuResDTO {
                 _data.menuId = iterator.menuId;
                 _data.menuName = iterator.menuName;
                 _data.iframe = iterator.iframe;
-                this.resData.push(_data);
+                _data.subMenuList = [];
+
+                if (!!_data.subMenuList && _data.subMenuList.length > 0) {
+                    for (const iterator2 of _data.subMenuList) {
+                        const _data2 = new SubMenuData();
+                        _data2.subMenuId = iterator2.subMenuId;
+                        _data2.subMenuName = iterator2.subMenuName;
+                        _data.subMenuList.push(_data2);
+                    }
+                    this.resData.push(_data);
+                }
             }
         }
     }

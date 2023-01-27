@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { MenuDB } from './../../../database/entity/menu.entity';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
+import { IsNumber } from 'class-validator';
 
 export class CreateMenuDTO {
     @ApiProperty()
@@ -12,6 +13,10 @@ export class CreateMenuDTO {
     @ApiProperty()
     @IsString()
     iframe: string;
+
+    @ApiProperty()
+    @IsNumber()
+    subMenuId: number;
 }
 
 export class CreateMenuResDTOData {
@@ -21,6 +26,8 @@ export class CreateMenuResDTOData {
     menuName: string;
     @ApiProperty()
     iframe: string;
+    @ApiProperty()
+    subMenuId: number;
 }
 
 export class CreateMenuResDTO {
@@ -50,6 +57,7 @@ export class CreateMenuResDTO {
             this.resData.menuId = datas.menuId;
             this.resData.menuName = datas.menuName;
             this.resData.iframe = datas.iframe;
+            this.resData.subMenuId = datas.subMenuId;
         }
     }
 }

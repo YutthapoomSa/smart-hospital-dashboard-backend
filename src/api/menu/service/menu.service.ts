@@ -6,6 +6,7 @@ import { CreateMenuDTO } from '../dto/create-menu.dto';
 import { UpdateMenuDTO } from '../dto/update-menu.dto';
 import { MenuDB } from './../../../database/entity/menu.entity';
 import { UserDB, UserDBRole } from './../../../database/entity/user.entity';
+import { SubMenuDB } from 'src/database/entity/sub-menu.entity';
 
 @Injectable()
 export class MenuService implements OnApplicationBootstrap {
@@ -32,6 +33,7 @@ export class MenuService implements OnApplicationBootstrap {
             const menuCreate = new MenuDB();
             menuCreate.menuName = body.menuName;
             menuCreate.iframe = body.iframe;
+            menuCreate.subMenuId = body.subMenuId;
 
             await menuCreate.save();
             return menuCreate;
@@ -58,6 +60,7 @@ export class MenuService implements OnApplicationBootstrap {
                 {
                     menuName: updateMenuDto.menuName,
                     iframe: updateMenuDto.iframe,
+                    subMenuId: updateMenuDto.subMenuId
                 },
                 {
                     where: {
@@ -101,10 +104,14 @@ export class MenuService implements OnApplicationBootstrap {
         try {
             if (!_menuId) throw new Error('menu_id is required');
 
-            const result = await this.menuRepositoryModel.findByPk(_menuId);
-            if (!result) {
-                throw new Error('not found');
-            }
+            const result = await this.menuRepositoryModel.findByPk(_menuId, {
+                include: [
+                    {
+                        model: SubMenuDB,
+                        attributes: ['subMenuId', 'suBmenuName'],
+                    },
+                ],
+            });
 
             return result;
         } catch (error) {

@@ -2,13 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { SubMenuDB } from './../../../database/entity/sub-menu.entity';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
 
-export class MenuListDTO {
-    @ApiProperty()
-    menuId: number;
-    @ApiProperty()
-    menuName: string;
-}
-
 export class FindAllSubMenuResDTOData {
     @ApiProperty()
     submenuId: number;
@@ -20,12 +13,7 @@ export class FindAllSubMenuResDTOData {
     link: string;
     @ApiProperty()
     page: string;
-    @ApiProperty({
-        type: () => [MenuListDTO],
-    })
-    menuLists: MenuListDTO[];
 }
-
 export class FindAllSubMenuResDTO {
     @ApiProperty({
         enum: Object.keys(ResStatus).map((k) => ResStatus[k]),
@@ -58,14 +46,6 @@ export class FindAllSubMenuResDTO {
                 _data.iframe = iterator.iframe;
                 _data.link = iterator.link;
                 _data.page = iterator.page;
-                _data.menuLists = [];
-
-                if (!!_data.menuLists) {
-                    const _menu = new MenuListDTO();
-                    _menu.menuId = iterator.menuLists.menuId;
-                    _menu.menuName = iterator.menuLists.menuName;
-                    _data.menuLists.push(_menu);
-                }
                 this.resData.push(_data);
             }
         }

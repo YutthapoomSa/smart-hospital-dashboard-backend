@@ -12,6 +12,11 @@ export class CreateUserReqDTO {
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
+    username: string;
+
+    @ApiProperty()
+    @IsNotEmpty()
+    @IsString()
     password: string;
 
     @ApiProperty()
