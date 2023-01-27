@@ -3,7 +3,6 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { SubMenuDB } from './../../../database/entity/sub-menu.entity';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
 import { CreateSubmenuResDTOData } from './create-sub-menu.dto';
-import { MenuListDTO } from './findAll-SubMenu.dto';
 
 export class UpdateSubMenuDTO {
     @ApiProperty()
@@ -27,11 +26,6 @@ export class UpdateSubMenuDTO {
     @ApiProperty()
     @IsString()
     page: string;
-
-    @ApiProperty()
-    @IsNumber()
-    @IsNotEmpty()
-    menuId: number;
 }
 
 export class UpdateSubMenuResDTOData extends PartialType(CreateSubmenuResDTOData) {}
@@ -65,15 +59,6 @@ export class UpdateSubMenuResDTO {
             this.resData.iframe = datas.iframe;
             this.resData.link = datas.link;
             this.resData.page = datas.page;
-            this.resData.menuLists = [];
-
-            if (!!this.resData.menuLists && this.resData.menuLists.length > 0)
-                for (const iterator2 of this.resData.menuLists) {
-                    const _data2 = new MenuListDTO();
-                    _data2.menuId = iterator2.menuId;
-                    _data2.menuName = iterator2.menuName;
-                    this.resData.menuLists.push(iterator2);
-                }
         }
     }
 }

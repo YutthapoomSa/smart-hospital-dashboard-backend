@@ -1,4 +1,4 @@
-import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 import { MenuDB } from './menu.entity';
 
 @Table({
@@ -55,15 +55,8 @@ export class SubMenuDB extends Model<SubMenuDB> {
     // readonly updatedAt?: Date;
     // ─────────────────────────────────────────────────────────────────────
 
-    @ForeignKey(() => MenuDB)
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: true,
-    })
-    menuId: number;
-
-    @BelongsTo(() => MenuDB)
-    menuLists: MenuDB;
+    @HasMany(() => MenuDB)
+    menuLists: MenuDB[];
 
     //     @BelongsTo(() => MenuDB)
 
