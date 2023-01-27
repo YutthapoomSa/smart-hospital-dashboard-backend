@@ -124,10 +124,12 @@ export class ApiUsersService implements OnApplicationBootstrap {
             const users = new UserDB();
             users.email = body.email.trim().toLowerCase();
             users.username = body.username.trim().toLowerCase();
+            users.password = _hashPass;
             users.firstName = body.firstName;
             users.lastName = body.lastName;
-            users.password = _hashPass;
             users.gender = body.gender;
+            users.image = body.image;
+            users.role = body.role;
             users.phoneNumber = body.phoneNumber;
 
             await users.save();

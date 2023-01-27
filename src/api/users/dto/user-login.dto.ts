@@ -4,14 +4,14 @@ import { ResStatus } from './../../../shared/enum/res-status.enum';
 
 export class UserLoginRequestDTO {
     @ApiProperty({
-        example: 'admin',
+        example: 'admin1',
     })
     @IsString()
     @IsNotEmpty()
     readonly username: string;
 
     @ApiProperty({
-        example: 'admin',
+        example: 'admin1',
     })
     @IsString()
     @IsNotEmpty()
