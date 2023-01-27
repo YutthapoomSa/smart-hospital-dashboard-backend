@@ -71,7 +71,7 @@ export class UsersController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     @ApiOperation({ summary: 'ลบข้อมู,ผู้ใช้' })
-    @ApiParam({ name: 'userId', type: 'string' })
+    // @ApiParam({ name: 'userId', type: 'string' })
     @ApiOkResponse({ type: GlobalResDTO })
     delete(@Param('id') id: number): Promise<GlobalResDTO> {
         return this.apiUsersService.api_delete(id);
