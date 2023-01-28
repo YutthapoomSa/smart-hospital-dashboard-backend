@@ -45,7 +45,7 @@ export class SubMenuController {
         return await this.subMenuService.update(body, user);
     }
 
-    @Delete('deleteSubMenuBySubMenuId/:submenuId')
+    @Delete('deleteSubMenuBysubmenuId/:submenuId')
     @ApiOperation({ summary: 'delete submenu' })
     async remove(@Param('submenuId') submenuId: number) {
         return await this.subMenuService.remove(submenuId);

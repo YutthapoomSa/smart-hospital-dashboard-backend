@@ -42,14 +42,12 @@ export class MenuDB extends Model<MenuDB> {
     // readonly updatedAt?: Date;
     // ─────────────────────────────────────────────────────────────────────
 
-   
-
     @ForeignKey(() => SubMenuDB)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    subMenuId: number;
+    submenuId: number;
 
     @BelongsTo(() => SubMenuDB)
     subMenuLists: SubMenuDB[];

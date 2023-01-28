@@ -33,7 +33,7 @@ export class MenuService implements OnApplicationBootstrap {
             const menuCreate = new MenuDB();
             menuCreate.menuName = body.menuName;
             menuCreate.iframe = body.iframe;
-            menuCreate.subMenuId = body.subMenuId;
+            menuCreate.submenuId = body.submenuId;
 
             await menuCreate.save();
             return menuCreate;
@@ -60,7 +60,7 @@ export class MenuService implements OnApplicationBootstrap {
                 {
                     menuName: updateMenuDto.menuName,
                     iframe: updateMenuDto.iframe,
-                    subMenuId: updateMenuDto.subMenuId,
+                    submenuId: updateMenuDto.submenuId,
                 },
                 {
                     where: {
@@ -108,7 +108,7 @@ export class MenuService implements OnApplicationBootstrap {
                 include: [
                     {
                         model: SubMenuDB,
-                        attributes: ['subMenuId', 'suBmenuName'],
+                        attributes: ['submenuId', 'submenuName'],
                     },
                 ],
             });

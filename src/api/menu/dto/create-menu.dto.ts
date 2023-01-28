@@ -16,7 +16,7 @@ export class CreateMenuDTO {
 
     @ApiProperty()
     @IsNumber()
-    subMenuId: number;
+    submenuId: number;
 }
 
 export class CreateMenuResDTOData {
@@ -27,7 +27,7 @@ export class CreateMenuResDTOData {
     @ApiProperty()
     iframe: string;
     @ApiProperty()
-    subMenuId: number;
+    submenuId: number;
 }
 
 export class CreateMenuResDTO {
@@ -57,7 +57,7 @@ export class CreateMenuResDTO {
             this.resData.menuId = datas.menuId;
             this.resData.menuName = datas.menuName;
             this.resData.iframe = datas.iframe;
-            this.resData.subMenuId = datas.subMenuId;
+            this.resData.submenuId = datas.submenuId;
         }
     }
 }

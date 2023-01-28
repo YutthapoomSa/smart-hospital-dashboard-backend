@@ -1,7 +1,6 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { MenuDB } from './../../../database/entity/menu.entity';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
-import { UpdateMenuResDTOData } from './update-menu.dto';
 
 export class FindAllMenuResDTOData {
     @ApiProperty()
@@ -16,9 +15,9 @@ export class FindAllMenuResDTOData {
 
 export class SubMenuData {
     @ApiProperty()
-    subMenuId: number;
+    submenuId: number;
     @ApiProperty()
-    subMenuName: string;
+    submenuName: string;
 }
 
 export class FindAllMenuResDTO {
@@ -52,11 +51,11 @@ export class FindAllMenuResDTO {
                 _data.iframe = iterator.iframe;
                 _data.subMenuLists = [];
 
-                if (!!_data.subMenuLists && _data.subMenuLists.length > 0) {
-                    for (const iterator2 of _data.subMenuLists) {
+                if (!!iterator.subMenuLists && iterator.subMenuLists.length > 0) {
+                    for (const iterator2 of iterator.subMenuLists) {
                         const _data2 = new SubMenuData();
-                        _data2.subMenuId = iterator2.subMenuId;
-                        _data2.subMenuName = iterator2.subMenuName;
+                        _data2.submenuId = iterator2.submenuId;
+                        _data2.submenuName = iterator2.submenuName;
                         _data.subMenuLists.push(_data2);
                     }
                     this.resData.push(_data);
