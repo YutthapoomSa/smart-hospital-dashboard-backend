@@ -8,7 +8,7 @@ export class FindAllMenuResDTOData {
     @ApiProperty()
     menuName: string;
     @ApiProperty()
-    iframe: string;
+    iframeMenu: string;
     @ApiProperty({ type: () => [SubMenuData] })
     subMenuLists: SubMenuData[];
 }
@@ -18,6 +18,12 @@ export class SubMenuData {
     submenuId: number;
     @ApiProperty()
     submenuName: string;
+    @ApiProperty()
+    iframe: string;
+    @ApiProperty()
+    link: string;
+    @ApiProperty()
+    page: string;
 }
 
 export class FindAllMenuResDTO {
@@ -52,12 +58,15 @@ export class FindAllMenuResDTO {
                 const _data = new FindAllMenuResDTOData();
                 _data.menuId = iterator.menuId;
                 _data.menuName = iterator.menuName;
-                _data.iframe = iterator.iframe;
+                _data.iframeMenu = iterator.iframeMenu;
                 _data.subMenuLists = [];
                 if (!!iterator.subMenuLists) {
                     const submenuList = new SubMenuData();
                     submenuList.submenuId = iterator.subMenuLists.submenuId;
                     submenuList.submenuName = iterator.subMenuLists.submenuName;
+                    submenuList.iframe = iterator.subMenuLists.iframe;
+                    submenuList.link = iterator.subMenuLists.link;
+                    submenuList.page = iterator.subMenuLists.page;
                     _data.subMenuLists.push(submenuList);
                 }
                 this.resData.push(_data);
