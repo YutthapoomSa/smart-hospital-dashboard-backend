@@ -23,7 +23,7 @@ export class MenuDB extends Model<MenuDB> {
         allowNull: true,
         comment: 'link url iframe',
     })
-    iframe: string;
+    iframeMenu: string;
 
     // @Column({
     //     type: DataType.DATE(),

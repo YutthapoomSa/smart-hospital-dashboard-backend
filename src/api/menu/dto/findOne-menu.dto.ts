@@ -8,11 +8,17 @@ export class FindOneMenuResDTOData {
     @ApiProperty()
     menuName: string;
     @ApiProperty()
-    iframe: string;
+    iframeMenu: string;
     @ApiProperty()
     submenuId: number;
     @ApiProperty()
     submenuName: string;
+    @ApiProperty()
+    iframe: string;
+    @ApiProperty()
+    link: string;
+    @ApiProperty()
+    page: string;
 }
 
 export class FindOneMenuResDTO {
@@ -42,10 +48,13 @@ export class FindOneMenuResDTO {
         if (!!datas) {
             this.resData.menuId = datas.menuId;
             this.resData.menuName = datas.menuName;
-            this.resData.iframe = datas.iframe;
+            this.resData.iframeMenu = datas.iframeMenu;
             this.resData.submenuId = datas.submenuId;
             if (!!datas.subMenuLists) {
                 this.resData.submenuName = datas.subMenuLists.submenuName ? datas.subMenuLists.submenuName : '';
+                this.resData.iframe = datas.subMenuLists.iframe ? datas.subMenuLists.iframe : '';
+                this.resData.link = datas.subMenuLists.link ? datas.subMenuLists.link : '';
+                this.resData.page = datas.subMenuLists.page ? datas.subMenuLists.page : '';
             }
         }
     }
