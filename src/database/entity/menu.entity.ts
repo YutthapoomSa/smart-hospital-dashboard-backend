@@ -21,7 +21,7 @@ export class MenuDB extends Model<MenuDB> {
 
     @Column({
         allowNull: true,
-        comment: 'link url iframe'
+        comment: 'link url iframe',
     })
     iframe: string;
 
@@ -50,5 +50,5 @@ export class MenuDB extends Model<MenuDB> {
     submenuId: number;
 
     @BelongsTo(() => SubMenuDB)
-    subMenuLists: SubMenuDB[];
+    subMenuLists: SubMenuDB;
 }

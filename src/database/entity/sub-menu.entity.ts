@@ -22,19 +22,19 @@ export class SubMenuDB extends Model<SubMenuDB> {
 
     @Column({
         allowNull: true,
-        comment: 'link url iframe'
+        comment: 'link url iframe',
     })
     iframe: string;
 
     @Column({
         allowNull: true,
-        comment: 'link ที่ไปยังหน้าอื่น'
+        comment: 'link ที่ไปยังหน้าอื่น',
     })
     link: string;
 
     @Column({
         allowNull: true,
-        comment: 'link หน้าเปล่า'
+        comment: 'link หน้าเปล่า',
     })
     page: string;
 

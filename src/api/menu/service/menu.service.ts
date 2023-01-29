@@ -88,7 +88,14 @@ export class MenuService implements OnApplicationBootstrap {
                 throw new Error('no data try again later...');
             }
 
-            const resultFindAllMenu = await this.menuRepositoryModel.findAll();
+            const resultFindAllMenu = await this.menuRepositoryModel.findAll({
+                include: [
+                    {
+                        model: SubMenuDB,
+                        attributes: ['submenuId', 'submenuName'],
+                    },
+                ],
+            });
 
             return resultFindAllMenu;
         } catch (error) {

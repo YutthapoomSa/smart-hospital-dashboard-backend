@@ -7,14 +7,13 @@ import { UserDB } from './entity/user.entity';
 import { MenuDB } from './entity/menu.entity';
 import { SubMenuDB } from './entity/sub-menu.entity';
 
-
 export enum DataBase {
     UserDB = 'UserDB',
     UserTokenDB = 'UserTokenDB',
     UserSocketDB = 'UserSocketDB',
     UserPasswordDB = 'UserPasswordDB',
     MenuDB = 'MenuDB',
-    SubMenuDB = 'SubMenuDB'
+    SubMenuDB = 'SubMenuDB',
 }
 
 export const dbProviders = [

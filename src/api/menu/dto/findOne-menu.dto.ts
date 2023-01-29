@@ -11,6 +11,8 @@ export class FindOneMenuResDTOData {
     iframe: string;
     @ApiProperty()
     submenuId: number;
+    @ApiProperty()
+    submenuName: string;
 }
 
 export class FindOneMenuResDTO {
@@ -36,12 +38,15 @@ export class FindOneMenuResDTO {
         this.msg = msg;
         this.resData = new FindOneMenuResDTOData();
 
-        // console.log(JSON.stringify(datas, null, 2));
+        console.log(JSON.stringify(datas, null, 2));
         if (!!datas) {
             this.resData.menuId = datas.menuId;
             this.resData.menuName = datas.menuName;
             this.resData.iframe = datas.iframe;
             this.resData.submenuId = datas.submenuId;
+            if (!!datas.subMenuLists) {
+                this.resData.submenuName = datas.subMenuLists.submenuName ? datas.subMenuLists.submenuName : '';
+            }
         }
     }
 }

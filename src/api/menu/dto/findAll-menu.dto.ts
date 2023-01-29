@@ -46,22 +46,21 @@ export class FindAllMenuResDTO {
         // console.log(JSON.stringify(datas, null, 2));
 
         if (!!datas && datas.length > 0) {
+            console.log(JSON.stringify(datas, null, 2));
             for (const iterator of datas) {
+                console.log(JSON.stringify(iterator, null, 2));
                 const _data = new FindAllMenuResDTOData();
                 _data.menuId = iterator.menuId;
                 _data.menuName = iterator.menuName;
                 _data.iframe = iterator.iframe;
                 _data.subMenuLists = [];
-
-                if (!!iterator.subMenuLists && iterator.subMenuLists.length > 0) {
-                    for (const iterator2 of iterator.subMenuLists) {
-                        const _data2 = new SubMenuData();
-                        _data2.submenuId = iterator2.submenuId;
-                        _data2.submenuName = iterator2.submenuName;
-                        _data.subMenuLists.push(_data2);
-                    }
-                    this.resData.push(_data);
+                if (!!iterator.subMenuLists) {
+                    const submenuList = new SubMenuData();
+                    submenuList.submenuId = iterator.subMenuLists.submenuId;
+                    submenuList.submenuName = iterator.subMenuLists.submenuName;
+                    _data.subMenuLists.push(submenuList);
                 }
+                this.resData.push(_data);
             }
         }
     }
