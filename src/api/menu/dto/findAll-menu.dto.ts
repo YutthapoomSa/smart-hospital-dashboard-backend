@@ -1,7 +1,6 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { MenuDB } from './../../../database/entity/menu.entity';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
-import { UpdateMenuResDTOData } from './update-menu.dto';
 
 export class FindAllMenuResDTOData {
     @ApiProperty()
@@ -11,14 +10,14 @@ export class FindAllMenuResDTOData {
     @ApiProperty()
     iframe: string;
     @ApiProperty({ type: () => [SubMenuData] })
-    subMenuList: SubMenuData[];
+    subMenuLists: SubMenuData[];
 }
 
 export class SubMenuData {
     @ApiProperty()
-    subMenuId: number;
+    submenuId: number;
     @ApiProperty()
-    subMenuName: string;
+    submenuName: string;
 }
 
 export class FindAllMenuResDTO {
@@ -44,23 +43,24 @@ export class FindAllMenuResDTO {
         this.msg = msg;
         this.resData = [];
 
+        // console.log(JSON.stringify(datas, null, 2));
+
         if (!!datas && datas.length > 0) {
+            console.log(JSON.stringify(datas, null, 2));
             for (const iterator of datas) {
+                console.log(JSON.stringify(iterator, null, 2));
                 const _data = new FindAllMenuResDTOData();
                 _data.menuId = iterator.menuId;
                 _data.menuName = iterator.menuName;
                 _data.iframe = iterator.iframe;
-                _data.subMenuList = [];
-
-                if (!!_data.subMenuList && _data.subMenuList.length > 0) {
-                    for (const iterator2 of _data.subMenuList) {
-                        const _data2 = new SubMenuData();
-                        _data2.subMenuId = iterator2.subMenuId;
-                        _data2.subMenuName = iterator2.subMenuName;
-                        _data.subMenuList.push(_data2);
-                    }
-                    this.resData.push(_data);
+                _data.subMenuLists = [];
+                if (!!iterator.subMenuLists) {
+                    const submenuList = new SubMenuData();
+                    submenuList.submenuId = iterator.subMenuLists.submenuId;
+                    submenuList.submenuName = iterator.subMenuLists.submenuName;
+                    _data.subMenuLists.push(submenuList);
                 }
+                this.resData.push(_data);
             }
         }
     }

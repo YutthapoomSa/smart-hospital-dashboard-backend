@@ -102,14 +102,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
         try {
             if (!_submenuId) throw new Error('id is required');
 
-            const result = await this.subMenuRepositoryModel.findByPk(_submenuId, {
-                include: [
-                    {
-                        model: MenuDB,
-                        attributes: ['menuId', 'menuName'],
-                    },
-                ],
-            });
+            const result = await this.subMenuRepositoryModel.findByPk(_submenuId);
             console.log(JSON.stringify(result, null, 2));
             if (!result) throw new Error('no data found');
             return result;

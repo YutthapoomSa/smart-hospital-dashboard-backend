@@ -5,7 +5,7 @@ import { ResStatus } from './../../shared/enum/res-status.enum';
 import { GlobalResDTO } from './../global-dto/global-res.dto';
 import { CreateSubMenuReqDTO, CreateSubMenuResDTO } from './dto/create-sub-menu.dto';
 import { FindAllSubMenuResDTO } from './dto/findAll-SubMenu.dto';
-import { FindOneMenuResDTO } from './dto/findOne-subMenu.dto';
+import { FindOneSubMenuResDTO } from './dto/findOne-subMenu.dto';
 import { UpdateSubMenuDTO } from './dto/update-sub-menu.dto';
 import { SubMenuRepository } from './sub-menu.repository';
 
@@ -49,7 +49,7 @@ export class SubMenuService implements OnApplicationBootstrap {
         const tag = this.findOne.name;
         try {
             const resultFindOne = await this.subMenuRepository.findOne(_submenuId);
-            return new FindOneMenuResDTO(ResStatus.success, '', resultFindOne);
+            return new FindOneSubMenuResDTO(ResStatus.success, '', resultFindOne);
         } catch (error) {
             console.error(`${tag} -> `, error);
             this.logger.error(`${tag} -> `, error);

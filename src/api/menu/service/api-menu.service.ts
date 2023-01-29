@@ -26,12 +26,11 @@ export class ApiMenuService implements OnApplicationBootstrap {
         @Inject('SEQUELIZE') private sequelize: Sequelize,
         @Inject(forwardRef(() => MenuService))
         private menuService: MenuService,
-    ) { }
+    ) {}
 
     async onApplicationBootstrap() {
         //
     }
-
 
     async api_create(body: CreateMenuDTO, user: UserDB): Promise<CreateMenuResDTO> {
         const tag = this.api_create.name;
@@ -64,10 +63,10 @@ export class ApiMenuService implements OnApplicationBootstrap {
         }
     }
 
-    async api_findOne(_menuId: number) {
+    async api_findOne(menuId: number) {
         const tag = this.api_update.name;
         try {
-            const result = await this.menuService.findOne(_menuId);
+            const result = await this.menuService.findOne(menuId);
             return new FindOneMenuResDTO(ResStatus.success, '', result);
         } catch (error) {
             this.logger.error(`${tag} -> `, error);

@@ -4,9 +4,9 @@ import { DataBase } from './../../../database/database.providers';
 import { LogService } from './../../../helper/services/log.service';
 import { CreateMenuDTO } from '../dto/create-menu.dto';
 import { UpdateMenuDTO } from '../dto/update-menu.dto';
-import { MenuDB } from './../../../database/entity/menu.entity';
 import { UserDB, UserDBRole } from './../../../database/entity/user.entity';
 import { SubMenuDB } from 'src/database/entity/sub-menu.entity';
+import { MenuDB } from 'src/database/entity/menu.entity';
 
 @Injectable()
 export class MenuService implements OnApplicationBootstrap {
@@ -15,7 +15,7 @@ export class MenuService implements OnApplicationBootstrap {
     constructor(
         @Inject(DataBase.MenuDB) private readonly menuRepositoryModel: typeof MenuDB,
         @Inject('SEQUELIZE') private readonly sequelize: Sequelize,
-    ) { }
+    ) {}
 
     onApplicationBootstrap() {
         //
@@ -33,7 +33,7 @@ export class MenuService implements OnApplicationBootstrap {
             const menuCreate = new MenuDB();
             menuCreate.menuName = body.menuName;
             menuCreate.iframe = body.iframe;
-            menuCreate.subMenuId = body.subMenuId;
+            menuCreate.submenuId = body.submenuId;
 
             await menuCreate.save();
             return menuCreate;
@@ -60,7 +60,7 @@ export class MenuService implements OnApplicationBootstrap {
                 {
                     menuName: updateMenuDto.menuName,
                     iframe: updateMenuDto.iframe,
-                    subMenuId: updateMenuDto.subMenuId
+                    submenuId: updateMenuDto.submenuId,
                 },
                 {
                     where: {
@@ -88,7 +88,14 @@ export class MenuService implements OnApplicationBootstrap {
                 throw new Error('no data try again later...');
             }
 
-            const resultFindAllMenu = await this.menuRepositoryModel.findAll();
+            const resultFindAllMenu = await this.menuRepositoryModel.findAll({
+                include: [
+                    {
+                        model: SubMenuDB,
+                        attributes: ['submenuId', 'submenuName'],
+                    },
+                ],
+            });
 
             return resultFindAllMenu;
         } catch (error) {
@@ -99,20 +106,19 @@ export class MenuService implements OnApplicationBootstrap {
 
     // ─────────────────────────────────────────────────────────────────────
 
-    async findOne(_menuId: number) {
+    async findOne(menuId: number) {
         const tag = this.findAll.name;
         try {
-            if (!_menuId) throw new Error('menu_id is required');
+            if (!menuId) throw new Error('menu_id is required');
 
-            const result = await this.menuRepositoryModel.findByPk(_menuId, {
+            const result = await this.menuRepositoryModel.findByPk(menuId, {
                 include: [
                     {
                         model: SubMenuDB,
-                        attributes: ['subMenuId', 'suBmenuName'],
+                        attributes: ['submenuId', 'submenuName'],
                     },
                 ],
             });
-
             return result;
         } catch (error) {
             this.logger.error(`${tag} -> `, error);

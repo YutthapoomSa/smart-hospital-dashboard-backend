@@ -1,7 +1,6 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { MenuDB } from './../../../database/entity/menu.entity';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
-import { UpdateMenuResDTOData } from './update-menu.dto';
 
 export class FindOneMenuResDTOData {
     @ApiProperty()
@@ -10,15 +9,10 @@ export class FindOneMenuResDTOData {
     menuName: string;
     @ApiProperty()
     iframe: string;
-    @ApiProperty({ type: () => [SubMenuData] })
-    subMenuList: SubMenuData[];
-}
-
-export class SubMenuData {
     @ApiProperty()
-    subMenuId: number;
+    submenuId: number;
     @ApiProperty()
-    subMenuName: string;
+    submenuName: string;
 }
 
 export class FindOneMenuResDTO {
@@ -42,23 +36,16 @@ export class FindOneMenuResDTO {
     constructor(resCode: ResStatus, msg: string, datas: MenuDB) {
         this.resCode = resCode;
         this.msg = msg;
-        this.resData = null;
+        this.resData = new FindOneMenuResDTOData();
 
+        console.log(JSON.stringify(datas, null, 2));
         if (!!datas) {
-            const _data = new FindOneMenuResDTOData();
-            _data.menuId = datas.menuId;
-            _data.menuName = datas.menuName;
-            _data.iframe = datas.iframe;
-            _data.subMenuList = [];
-
-            if (!!_data.subMenuList && _data.subMenuList.length > 0) {
-                for (const iterator of _data.subMenuList) {
-                    const _data2 = new SubMenuData();
-                    _data2.subMenuId = iterator.subMenuId;
-                    _data2.subMenuName = iterator.subMenuName;
-                    _data.subMenuList.push(_data2);
-                }
-                this.resData = _data;
+            this.resData.menuId = datas.menuId;
+            this.resData.menuName = datas.menuName;
+            this.resData.iframe = datas.iframe;
+            this.resData.submenuId = datas.submenuId;
+            if (!!datas.subMenuLists) {
+                this.resData.submenuName = datas.subMenuLists.submenuName ? datas.subMenuLists.submenuName : '';
             }
         }
     }
