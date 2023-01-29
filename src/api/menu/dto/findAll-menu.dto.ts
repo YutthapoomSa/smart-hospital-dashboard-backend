@@ -43,6 +43,8 @@ export class FindAllMenuResDTO {
         this.msg = msg;
         this.resData = [];
 
+        // console.log(JSON.stringify(datas, null, 2));
+
         if (!!datas && datas.length > 0) {
             for (const iterator of datas) {
                 const _data = new FindAllMenuResDTOData();

@@ -36,6 +36,7 @@ export class FindOneMenuResDTO {
         this.msg = msg;
         this.resData = new FindOneMenuResDTOData();
 
+        // console.log(JSON.stringify(datas, null, 2));
         if (!!datas) {
             this.resData.menuId = datas.menuId;
             this.resData.menuName = datas.menuName;
