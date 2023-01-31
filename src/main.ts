@@ -9,20 +9,16 @@ import compression = require('compression');
 import path = require('path');
 import fs from 'fs';
 
-
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
     const pathUploadPath = path.join(__dirname, './../', 'upload');
     if (!fs.existsSync(pathUploadPath)) fs.mkdirSync(pathUploadPath);
 
-
     const pathImageUser = pathUploadPath + '/image-user';
     if (!fs.existsSync(pathImageUser)) fs.mkdirSync(pathImageUser);
 
-
     app.useStaticAssets(path.resolve(__dirname, './../upload', 'image-user'), { prefix: '/userImage' });
-
 
     app.enableCors({
         origin: '*',
@@ -34,6 +30,7 @@ async function bootstrap() {
     app.use(json({ limit: '300mb' }));
     app.use(compression());
     app.use(urlencoded({ extended: true, limit: '300mb' }));
+    app.enableCors();
     app.set('x-powered-by', false);
     setupSwagger(app);
     await app.listen(3000);
