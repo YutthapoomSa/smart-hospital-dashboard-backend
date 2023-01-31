@@ -1,7 +1,6 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { MenuDB } from './../../../database/entity/menu.entity';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
-import { UpdateMenuResDTOData } from './update-menu.dto';
 
 export class FindAllMenuResDTOData {
     @ApiProperty()
@@ -9,16 +8,22 @@ export class FindAllMenuResDTOData {
     @ApiProperty()
     menuName: string;
     @ApiProperty()
-    iframe: string;
+    iframeMenu: string;
     @ApiProperty({ type: () => [SubMenuData] })
     subMenuLists: SubMenuData[];
 }
 
 export class SubMenuData {
     @ApiProperty()
-    subMenuId: number;
+    submenuId: number;
     @ApiProperty()
-    subMenuName: string;
+    submenuName: string;
+    @ApiProperty()
+    iframe: string;
+    @ApiProperty()
+    link: string;
+    @ApiProperty()
+    page: string;
 }
 
 export class FindAllMenuResDTO {
@@ -44,23 +49,27 @@ export class FindAllMenuResDTO {
         this.msg = msg;
         this.resData = [];
 
+        // console.log(JSON.stringify(datas, null, 2));
+
         if (!!datas && datas.length > 0) {
+            console.log(JSON.stringify(datas, null, 2));
             for (const iterator of datas) {
+                console.log(JSON.stringify(iterator, null, 2));
                 const _data = new FindAllMenuResDTOData();
                 _data.menuId = iterator.menuId;
                 _data.menuName = iterator.menuName;
-                _data.iframe = iterator.iframe;
+                _data.iframeMenu = iterator.iframeMenu;
                 _data.subMenuLists = [];
-
-                if (!!_data.subMenuLists && _data.subMenuLists.length > 0) {
-                    for (const iterator2 of _data.subMenuLists) {
-                        const _data2 = new SubMenuData();
-                        _data2.subMenuId = iterator2.subMenuId;
-                        _data2.subMenuName = iterator2.subMenuName;
-                        _data.subMenuLists.push(_data2);
-                    }
-                    this.resData.push(_data);
+                if (!!iterator.subMenuLists) {
+                    const submenuList = new SubMenuData();
+                    submenuList.submenuId = iterator.subMenuLists.submenuId;
+                    submenuList.submenuName = iterator.subMenuLists.submenuName;
+                    submenuList.iframe = iterator.subMenuLists.iframe;
+                    submenuList.link = iterator.subMenuLists.link;
+                    submenuList.page = iterator.subMenuLists.page;
+                    _data.subMenuLists.push(submenuList);
                 }
+                this.resData.push(_data);
             }
         }
     }

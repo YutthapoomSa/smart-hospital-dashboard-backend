@@ -32,8 +32,8 @@ export class MenuService implements OnApplicationBootstrap {
 
             const menuCreate = new MenuDB();
             menuCreate.menuName = body.menuName;
-            menuCreate.iframe = body.iframe;
-            menuCreate.subMenuId = body.subMenuId;
+            menuCreate.iframeMenu = body.iframeMenu;
+            menuCreate.submenuId = body.submenuId;
 
             await menuCreate.save();
             return menuCreate;
@@ -59,8 +59,8 @@ export class MenuService implements OnApplicationBootstrap {
             const updateMenu = await resultUpdate.update(
                 {
                     menuName: updateMenuDto.menuName,
-                    iframe: updateMenuDto.iframe,
-                    subMenuId: updateMenuDto.subMenuId,
+                    iframeMenu: updateMenuDto.iframeMenu,
+                    submenuId: updateMenuDto.submenuId,
                 },
                 {
                     where: {
@@ -88,7 +88,14 @@ export class MenuService implements OnApplicationBootstrap {
                 throw new Error('no data try again later...');
             }
 
-            const resultFindAllMenu = await this.menuRepositoryModel.findAll();
+            const resultFindAllMenu = await this.menuRepositoryModel.findAll({
+                include: [
+                    {
+                        model: SubMenuDB,
+                        attributes: ['submenuId', 'submenuName', 'iframe', 'link', 'page'],
+                    },
+                ],
+            });
 
             return resultFindAllMenu;
         } catch (error) {
@@ -108,7 +115,7 @@ export class MenuService implements OnApplicationBootstrap {
                 include: [
                     {
                         model: SubMenuDB,
-                        attributes: ['subMenuId', 'suBmenuName'],
+                        attributes: ['submenuId', 'submenuName', 'iframe', 'link', 'page'],
                     },
                 ],
             });

@@ -21,9 +21,9 @@ export class MenuDB extends Model<MenuDB> {
 
     @Column({
         allowNull: true,
-        comment: 'link url iframe'
+        comment: 'link url iframe',
     })
-    iframe: string;
+    iframeMenu: string;
 
     // @Column({
     //     type: DataType.DATE(),
@@ -42,15 +42,13 @@ export class MenuDB extends Model<MenuDB> {
     // readonly updatedAt?: Date;
     // ─────────────────────────────────────────────────────────────────────
 
-   
-
     @ForeignKey(() => SubMenuDB)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    subMenuId: number;
+    submenuId: number;
 
     @BelongsTo(() => SubMenuDB)
-    subMenuLists: SubMenuDB[];
+    subMenuLists: SubMenuDB;
 }
