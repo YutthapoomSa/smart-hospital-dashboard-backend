@@ -33,7 +33,7 @@ export class SubMenuDB extends Model<SubMenuDB> {
     link: string;
 
     @Column({
-        allowNull: false,
+        allowNull: true,
     })
     submenuIcon: string;
 

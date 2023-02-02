@@ -20,7 +20,7 @@ export class MenuDB extends Model<MenuDB> {
     menuName: string;
 
     @Column({
-        allowNull: false,
+        allowNull: true,
     })
     icon: string;
 

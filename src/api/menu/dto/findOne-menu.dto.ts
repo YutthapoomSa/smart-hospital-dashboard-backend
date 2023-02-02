@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { MenuDB } from './../../../database/entity/menu.entity';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
+import { SubMenuData } from './findAll-menu.dto';
 
 export class FindOneMenuResDTOData {
     @ApiProperty()
@@ -23,6 +24,11 @@ export class FindOneMenuResDTOData {
     link: string;
     @ApiProperty()
     page: string;
+
+    @ApiProperty({
+        type: () => [SubMenuData]
+    })
+    submenuLists: SubMenuData[];
 }
 
 export class FindOneMenuResDTO {
@@ -54,13 +60,16 @@ export class FindOneMenuResDTO {
             this.resData.menuName = datas.menuName;
             this.resData.icon = datas.icon;
             this.resData.iframeMenu = datas.iframeMenu;
-            this.resData.submenuId = datas.submenuId;
-            if (!!datas.subMenuLists) {
-                this.resData.submenuName = datas.subMenuLists.submenuName ? datas.subMenuLists.submenuName : '';
-                this.resData.submenuIcon = datas.subMenuLists.submenuIcon ? datas.subMenuLists.submenuIcon : '';
-                this.resData.iframe = datas.subMenuLists.iframe ? datas.subMenuLists.iframe : '';
-                this.resData.link = datas.subMenuLists.link ? datas.subMenuLists.link : '';
-                this.resData.page = datas.subMenuLists.page ? datas.subMenuLists.page : '';
+            this.resData.submenuLists = [];
+            for (const iterator of datas.SubMenuLists) {
+                const submenuList = new SubMenuData()
+                submenuList.submenuId = iterator.id
+                submenuList.submenuName = iterator.submenuName
+                submenuList.iframe = iterator.iframe
+                submenuList.link = iterator.link
+                submenuList.submenuIcon = iterator.submenuIcon
+
+                this.resData.submenuLists.push(submenuList);
             }
         }
     }

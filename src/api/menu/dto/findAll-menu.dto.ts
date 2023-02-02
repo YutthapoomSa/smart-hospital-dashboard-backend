@@ -53,7 +53,7 @@ export class FindAllMenuResDTO {
         this.msg = msg;
         this.resData = [];
 
-        // console.log(JSON.stringify(datas, null, 2));
+        console.log('Data : ', JSON.stringify(datas, null, 2));
 
         if (!!datas && datas.length > 0) {
             console.log(JSON.stringify(datas, null, 2));
@@ -65,16 +65,17 @@ export class FindAllMenuResDTO {
                 _data.icon = iterator.icon;
                 _data.iframeMenu = iterator.iframeMenu;
                 _data.subMenuLists = [];
-                if (!!iterator.subMenuLists) {
-                    const submenuList = new SubMenuData();
-                    submenuList.submenuId = iterator.subMenuLists.id;
-                    submenuList.submenuName = iterator.subMenuLists.submenuName;
-                    submenuList.submenuIcon = iterator.subMenuLists.submenuIcon;
-                    submenuList.iframe = iterator.subMenuLists.iframe;
-                    submenuList.link = iterator.subMenuLists.link;
-                    submenuList.page = iterator.subMenuLists.page;
+                for (const iterator2 of iterator.SubMenuLists) {
+                    const submenuList = new SubMenuData()
+                    submenuList.submenuId = iterator2.id
+                    submenuList.submenuName = iterator2.submenuName
+                    submenuList.iframe = iterator2.iframe
+                    submenuList.link = iterator2.link
+                    submenuList.submenuIcon = iterator2.submenuIcon
+
                     _data.subMenuLists.push(submenuList);
                 }
+
                 this.resData.push(_data);
             }
         }

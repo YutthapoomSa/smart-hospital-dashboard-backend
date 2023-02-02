@@ -96,11 +96,12 @@ export class MenuService implements OnApplicationBootstrap {
                 include: [
                     {
                         model: SubMenuDB,
-                        attributes: ['submenuId', 'submenuName', 'submenuIcon', 'iframe', 'link', 'page'],
+                        attributes: ['id', 'submenuName', 'submenuIcon', 'iframe', 'link', 'page'],
                     },
                 ],
             });
 
+            console.log('resultFindAllMenu : ', JSON.stringify(resultFindAllMenu, null, 2))
             return resultFindAllMenu;
         } catch (error) {
             this.logger.error(`${tag} -> `, error);
@@ -119,7 +120,7 @@ export class MenuService implements OnApplicationBootstrap {
                 include: [
                     {
                         model: SubMenuDB,
-                        attributes: ['submenuId', 'submenuName', 'submenuIcon', 'iframe', 'link', 'page'],
+                        attributes: ['id', 'submenuName', 'submenuIcon', 'iframe', 'link', 'page'],
                     },
                 ],
             });
