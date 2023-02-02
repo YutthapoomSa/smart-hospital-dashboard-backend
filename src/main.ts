@@ -30,6 +30,7 @@ async function bootstrap() {
         allowedHeaders: 'Content-Type, Accept,Option, Authorization',
         maxAge: 3600,
     });
+ 
     app.useGlobalPipes(new ValidationPipe());
     app.use(json({ limit: '300mb' }));
     app.use(compression());
