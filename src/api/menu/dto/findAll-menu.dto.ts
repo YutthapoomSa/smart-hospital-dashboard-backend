@@ -4,7 +4,7 @@ import { ResStatus } from './../../../shared/enum/res-status.enum';
 
 export class FindAllMenuResDTOData {
     @ApiProperty()
-    menuId: number;
+    id: number;
     @ApiProperty()
     menuName: string;
     @ApiProperty()
@@ -60,14 +60,14 @@ export class FindAllMenuResDTO {
             for (const iterator of datas) {
                 console.log(JSON.stringify(iterator, null, 2));
                 const _data = new FindAllMenuResDTOData();
-                _data.menuId = iterator.menuId;
+                _data.id = iterator.id;
                 _data.menuName = iterator.menuName;
                 _data.icon = iterator.icon;
                 _data.iframeMenu = iterator.iframeMenu;
                 _data.subMenuLists = [];
                 if (!!iterator.subMenuLists) {
                     const submenuList = new SubMenuData();
-                    submenuList.submenuId = iterator.subMenuLists.submenuId;
+                    submenuList.submenuId = iterator.subMenuLists.id;
                     submenuList.submenuName = iterator.subMenuLists.submenuName;
                     submenuList.submenuIcon = iterator.subMenuLists.submenuIcon;
                     submenuList.iframe = iterator.subMenuLists.iframe;

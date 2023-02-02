@@ -1,12 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { MenuDB } from './../../../database/entity/menu.entity';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
 
 export class UpdateMenuDTO {
     @ApiProperty()
     @IsString()
-    @IsNotEmpty()
     menuName: string;
 
     @ApiProperty()
@@ -17,9 +16,7 @@ export class UpdateMenuDTO {
     @IsString()
     iframeMenu: string;
 
-    @ApiProperty()
-    @IsNumber()
-    submenuId: number;
+
 }
 
 export class UpdateMenuResDTOData {
@@ -32,7 +29,7 @@ export class UpdateMenuResDTOData {
     @ApiProperty()
     iframeMenu: string;
     @ApiProperty()
-    submenuId: number;
+    submenuId: number[];
 }
 
 export class UpdateMenuResDTO {
@@ -59,11 +56,12 @@ export class UpdateMenuResDTO {
         this.resData = new UpdateMenuResDTOData();
 
         if (!!datas) {
-            this.resData.menuId = datas.menuId;
+            this.resData.menuId = datas.id;
             this.resData.menuName = datas.menuName;
             this.resData.icon = datas.icon;
             this.resData.iframeMenu = datas.iframeMenu;
-            this.resData.submenuId = datas.submenuId;
+            this.resData.submenuId = []
+
         }
     }
 }

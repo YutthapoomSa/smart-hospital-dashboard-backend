@@ -50,7 +50,7 @@ export class FindOneMenuResDTO {
 
         console.log(JSON.stringify(datas, null, 2));
         if (!!datas) {
-            this.resData.menuId = datas.menuId;
+            this.resData.menuId = datas.id;
             this.resData.menuName = datas.menuName;
             this.resData.icon = datas.icon;
             this.resData.iframeMenu = datas.iframeMenu;

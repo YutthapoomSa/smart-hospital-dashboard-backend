@@ -14,7 +14,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
     constructor(
         @Inject('SEQUELIZE') private readonly sequelize: Sequelize,
         @Inject(DataBase.SubMenuDB) private readonly subMenuRepositoryModel: typeof SubMenuDB,
-    ) {}
+    ) { }
 
     onApplicationBootstrap() {
         //
@@ -70,6 +70,11 @@ export class SubMenuRepository implements OnApplicationBootstrap {
             resultUpdate.iframe = body.iframe ? body.iframe : resultUpdate.iframe;
             resultUpdate.link = body.link ? body.link : resultUpdate.link;
             resultUpdate.page = body.page ? body.page : resultUpdate.page;
+            resultUpdate.menuId = [];
+            for (const iterator of body.menuId) {
+                resultUpdate.menuId.push(iterator);
+
+            }
 
             return await resultUpdate.save();
         } catch (error) {
@@ -111,13 +116,13 @@ export class SubMenuRepository implements OnApplicationBootstrap {
         const tag = this.remove.name;
         try {
             const isFindSubmenuDetailById = await this.subMenuRepositoryModel.count({
-                where: { submenuId: _submenuId },
+                where: { id: _submenuId },
             });
             if (isFindSubmenuDetailById === 0) {
                 throw new Error('can not remove this title maybe is invalid id');
             }
             const resultRemoveSubMenuDetailById = await this.subMenuRepositoryModel.destroy({
-                where: { submenuId: _submenuId },
+                where: { id: _submenuId },
             });
             if (resultRemoveSubMenuDetailById === 1) {
                 return `remove subMenuDetail Id : ${_submenuId} success`;

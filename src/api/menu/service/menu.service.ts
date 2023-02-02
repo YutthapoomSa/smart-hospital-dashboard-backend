@@ -15,7 +15,7 @@ export class MenuService implements OnApplicationBootstrap {
     constructor(
         @Inject(DataBase.MenuDB) private readonly menuRepositoryModel: typeof MenuDB,
         @Inject('SEQUELIZE') private readonly sequelize: Sequelize,
-    ) {}
+    ) { }
 
     onApplicationBootstrap() {
         //
@@ -33,8 +33,6 @@ export class MenuService implements OnApplicationBootstrap {
             const menuCreate = new MenuDB();
             menuCreate.menuName = body.menuName;
             menuCreate.iframeMenu = body.iframeMenu;
-            menuCreate.subMenuLists = body.subMenuLists;
-
             await menuCreate.save();
             return menuCreate;
         } catch (error) {
@@ -56,21 +54,27 @@ export class MenuService implements OnApplicationBootstrap {
             const resultUpdate = await this.menuRepositoryModel.findByPk(_menuId);
             if (!resultUpdate) throw new Error('may be is wrong id try again later');
 
-            const updateMenu = await resultUpdate.update(
-                {
-                    menuName: updateMenuDto.menuName,
-                    iframeMenu: updateMenuDto.iframeMenu,
-                    submenuId: updateMenuDto.submenuId,
-                },
-                {
-                    where: {
-                        menuId: _menuId,
-                    },
-                },
-            );
-            console.log(updateMenu);
+            // const updateMenu = await resultUpdate.update(
+            //     {
+            //         menuName: updateMenuDto.menuName ? updateMenuDto.menuName : resultUpdate.menuName,
+            //         iframeMenu: updateMenuDto.iframeMenu ? updateMenuDto.iframeMenu : resultUpdate.iframeMenu,
+            //         submenuId: updateMenuDto.submenuId ? updateMenuDto.submenuId : resultUpdate.submenuId,
+            //     },
+            //     {
+            //         where: {
+            //             menuId: _menuId,
+            //         },
+            //     },
+            // );
 
-            return updateMenu;
+            resultUpdate.menuName = updateMenuDto.menuName ? updateMenuDto.menuName : resultUpdate.menuName;
+            resultUpdate.iframeMenu = updateMenuDto.iframeMenu ? updateMenuDto.iframeMenu : resultUpdate.iframeMenu;
+
+            await resultUpdate.save();
+
+            console.log(resultUpdate);
+
+            return resultUpdate;
         } catch (error) {
             this.logger.error(`${tag} -> `, error);
             throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -92,7 +96,7 @@ export class MenuService implements OnApplicationBootstrap {
                 include: [
                     {
                         model: SubMenuDB,
-                        attributes: ['submenuId', 'submenuName','submenuIcon', 'iframe', 'link', 'page'],
+                        attributes: ['submenuId', 'submenuName', 'submenuIcon', 'iframe', 'link', 'page'],
                     },
                 ],
             });
@@ -115,7 +119,7 @@ export class MenuService implements OnApplicationBootstrap {
                 include: [
                     {
                         model: SubMenuDB,
-                        attributes: ['submenuId', 'submenuName','submenuIcon', 'iframe', 'link', 'page'],
+                        attributes: ['submenuId', 'submenuName', 'submenuIcon', 'iframe', 'link', 'page'],
                     },
                 ],
             });
@@ -132,7 +136,7 @@ export class MenuService implements OnApplicationBootstrap {
             if (!_menuId) throw new Error('id is required');
             const isFindResult = await this.menuRepositoryModel.findByPk(_menuId);
             if (!isFindResult) throw new Error('may be is wrong id try again later');
-            const removeResult = await this.menuRepositoryModel.destroy({ where: { menuId: _menuId } });
+            const removeResult = await this.menuRepositoryModel.destroy({ where: { id: _menuId } });
 
             if (removeResult === 1) {
                 return `remove ResultRider Id : ${_menuId} success`;

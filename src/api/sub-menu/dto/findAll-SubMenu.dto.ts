@@ -15,6 +15,8 @@ export class FindAllSubMenuResDTOData {
     link: string;
     @ApiProperty()
     page: string;
+    @ApiProperty()
+    menuId: number[];
 }
 export class FindAllSubMenuResDTO {
     @ApiProperty({
@@ -43,12 +45,17 @@ export class FindAllSubMenuResDTO {
         if (!!datas) {
             for (const iterator of datas) {
                 const _data = new FindAllSubMenuResDTOData();
-                _data.submenuId = iterator.submenuId;
+                _data.submenuId = iterator.id;
                 _data.submenuName = iterator.submenuName;
                 _data.submenuIcon = iterator.submenuIcon;
                 _data.iframe = iterator.iframe;
                 _data.link = iterator.link;
                 _data.page = iterator.page;
+                _data.menuId = []
+                for (const iterator2 of iterator.menuId) {
+                    _data.menuId.push(iterator2)
+                }
+
                 this.resData.push(_data);
             }
         }

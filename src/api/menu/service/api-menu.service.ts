@@ -26,7 +26,7 @@ export class ApiMenuService implements OnApplicationBootstrap {
         @Inject('SEQUELIZE') private sequelize: Sequelize,
         @Inject(forwardRef(() => MenuService))
         private menuService: MenuService,
-    ) {}
+    ) { }
 
     async onApplicationBootstrap() {
         //

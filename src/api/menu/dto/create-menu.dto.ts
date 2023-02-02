@@ -5,7 +5,7 @@ import { ResStatus } from './../../../shared/enum/res-status.enum';
 
 export class SubmenuData {
     @ApiProperty()
-    submenuId: number;
+    id: number;
 }
 export class CreateMenuDTO {
     @ApiProperty()
@@ -21,9 +21,6 @@ export class CreateMenuDTO {
     @IsString()
     icon: string;
 
-    @ApiProperty({ type: () => [SubmenuData] })
-    @IsArray()
-    submenuLists: SubmenuData[];
 }
 
 export class ResSubMenuData {
@@ -67,7 +64,7 @@ export class CreateMenuResDTO {
         this.resData = new CreateMenuResDTOData();
 
         if (!!datas) {
-            this.resData.menuId = datas.menuId;
+            this.resData.menuId = datas.id;
             this.resData.menuName = datas.menuName;
             this.resData.icon = datas.icon;
             this.resData.iframeMenu = datas.iframeMenu;
