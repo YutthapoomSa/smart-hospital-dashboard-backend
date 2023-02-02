@@ -11,6 +11,10 @@ export class UpdateMenuDTO {
 
     @ApiProperty()
     @IsString()
+    icon: string;
+
+    @ApiProperty()
+    @IsString()
     iframeMenu: string;
 
     @ApiProperty()
@@ -23,6 +27,8 @@ export class UpdateMenuResDTOData {
     menuId: number;
     @ApiProperty()
     menuName: string;
+    @ApiProperty()
+    icon: string;
     @ApiProperty()
     iframeMenu: string;
     @ApiProperty()
@@ -55,6 +61,7 @@ export class UpdateMenuResDTO {
         if (!!datas) {
             this.resData.menuId = datas.menuId;
             this.resData.menuName = datas.menuName;
+            this.resData.icon = datas.icon;
             this.resData.iframeMenu = datas.iframeMenu;
             this.resData.submenuId = datas.submenuId;
         }

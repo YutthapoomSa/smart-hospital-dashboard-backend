@@ -20,6 +20,11 @@ export class MenuDB extends Model<MenuDB> {
     menuName: string;
 
     @Column({
+        allowNull: false,
+    })
+    icon: string;
+
+    @Column({
         allowNull: true,
         comment: 'link url iframe',
     })

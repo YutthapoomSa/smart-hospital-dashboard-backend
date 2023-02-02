@@ -9,6 +9,8 @@ export class FindOneSubMenuResDTOData {
     @ApiProperty()
     submenuName: string;
     @ApiProperty()
+    submenuIcon: string;
+    @ApiProperty()
     iframe: string;
     @ApiProperty()
     link: string;
@@ -41,6 +43,7 @@ export class FindOneSubMenuResDTO {
         if (!!datas) {
             this.resData.submenuId = datas.submenuId;
             this.resData.submenuName = datas.submenuName;
+            this.resData.submenuIcon = datas.submenuIcon;
             this.resData.iframe = datas.iframe;
             this.resData.link = datas.link;
             this.resData.page = datas.page;

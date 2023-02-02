@@ -33,6 +33,11 @@ export class SubMenuDB extends Model<SubMenuDB> {
     link: string;
 
     @Column({
+        allowNull: false,
+    })
+    submenuIcon: string;
+
+    @Column({
         allowNull: true,
         comment: 'link หน้าเปล่า',
     })

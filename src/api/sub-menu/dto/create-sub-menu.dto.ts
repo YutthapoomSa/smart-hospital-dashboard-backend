@@ -11,6 +11,10 @@ export class CreateSubMenuReqDTO {
 
     @ApiProperty()
     @IsString()
+    submenuIcon: string;
+
+    @ApiProperty()
+    @IsString()
     iframe: string;
 
     @ApiProperty()
@@ -27,6 +31,8 @@ export class CreateSubmenuResDTOData {
     submenuId: number;
     @ApiProperty()
     submenuName: string;
+    @ApiProperty()
+    submenuIcon: string;
     @ApiProperty()
     iframe: string;
     @ApiProperty()
@@ -61,6 +67,7 @@ export class CreateSubMenuResDTO {
         if (!!datas) {
             this.resData.submenuId = datas.submenuId;
             this.resData.submenuName = datas.submenuName;
+            this.resData.submenuIcon = datas.submenuIcon;
             this.resData.iframe = datas.iframe;
             this.resData.link = datas.link;
             this.resData.page = datas.page;

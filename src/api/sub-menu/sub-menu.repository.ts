@@ -31,6 +31,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
             const createSubMenu = await this.subMenuRepositoryModel.count({
                 where: {
                     submenuName: body.submenuName,
+                    submenuIcon: body.submenuIcon,
                     iframe: body.iframe,
                     link: body.link,
                     page: body.page,
@@ -41,6 +42,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
 
             const _create = new SubMenuDB();
             _create.submenuName = body.submenuName;
+            _create.submenuIcon = body.submenuIcon;
             _create.iframe = body.iframe;
             _create.link = body.link;
             _create.page = body.page;
@@ -64,6 +66,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
             if (!resultUpdate) throw new Error('may be is wrong id try again later');
 
             resultUpdate.submenuName = body.submenuName ? body.submenuName : resultUpdate.submenuName;
+            resultUpdate.submenuIcon = body.submenuIcon ? body.submenuIcon : resultUpdate.submenuIcon;
             resultUpdate.iframe = body.iframe ? body.iframe : resultUpdate.iframe;
             resultUpdate.link = body.link ? body.link : resultUpdate.link;
             resultUpdate.page = body.page ? body.page : resultUpdate.page;
@@ -79,14 +82,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
     async findAll() {
         const tag = this.findAll.name;
         try {
-            const result = await this.subMenuRepositoryModel.findAll({
-                include: [
-                    {
-                        model: MenuDB,
-                        attributes: ['menuId', 'menuName'],
-                    },
-                ],
-            });
+            const result = await this.subMenuRepositoryModel.findAll();
             if (!result) throw new Error('no data found try again later');
             console.log(JSON.stringify(result, null, 2));
             return result;
