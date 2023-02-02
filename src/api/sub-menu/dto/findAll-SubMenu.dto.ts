@@ -16,7 +16,9 @@ export class FindAllSubMenuResDTOData {
     @ApiProperty()
     page: string;
     @ApiProperty()
-    menuId: number[];
+    menuId: number
+    @ApiProperty()
+    menuName: string;
 }
 export class FindAllSubMenuResDTO {
     @ApiProperty({
@@ -44,6 +46,7 @@ export class FindAllSubMenuResDTO {
 
         if (!!datas) {
             for (const iterator of datas) {
+                console.log('findAllSub : ', JSON.stringify(iterator, null, 2))
                 const _data = new FindAllSubMenuResDTOData();
                 _data.submenuId = iterator.id;
                 _data.submenuName = iterator.submenuName;
@@ -51,10 +54,9 @@ export class FindAllSubMenuResDTO {
                 _data.iframe = iterator.iframe;
                 _data.link = iterator.link;
                 _data.page = iterator.page;
-                _data.menuId = []
-                for (const iterator2 of iterator.menuId) {
-                    _data.menuId.push(iterator2)
-                }
+                _data.menuId = iterator.menuId;
+                _data.menuName = iterator.menuLists.menuName;
+
 
                 this.resData.push(_data);
             }

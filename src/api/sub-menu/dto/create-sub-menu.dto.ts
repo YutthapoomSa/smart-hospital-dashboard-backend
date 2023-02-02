@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { SubMenuDB } from './../../../database/entity/sub-menu.entity';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
 
@@ -26,8 +26,8 @@ export class CreateSubMenuReqDTO {
     page: string;
 
     @ApiProperty()
-    @IsArray()
-    menuId: number[];
+    @IsNumber()
+    menuId: number;
 }
 // ─────────────────────────────────────────────────────────────────────────────
 export class CreateSubmenuResDTOData {
@@ -44,7 +44,7 @@ export class CreateSubmenuResDTOData {
     @ApiProperty()
     page: string;
     @ApiProperty()
-    menuId: number[];
+    menuId: number;
 }
 
 export class CreateSubMenuResDTO {
@@ -77,10 +77,7 @@ export class CreateSubMenuResDTO {
             this.resData.iframe = datas.iframe;
             this.resData.link = datas.link;
             this.resData.page = datas.page;
-            this.resData.menuId = [];
-            for (const iterator of datas.menuId) {
-                this.resData.menuId.push(iterator);
-            }
+            this.resData.menuId = datas.menuId
         }
     }
 }

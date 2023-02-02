@@ -46,6 +46,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
             _create.iframe = body.iframe;
             _create.link = body.link;
             _create.page = body.page;
+            _create.menuId = body.menuId;
             await _create.save();
 
             return _create;
@@ -70,11 +71,8 @@ export class SubMenuRepository implements OnApplicationBootstrap {
             resultUpdate.iframe = body.iframe ? body.iframe : resultUpdate.iframe;
             resultUpdate.link = body.link ? body.link : resultUpdate.link;
             resultUpdate.page = body.page ? body.page : resultUpdate.page;
-            resultUpdate.menuId = [];
-            for (const iterator of body.menuId) {
-                resultUpdate.menuId.push(iterator);
+            resultUpdate.menuId = body.menuId ? body.menuId : resultUpdate.menuId;
 
-            }
 
             return await resultUpdate.save();
         } catch (error) {
@@ -87,7 +85,14 @@ export class SubMenuRepository implements OnApplicationBootstrap {
     async findAll() {
         const tag = this.findAll.name;
         try {
-            const result = await this.subMenuRepositoryModel.findAll();
+            const result = await this.subMenuRepositoryModel.findAll({
+                include: [
+                    {
+                        model: MenuDB,
+                        attributes: ['menuName']
+                    }
+                ]
+            });
             if (!result) throw new Error('no data found try again later');
             console.log(JSON.stringify(result, null, 2));
             return result;
@@ -103,7 +108,14 @@ export class SubMenuRepository implements OnApplicationBootstrap {
         try {
             if (!_submenuId) throw new Error('id is required');
 
-            const result = await this.subMenuRepositoryModel.findByPk(_submenuId);
+            const result = await this.subMenuRepositoryModel.findByPk(_submenuId, {
+                include: [
+                    {
+                        model: MenuDB,
+                        attributes: ['menuName']
+                    }
+                ]
+            });
             console.log(JSON.stringify(result, null, 2));
             if (!result) throw new Error('no data found');
             return result;

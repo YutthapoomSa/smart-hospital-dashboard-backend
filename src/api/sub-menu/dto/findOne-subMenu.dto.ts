@@ -17,7 +17,9 @@ export class FindOneSubMenuResDTOData {
     @ApiProperty()
     page: string;
     @ApiProperty()
-    menuId: number[];
+    menuId: number;
+    @ApiProperty()
+    menuName: string;
 }
 export class FindOneSubMenuResDTO {
     @ApiProperty({
@@ -49,10 +51,9 @@ export class FindOneSubMenuResDTO {
             this.resData.iframe = datas.iframe;
             this.resData.link = datas.link;
             this.resData.page = datas.page;
-            this.resData.menuId = [];
-            for (const iterator of datas.menuId) {
-                this.resData.menuId.push(iterator);
-            }
+            this.resData.menuId = datas.menuId;
+            this.resData.menuName = datas.menuLists.menuName;
+
         }
     }
 }

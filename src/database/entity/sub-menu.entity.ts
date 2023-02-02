@@ -65,7 +65,7 @@ export class SubMenuDB extends Model<SubMenuDB> {
         type: DataType.INTEGER,
         allowNull: false,
     })
-    menuId: number[];
+    menuId: number;
 
     @BelongsTo(() => MenuDB)
     menuLists: MenuDB;
