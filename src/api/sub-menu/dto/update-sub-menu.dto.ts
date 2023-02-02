@@ -17,6 +17,10 @@ export class UpdateSubMenuDTO {
 
     @ApiProperty()
     @IsString()
+    submenuIcon: string;
+
+    @ApiProperty()
+    @IsString()
     iframe: string;
 
     @ApiProperty()
@@ -26,9 +30,13 @@ export class UpdateSubMenuDTO {
     @ApiProperty()
     @IsString()
     page: string;
+
+    @ApiProperty()
+    @IsNumber()
+    menuId: number;
 }
 
-export class UpdateSubMenuResDTOData extends PartialType(CreateSubmenuResDTOData) {}
+export class UpdateSubMenuResDTOData extends PartialType(CreateSubmenuResDTOData) { }
 
 export class UpdateSubMenuResDTO {
     @ApiProperty({
@@ -54,11 +62,13 @@ export class UpdateSubMenuResDTO {
         this.resData = new UpdateSubMenuResDTOData();
 
         if (!!datas) {
-            this.resData.submenuId = datas.submenuId;
+            this.resData.submenuId = datas.id;
             this.resData.submenuName = datas.submenuName;
+            this.resData.submenuIcon = datas.submenuIcon;
             this.resData.iframe = datas.iframe;
             this.resData.link = datas.link;
             this.resData.page = datas.page;
+            this.resData.menuId = datas.menuId;
         }
     }
 }

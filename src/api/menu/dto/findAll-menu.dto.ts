@@ -4,9 +4,11 @@ import { ResStatus } from './../../../shared/enum/res-status.enum';
 
 export class FindAllMenuResDTOData {
     @ApiProperty()
-    menuId: number;
+    id: number;
     @ApiProperty()
     menuName: string;
+    @ApiProperty()
+    icon: string;
     @ApiProperty()
     iframeMenu: string;
     @ApiProperty({ type: () => [SubMenuData] })
@@ -18,6 +20,8 @@ export class SubMenuData {
     submenuId: number;
     @ApiProperty()
     submenuName: string;
+    @ApiProperty()
+    submenuIcon: string;
     @ApiProperty()
     iframe: string;
     @ApiProperty()
@@ -49,26 +53,29 @@ export class FindAllMenuResDTO {
         this.msg = msg;
         this.resData = [];
 
-        // console.log(JSON.stringify(datas, null, 2));
+        console.log('Data : ', JSON.stringify(datas, null, 2));
 
         if (!!datas && datas.length > 0) {
             console.log(JSON.stringify(datas, null, 2));
             for (const iterator of datas) {
                 console.log(JSON.stringify(iterator, null, 2));
                 const _data = new FindAllMenuResDTOData();
-                _data.menuId = iterator.menuId;
+                _data.id = iterator.id;
                 _data.menuName = iterator.menuName;
+                _data.icon = iterator.icon;
                 _data.iframeMenu = iterator.iframeMenu;
                 _data.subMenuLists = [];
-                if (!!iterator.subMenuLists) {
-                    const submenuList = new SubMenuData();
-                    submenuList.submenuId = iterator.subMenuLists.submenuId;
-                    submenuList.submenuName = iterator.subMenuLists.submenuName;
-                    submenuList.iframe = iterator.subMenuLists.iframe;
-                    submenuList.link = iterator.subMenuLists.link;
-                    submenuList.page = iterator.subMenuLists.page;
+                for (const iterator2 of iterator.SubMenuLists) {
+                    const submenuList = new SubMenuData()
+                    submenuList.submenuId = iterator2.id
+                    submenuList.submenuName = iterator2.submenuName
+                    submenuList.iframe = iterator2.iframe
+                    submenuList.link = iterator2.link
+                    submenuList.submenuIcon = iterator2.submenuIcon
+
                     _data.subMenuLists.push(submenuList);
                 }
+
                 this.resData.push(_data);
             }
         }

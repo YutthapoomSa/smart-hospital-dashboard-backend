@@ -9,11 +9,17 @@ export class FindOneSubMenuResDTOData {
     @ApiProperty()
     submenuName: string;
     @ApiProperty()
+    submenuIcon: string;
+    @ApiProperty()
     iframe: string;
     @ApiProperty()
     link: string;
     @ApiProperty()
     page: string;
+    @ApiProperty()
+    menuId: number;
+    @ApiProperty()
+    menuName: string;
 }
 export class FindOneSubMenuResDTO {
     @ApiProperty({
@@ -39,11 +45,15 @@ export class FindOneSubMenuResDTO {
         this.resData = new FindOneSubMenuResDTOData();
 
         if (!!datas) {
-            this.resData.submenuId = datas.submenuId;
+            this.resData.submenuId = datas.id;
             this.resData.submenuName = datas.submenuName;
+            this.resData.submenuIcon = datas.submenuIcon;
             this.resData.iframe = datas.iframe;
             this.resData.link = datas.link;
             this.resData.page = datas.page;
+            this.resData.menuId = datas.menuId;
+            this.resData.menuName = datas.menuLists.menuName;
+
         }
     }
 }

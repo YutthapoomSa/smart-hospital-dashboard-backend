@@ -1,9 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsString } from 'class-validator';
 import { MenuDB } from './../../../database/entity/menu.entity';
 import { ResStatus } from './../../../shared/enum/res-status.enum';
-import { IsNumber } from 'class-validator';
 
+export class SubmenuData {
+    @ApiProperty()
+    id: number;
+}
 export class CreateMenuDTO {
     @ApiProperty()
     @IsString()
@@ -15,19 +18,26 @@ export class CreateMenuDTO {
     iframeMenu: string;
 
     @ApiProperty()
-    @IsNumber()
-    submenuId: number;
+    @IsString()
+    icon: string;
+
 }
 
+export class ResSubMenuData {
+    @ApiProperty()
+    submenuId: number;
+}
 export class CreateMenuResDTOData {
     @ApiProperty()
     menuId: number;
     @ApiProperty()
     menuName: string;
     @ApiProperty()
-    iframeMenu: string;
+    icon: string;
     @ApiProperty()
-    submenuId: number;
+    iframeMenu: string;
+    @ApiProperty({ type: () => [ResSubMenuData] })
+    submenuLists: ResSubMenuData[];
 }
 
 export class CreateMenuResDTO {
@@ -54,10 +64,18 @@ export class CreateMenuResDTO {
         this.resData = new CreateMenuResDTOData();
 
         if (!!datas) {
-            this.resData.menuId = datas.menuId;
+            this.resData.menuId = datas.id;
             this.resData.menuName = datas.menuName;
+            this.resData.icon = datas.icon;
             this.resData.iframeMenu = datas.iframeMenu;
-            this.resData.submenuId = datas.submenuId;
+            this.resData.submenuLists = [];
+            if (!!this.resData.submenuLists && this.resData.submenuLists.length > 0) {
+                for (const iterator of this.resData.submenuLists) {
+                    const _data = new ResSubMenuData();
+                    _data.submenuId = iterator.submenuId;
+                    this.resData.submenuLists.push(_data);
+                }
+            }
         }
     }
 }

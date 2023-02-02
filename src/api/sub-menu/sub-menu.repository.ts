@@ -14,7 +14,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
     constructor(
         @Inject('SEQUELIZE') private readonly sequelize: Sequelize,
         @Inject(DataBase.SubMenuDB) private readonly subMenuRepositoryModel: typeof SubMenuDB,
-    ) {}
+    ) { }
 
     onApplicationBootstrap() {
         //
@@ -31,6 +31,7 @@ export class SubMenuRepository implements OnApplicationBootstrap {
             const createSubMenu = await this.subMenuRepositoryModel.count({
                 where: {
                     submenuName: body.submenuName,
+                    submenuIcon: body.submenuIcon,
                     iframe: body.iframe,
                     link: body.link,
                     page: body.page,
@@ -41,9 +42,11 @@ export class SubMenuRepository implements OnApplicationBootstrap {
 
             const _create = new SubMenuDB();
             _create.submenuName = body.submenuName;
+            _create.submenuIcon = body.submenuIcon;
             _create.iframe = body.iframe;
             _create.link = body.link;
             _create.page = body.page;
+            _create.menuId = body.menuId;
             await _create.save();
 
             return _create;
@@ -64,9 +67,12 @@ export class SubMenuRepository implements OnApplicationBootstrap {
             if (!resultUpdate) throw new Error('may be is wrong id try again later');
 
             resultUpdate.submenuName = body.submenuName ? body.submenuName : resultUpdate.submenuName;
+            resultUpdate.submenuIcon = body.submenuIcon ? body.submenuIcon : resultUpdate.submenuIcon;
             resultUpdate.iframe = body.iframe ? body.iframe : resultUpdate.iframe;
             resultUpdate.link = body.link ? body.link : resultUpdate.link;
             resultUpdate.page = body.page ? body.page : resultUpdate.page;
+            resultUpdate.menuId = body.menuId ? body.menuId : resultUpdate.menuId;
+
 
             return await resultUpdate.save();
         } catch (error) {
@@ -83,9 +89,9 @@ export class SubMenuRepository implements OnApplicationBootstrap {
                 include: [
                     {
                         model: MenuDB,
-                        attributes: ['menuId', 'menuName'],
-                    },
-                ],
+                        attributes: ['menuName']
+                    }
+                ]
             });
             if (!result) throw new Error('no data found try again later');
             console.log(JSON.stringify(result, null, 2));
@@ -102,7 +108,14 @@ export class SubMenuRepository implements OnApplicationBootstrap {
         try {
             if (!_submenuId) throw new Error('id is required');
 
-            const result = await this.subMenuRepositoryModel.findByPk(_submenuId);
+            const result = await this.subMenuRepositoryModel.findByPk(_submenuId, {
+                include: [
+                    {
+                        model: MenuDB,
+                        attributes: ['menuName']
+                    }
+                ]
+            });
             console.log(JSON.stringify(result, null, 2));
             if (!result) throw new Error('no data found');
             return result;
@@ -115,13 +128,13 @@ export class SubMenuRepository implements OnApplicationBootstrap {
         const tag = this.remove.name;
         try {
             const isFindSubmenuDetailById = await this.subMenuRepositoryModel.count({
-                where: { submenuId: _submenuId },
+                where: { id: _submenuId },
             });
             if (isFindSubmenuDetailById === 0) {
                 throw new Error('can not remove this title maybe is invalid id');
             }
             const resultRemoveSubMenuDetailById = await this.subMenuRepositoryModel.destroy({
-                where: { submenuId: _submenuId },
+                where: { id: _submenuId },
             });
             if (resultRemoveSubMenuDetailById === 1) {
                 return `remove subMenuDetail Id : ${_submenuId} success`;

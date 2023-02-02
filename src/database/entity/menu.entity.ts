@@ -1,4 +1,4 @@
-import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
+import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from 'sequelize-typescript';
 import { SubMenuDB } from './sub-menu.entity';
 
 @Table({
@@ -12,12 +12,17 @@ export class MenuDB extends Model<MenuDB> {
         autoIncrement: true,
         primaryKey: true,
     })
-    menuId: number;
+    id: number;
 
     @Column({
         allowNull: false,
     })
     menuName: string;
+
+    @Column({
+        allowNull: true,
+    })
+    icon: string;
 
     @Column({
         allowNull: true,
@@ -42,13 +47,6 @@ export class MenuDB extends Model<MenuDB> {
     // readonly updatedAt?: Date;
     // ─────────────────────────────────────────────────────────────────────
 
-    @ForeignKey(() => SubMenuDB)
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false,
-    })
-    submenuId: number;
-
-    @BelongsTo(() => SubMenuDB)
-    subMenuLists: SubMenuDB;
+    @HasMany(() => SubMenuDB)
+    SubMenuLists: SubMenuDB[];
 }

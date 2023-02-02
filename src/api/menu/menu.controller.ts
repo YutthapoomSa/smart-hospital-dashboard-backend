@@ -13,7 +13,7 @@ import { MenuService } from './service/menu.service';
 @ApiTags('Menu')
 @Controller('menu')
 export class MenuController {
-    constructor(private readonly menuService: MenuService, private readonly apiMenuService: ApiMenuService) {}
+    constructor(private readonly menuService: MenuService, private readonly apiMenuService: ApiMenuService) { }
 
     @Post('createMenu')
     @ApiBearerAuth()

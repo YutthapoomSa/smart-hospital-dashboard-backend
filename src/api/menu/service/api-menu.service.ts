@@ -26,7 +26,7 @@ export class ApiMenuService implements OnApplicationBootstrap {
         @Inject('SEQUELIZE') private sequelize: Sequelize,
         @Inject(forwardRef(() => MenuService))
         private menuService: MenuService,
-    ) {}
+    ) { }
 
     async onApplicationBootstrap() {
         //
@@ -79,6 +79,7 @@ export class ApiMenuService implements OnApplicationBootstrap {
         try {
             const resultFindAll = await this.menuService.findAll();
             return new FindAllMenuResDTO(ResStatus.success, '', resultFindAll);
+            // return resultFindAll;
         } catch (error) {
             console.error(error);
         }

@@ -12,7 +12,7 @@ import { SubMenuService } from './sub-menu.service';
 @Controller('sub-menu')
 @ApiTags('SubMenu')
 export class SubMenuController {
-    constructor(private readonly subMenuService: SubMenuService) {}
+    constructor(private readonly subMenuService: SubMenuService) { }
 
     @Post('CreateSubMenu')
     @ApiBearerAuth()
