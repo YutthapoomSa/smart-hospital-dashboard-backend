@@ -17,6 +17,7 @@ import { CreateUserImage } from './dto/create-user-image.dto';
 import { UsersService } from './services/users.service';
 import { editFileName, imageFileFilter } from 'src/shared/utils/file-upload.utils';
 import { UserPaginationResDTO, UserPaginationDTO } from './dto/pagination-user.dto';
+import { CreateUserByAdminReqDTO } from './dto/create-userbyadmin.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -36,7 +37,7 @@ export class UsersController {
     @UseGuards(AuthGuard('jwt'))
     @ApiOperation({ summary: 'Adminเป็นคนสร้างให้User' })
     @ApiOkResponse({ type: FindOneUserResDTO })
-    async registerWithAdmin(@Body() body: CreateUserReqDTO, @User() user: UserDB) {
+    async registerWithAdmin(@Body() body: CreateUserByAdminReqDTO, @User() user: UserDB) {
         return this.apiUsersService.api_createWithAdmin(body, user);
     }
 

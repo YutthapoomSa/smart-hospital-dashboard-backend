@@ -25,6 +25,7 @@ import { FindOneUserResDTO } from './../dto/find-one-user-res.dto';
 import { UsersService } from './users.service';
 import { UpdateUserDto, UpdateUserResDTO } from '../dto/update-user.dto';
 import { GlobalResDTO } from 'src/api/global-dto/global-res.dto';
+import { CreateUserByAdminReqDTO } from '../dto/create-userbyadmin.dto';
 
 @Injectable()
 export class ApiUsersService implements OnApplicationBootstrap {
@@ -70,7 +71,7 @@ export class ApiUsersService implements OnApplicationBootstrap {
         }
     }
 
-    async api_createWithAdmin(body: CreateUserReqDTO, user: UserDB) {
+    async api_createWithAdmin(body: CreateUserByAdminReqDTO, user: UserDB) {
         const tag = this.api_create.name;
         try {
             if (String(user.role) !== String(UserDBRole.admin))
@@ -89,10 +90,12 @@ export class ApiUsersService implements OnApplicationBootstrap {
 
             const users = new UserDB();
             users.email = body.email.trim().toLowerCase();
+            users.username = body.username.trim().toLowerCase();
+            users.password = _hashPass;
             users.firstName = body.firstName;
             users.lastName = body.lastName;
-            users.password = _hashPass;
             users.gender = body.gender;
+            users.image = body.image;
             users.phoneNumber = body.phoneNumber;
             users.role = body.role;
 
@@ -124,11 +127,12 @@ export class ApiUsersService implements OnApplicationBootstrap {
 
             const users = new UserDB();
             users.email = body.email.trim().toLowerCase();
+            users.username = body.username.trim().toLowerCase();
+            users.password = _hashPass;
             users.firstName = body.firstName;
             users.lastName = body.lastName;
             users.gender = body.gender;
             users.image = body.image;
-            users.role = body.role;
             users.phoneNumber = body.phoneNumber;
             users.role = body.role;
 
